@@ -1,0 +1,7 @@
+.font-whisper {
+  font-family: 'Whisper', cursive;
+}
+
+.text-primary {
+  color: var(--title-color);
+}
