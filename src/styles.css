@@ -2,53 +2,60 @@
 @import "tailwindcss";
 
 :root {
-  --title-color: #D3AC92;
+  --title-color: #8B5A2B;
   --bg-color: #0C2A42;
   --bg-texture-color: #0a2338;
   --texture-highlight: rgba(255, 255, 255, 0.03);
   --texture-shadow: rgba(0, 0, 0, 0.15);
+  --geo-line-color: rgba(139, 90, 43, 0.09);
 }
 
 body {
   background-color: var(--bg-color);
   background-image: 
+    /* Geometric lines */
+    linear-gradient(
+      to right,
+      transparent 49.5%,
+      var(--geo-line-color) 49.5%,
+      var(--geo-line-color) 50.5%,
+      transparent 50.5%
+    ),
+    linear-gradient(
+      to bottom,
+      transparent 49.5%,
+      var(--geo-line-color) 49.5%,
+      var(--geo-line-color) 50.5%,
+      transparent 50.5%
+    ),
+    /* Diagonal geometric lines */
+    linear-gradient(
+      45deg,
+      transparent 49.5%,
+      var(--geo-line-color) 49.5%,
+      var(--geo-line-color) 50.5%,
+      transparent 50.5%
+    ),
+    linear-gradient(
+      -45deg,
+      transparent 49.5%,
+      var(--geo-line-color) 49.5%,
+      var(--geo-line-color) 50.5%,
+      transparent 50.5%
+    ),
     /* Main velvet sheen */
     radial-gradient(
       ellipse at 50% 50%,
       var(--bg-color) 0%,
       var(--bg-texture-color) 73%,
       var(--bg-color) 100%
-    ),
-    /* Micro texture */
-    repeating-linear-gradient(
-      45deg,
-      transparent,
-      transparent 1px,
-      var(--texture-highlight) 1px,
-      var(--texture-highlight) 2px
-    ),
-    repeating-linear-gradient(
-      -45deg,
-      transparent,
-      transparent 1px,
-      var(--texture-shadow) 1px,
-      var(--texture-shadow) 2px
-    ),
-    /* Deeper texture layer */
-    repeating-radial-gradient(
-      circle at 50% 50%,
-      transparent,
-      transparent 5px,
-      rgba(0, 0, 0, 0.03) 5px,
-      rgba(0, 0, 0, 0.03) 10px
     );
-  background-size: 100% 100%, 4px 4px, 4px 4px, 20px 20px;
+  background-size: 100px 100px, 100px 100px, 140px 140px, 140px 140px, 100% 100%;
   background-position: center center;
-  background-blend-mode: normal, overlay, overlay, multiply;
+  background-blend-mode: normal, normal, normal, normal, normal;
+  background-attachment: fixed;
   color: white;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
   font-family: 'Lato', sans-serif;
-  position: relative;
 }

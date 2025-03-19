@@ -1,7 +1,1 @@
-.font-whisper {
-  font-family: 'Whisper', cursive;
-}
-
-.text-primary {
-  color: var(--title-color);
-}
+/* No custom CSS needed as we're using Tailwind classes in the template */

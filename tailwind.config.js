@@ -10,7 +10,7 @@ module.exports = {
         'lato': ['Lato', 'sans-serif']
       },
       colors: {
-        'primary': '#D3AC92',
+        'primary': '#8B5A2B', // Changed to a rich velvet brown color
         'secondary': '#0C2A42',
       }
     },
