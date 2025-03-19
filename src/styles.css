@@ -2,7 +2,7 @@
 @import "tailwindcss";
 
 :root {
-  --title-color: #8B5A2B;
+  --title-color: #955922;
   --bg-color: #0C2A42;
   --bg-texture-color: #0a2338;
   --texture-highlight: rgba(255, 255, 255, 0.03);
