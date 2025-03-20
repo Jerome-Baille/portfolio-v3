@@ -7,7 +7,8 @@ module.exports = {
     extend: {
       fontFamily: {
         'whisper': ['Whisper', 'cursive'],
-        'lato': ['Lato', 'sans-serif']
+        'lato': ['Lato', 'sans-serif'],
+        'playfair': ['Playfair Display', 'serif']
       },
       colors: {
         'primary': '#955922',
