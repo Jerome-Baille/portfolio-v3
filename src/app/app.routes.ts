@@ -3,6 +3,7 @@ import { LandingComponent } from './landing/landing.component';
 import { HomeComponent } from './home/home.component';
 import { ContactComponent } from './contact/contact.component';
 import { AboutComponent } from './about/about.component';
+import { FeaturedProjectsComponent } from './featured-projects/featured-projects.component';
 
 export const routes: Routes = [
     {
@@ -17,6 +18,10 @@ export const routes: Routes = [
         
         path: 'about',
         component: AboutComponent
+    },
+    {
+        path: 'projects-highlight',
+        component: FeaturedProjectsComponent
     },
     {
         path: 'contact',

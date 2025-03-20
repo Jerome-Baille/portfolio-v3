@@ -1,0 +1,37 @@
+article {
+  border: 1px solid rgba(211, 172, 146, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  background: rgba(12, 42, 66, 0.3);
+}
+
+article:hover {
+  border-color: rgba(211, 172, 146, 0.2);
+}
+
+.featured-projects-section {
+  position: relative;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(12, 42, 66, 0.4) 10%,
+    rgba(12, 42, 66, 0.4) 90%,
+    transparent
+  );
+}
+
+.section-background {
+  background: 
+    linear-gradient(
+      105deg,
+      rgba(211, 172, 146, 0.03) 0%,
+      rgba(149, 89, 34, 0.03) 100%
+    ),
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      rgba(211, 172, 146, 0.02) 10px,
+      rgba(211, 172, 146, 0.02) 11px
+    );
+  backdrop-filter: blur(100px);
+}

@@ -1,0 +1,36 @@
+<section class="featured-projects-section relative py-20">
+  <div class="section-background absolute inset-0"></div>
+  <div class="relative z-10 max-w-2xl mx-auto p-6">
+    <h2 class="font-['playfair'] text-3xl text-[#D3AC92] mb-6">Featured Projects</h2>
+
+    <div class="grid grid-cols-1 gap-8">
+        <article *ngFor="let project of featuredProjects"
+            class="bg-secondary/30 backdrop-blur-sm rounded-lg overflow-hidden hover:transform hover:scale-[1.02] transition-transform">
+            <img [src]="project.mockups[0]" [alt]="project.title" class="w-full h-48 object-cover">
+
+            <div class="p-6">
+                <h3 class="text-2xl font-playfair mb-3">{{project.title}}</h3>
+                <p class="text-gray-300 mb-4">{{project.description}}</p>
+
+                <div class="flex flex-wrap gap-2 mb-4">
+                    <span *ngFor="let tag of project.tags"
+                        class="px-3 py-1 bg-primary/20 rounded-full text-sm">
+                        {{tag}}
+                    </span>
+                </div>
+
+                <div class="flex gap-4">
+                    <a *ngIf="project.github.frontend" [href]="project.github.frontend" target="_blank"
+                        class="text-primary hover:text-primary/80 transition-colors">
+                        GitHub
+                    </a>
+                    <a *ngIf="project.website" [href]="project.website" target="_blank"
+                        class="text-primary hover:text-primary/80 transition-colors">
+                        Live Demo
+                    </a>
+                </div>
+            </div>
+        </article>
+    </div>
+  </div>
+</section>
