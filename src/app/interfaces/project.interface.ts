@@ -23,6 +23,7 @@ export interface Project {
     involvement: string;
     fullStack: FullStack;
     tags: string[];
+    logo: string;
     screenshot: string;
     mockups: string[];
     website: string;

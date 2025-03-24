@@ -90,8 +90,9 @@ export class DataService {
             ]
           },
           tags: ['React', 'TypeScript', 'Node.js', 'Express', 'MySQL', 'Google Chrome Extension'],
+          logo: Images.JobTrackerLogo,
           screenshot: Screenshots.JobTrackerScreenshot,
-          mockups: [Images.JobTrackerLogo, Mockups.JobTrackerMockup1, Mockups.JobTrackerMockup2, Mockups.JobTrackerMockup3],
+          mockups: [Mockups.JobTrackerMockup1, Mockups.JobTrackerMockup2, Mockups.JobTrackerMockup3],
           website: "https://job-tracker.jerome-baille.fr",
           github: {
             frontend: "https://github.com/Jerome-Baille/job-visualiser",
@@ -138,8 +139,9 @@ export class DataService {
             extension: []
           },
           tags: ['Angular', 'TypeScript', 'Node.js', 'Express', 'MySQL'],
+          logo: Images.PantryPalLogo,
           screenshot: Screenshots.PantryPalScreenshot,
-          mockups: [Images.PantryPalLogo, Mockups.PantryPalMockup1, Mockups.PantryPalMockup2, Mockups.PantryPalMockup3],
+          mockups: [Mockups.PantryPalMockup1, Mockups.PantryPalMockup2, Mockups.PantryPalMockup3],
           website: "https://pantry-pal.jerome-baille.fr",
           github: {
             frontend: "https://github.com/Jerome-Baille/PantryPal-frontend",
@@ -184,8 +186,9 @@ export class DataService {
             extension: []
           },
           tags: ['Angular', 'TypeScript', 'Node.js', 'Express', 'MySQL'],
+          logo: Images.FlickPickLogo,
           screenshot: Screenshots.FlickPickScreenshot,
-          mockups: [Images.FlickPickLogo, Mockups.FlickPickMockup1, Mockups.FlickPickMockup2],
+          mockups: [Mockups.FlickPickMockup1, Mockups.FlickPickMockup2],
           website: "https://flick-pick.jerome-baille.fr",
           github: {
             frontend: "https://github.com/Jerome-Baille/FlickPick-frontend",
@@ -239,8 +242,9 @@ export class DataService {
             ]
           },
           tags: ['Angular', 'TypeScript', 'Node.js', 'Express', 'MySQL', 'Google Chrome Extension'],
+          logo: Images.GameVerseLogo,
           screenshot: Screenshots.GameVerseScreenshot,
-          mockups: [Images.GameVerseLogo, Mockups.GameVerseMockup1, Mockups.GameVerseMockup2],
+          mockups: [Mockups.GameVerseMockup1, Mockups.GameVerseMockup2],
           website: "https://game-verse.jerome-baille.fr",
           github: {
             frontend: "",
@@ -289,8 +293,9 @@ export class DataService {
             extension: []
           },
           tags: ["Angular", "TypeScript", "Node.js", "Express", "MongoDB"],
+          logo: Images.MesGourmandysLogo,
           screenshot: Screenshots.MesGourmandysScreenshot,
-          mockups: [Images.MesGourmandysLogo],
+          mockups: [],
           website: "https://jerome-baille.github.io/MesGourMandys/accueil",
           github: {
             frontend: "",
@@ -336,8 +341,9 @@ export class DataService {
             extension: []
           },
           tags: ["Angular", "TypeScript", "Node.js", "Express", "MySQL"],
+          logo: Images.GroupomaniaLogo,
           screenshot: '',
-          mockups: [Images.GroupomaniaLogo, Mockups.GroupomaniaMockup1, Mockups.GroupomaniaMockup2],
+          mockups: [Mockups.GroupomaniaMockup1, Mockups.GroupomaniaMockup2],
           website: "",
           github: {
             frontend: "https://github.com/Jerome-Baille/JeromeBaille_7_23022022/tree/main/frontend",
@@ -376,8 +382,9 @@ export class DataService {
             extension: []
           },
           tags: ["Node.js", "Express", "MongoDB"],
+          logo: Images.PiiquanteLogo,
           screenshot: '',
-          mockups: [Images.PiiquanteLogo, Mockups.PiiquanteMockup1, Mockups.PiiquanteMockup2],
+          mockups: [Mockups.PiiquanteMockup1, Mockups.PiiquanteMockup2],
           website: "",
           github: {
             frontend: "",
@@ -406,8 +413,9 @@ export class DataService {
             extension: []
           },
           tags: ["Angular", "TypeScript", "Node.js", "Express", "MySQL"],
+          logo: Images.KanapLogo,
           screenshot: Screenshots.KanapScreenshot,
-          mockups: [Images.KanapLogo, Mockups.KanapMockup1, Mockups.KanapMockup2],
+          mockups: [Mockups.KanapMockup1, Mockups.KanapMockup2],
           website: "https://jerome-baille.github.io/JeromeBaille_5_03012022/front/index.html",
           github: {
             frontend: "https://github.com/Jerome-Baille/JeromeBaille_5_03012022/tree/main/front",
@@ -437,8 +445,9 @@ export class DataService {
             extension: []
           },
           tags: ["Next.js", "TypeScript", "Tailwind CSS"],
+          logo: Images.LexirLogo,
           screenshot: Screenshots.LexirScreenshot,
-          mockups: [Images.LexirLogo, Mockups.LexirMockup1, Mockups.LexirMockup2],
+          mockups: [Mockups.LexirMockup1, Mockups.LexirMockup2],
           website: "https://shop.lexir.pt/",
           github: {
             frontend: "",
@@ -467,8 +476,9 @@ export class DataService {
             extension: []
           },
           tags: ["HTML", "CSS", "JavaScript"],
+          logo: Images.LaChouetteAgenceLogo,
           screenshot: Screenshots.LaChouetteAgenceScreenshot,
-          mockups: [Images.LaChouetteAgenceLogo, Mockups.LaChouetteAgenceMockup1, Mockups.LaChouetteAgenceMockup2],
+          mockups: [Mockups.LaChouetteAgenceMockup1, Mockups.LaChouetteAgenceMockup2],
           website: "https://jerome-baille.github.io/JeromeBaille_4_09122021/",
           github: {
             frontend: "https://github.com/Jerome-Baille/JeromeBaille_4_09122021",
@@ -497,8 +507,9 @@ export class DataService {
             extension: []
           },
           tags: ["HTML", "CSS", "JavaScript"],
+          logo: Images.OhMyFoodLogo,
           screenshot: Screenshots.OhMyFoodScreenshot,
-          mockups: [Images.OhMyFoodLogo, Mockups.OhmyfoodMockup1, Mockups.OhmyfoodMockup2],
+          mockups: [Mockups.OhmyfoodMockup1, Mockups.OhmyfoodMockup2],
           website: "https://jerome-baille.github.io/ohmyfood/index.html",
           github: {
             frontend: "https://github.com/Jerome-Baille/ohmyfood",
@@ -529,8 +540,9 @@ export class DataService {
             extension: []
           },
           tags: ["React", "TypeScript", "Sass"],
+          logo: Images.PhoceaTravelLogo,
           screenshot: Screenshots.PhoceaTravelScreenshot,
-          mockups: [Images.PhoceaTravelLogo, Mockups.PhoceaTravelMockup1, Mockups.PhoceaTravelMockup2],
+          mockups: [Mockups.PhoceaTravelMockup1, Mockups.PhoceaTravelMockup2],
           website: "https://jerome-baille.github.io/phocea-travel/",
           github: {
             frontend: "https://github.com/Jerome-Baille/phocea-travel",
@@ -575,8 +587,9 @@ export class DataService {
             extension: []
           },
           tags: ["React", "TypeScript", "Node.js", "Express", "MySQL"],
+          logo: Images.KiCultureLogo,
           screenshot: Screenshots.KiCultureScreenshot,
-          mockups: [Images.KiCultureLogo],
+          mockups: [],
           website: "https://www.kiculture.org/",
           github: {
             frontend: "",
@@ -612,8 +625,9 @@ export class DataService {
             extension: []
           },
           tags: ["React", "TypeScript"],
+          logo: Images.PortfolioLogo,
           screenshot: Screenshots.PortfolioV1Screenshot,
-          mockups: [Images.PortfolioV1Logo],
+          mockups: [],
           website: "https://v1.jerome-baille.fr",
           github: {
             frontend: "",
@@ -659,6 +673,7 @@ export class DataService {
             extension: []
           },
           tags: ["React", "TypeScript", "Node.js", "Express", "MySQL"],
+          logo: '',
           screenshot: '',
           mockups: [],
           website: "",

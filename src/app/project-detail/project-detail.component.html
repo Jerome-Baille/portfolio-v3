@@ -1,1 +1,165 @@
-<p>project-detail works!</p>
+<section class="project-detail-container relative py-16">
+  <div class="section-background absolute inset-0"></div>
+  
+  <div class="relative z-10 max-w-6xl mx-auto px-6">
+    <!-- Loading state -->
+    <div *ngIf="loading" class="flex justify-center items-center min-h-[50vh]">
+      <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-primary border-solid"></div>
+    </div>
+
+    <!-- Error state -->
+    <div *ngIf="error" class="min-h-[50vh] flex flex-col items-center justify-center">
+      <h2 class="text-2xl text-red-400 mb-4">Project not found</h2>
+      <button (click)="navigateBack()" 
+        class="px-4 py-2 bg-primary hover:bg-primary-dark transition-colors duration-300 rounded">
+        Back to Projects
+      </button>
+    </div>
+
+    <!-- Project content -->
+    <div *ngIf="!loading && !error && project" class="project-content">
+      <!-- Back button -->
+      <button (click)="navigateBack()" 
+        class="back-button mb-8 flex items-center text-primary hover:text-primary-dark transition-colors">
+        <i class="fas fa-arrow-left mr-2"></i> Back to Projects
+      </button>
+
+      <!-- Project header -->
+      <header class="project-header mb-12">
+        <h1 class="section-title text-4xl mb-3">{{ project.title }}</h1>
+        <p *ngIf="project.subtitle" class="text-xl text-gray-300 mb-6">{{ project.subtitle }}</p>
+        
+        <div *ngIf="project.tags && project.tags.length > 0" class="flex flex-wrap gap-3 mb-6">
+          <span *ngFor="let tag of project.tags" 
+            class="project-tag px-3 py-1 rounded-full text-sm">
+            {{ tag }}
+          </span>
+        </div>
+      </header>
+
+      <!-- Project showcase -->
+      <div class="project-showcase mb-16">
+        <!-- Main screenshot -->
+        <div *ngIf="project.screenshot" class="main-screenshot material-card overflow-hidden mb-8">
+          <img [src]="project.screenshot" [alt]="project.title + ' screenshot'" class="w-full">
+        </div>
+
+        <!-- Mockups gallery -->
+        <div *ngIf="project.mockups && project.mockups.length > 0" class="mockups-gallery grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div *ngFor="let mockup of project.mockups" class="mockup material-card overflow-hidden">
+            <img [src]="mockup" alt="Project mockup" class="w-full h-full object-cover">
+          </div>
+        </div>
+      </div>
+
+      <!-- Project details -->
+      <div class="project-details grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        <div class="col-span-2">
+          <h2 class="section-title text-2xl mb-6">About the Project</h2>
+          <p class="text-gray-300 mb-6">{{ project.description }}</p>
+
+          <div *ngIf="project.involvement" class="mb-6">
+            <h3 class="text-lg text-white mb-2">My Involvement</h3>
+            <p class="text-gray-300">{{ project.involvement }}</p>
+          </div>
+        </div>
+
+        <div class="project-meta material-card p-6">
+          <h2 class="text-xl text-white mb-4">Project Details</h2>
+          
+          <div class="mb-4">
+            <h3 class="text-sm uppercase text-gray-400">Year</h3>
+            <p class="text-white">{{ project.date }}</p>
+          </div>
+
+          <div class="mb-4">
+            <h3 class="text-sm uppercase text-gray-400">Client</h3>
+            <p class="text-white">{{ project.client }}</p>
+          </div>
+
+          <div class="mb-4">
+            <h3 class="text-sm uppercase text-gray-400">Role</h3>
+            <p class="text-white">{{ project.role }}</p>
+          </div>
+
+          <div class="flex flex-col gap-3 mt-6">
+            <a *ngIf="project.website" [href]="project.website" target="_blank" 
+              class="project-link flex items-center text-primary hover:text-primary-dark transition-colors">
+              <i class="fas fa-external-link-alt mr-2"></i> View Live Site
+            </a>
+            
+            <a *ngIf="project.github && project.github.frontend" [href]="project.github.frontend" target="_blank" 
+              class="project-link flex items-center text-primary hover:text-primary-dark transition-colors">
+              <i class="fab fa-github mr-2"></i> Frontend Repository
+            </a>
+            
+            <a *ngIf="project.github && project.github.backend" [href]="project.github.backend" target="_blank" 
+              class="project-link flex items-center text-primary hover:text-primary-dark transition-colors">
+              <i class="fab fa-github mr-2"></i> Backend Repository
+            </a>
+            
+            <a *ngIf="project.github && project.github.extension" [href]="project.github.extension" target="_blank" 
+              class="project-link flex items-center text-primary hover:text-primary-dark transition-colors">
+              <i class="fab fa-chrome mr-2"></i> Extension Repository
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Technical details -->
+      <div class="technical-details mb-16">
+        <h2 class="section-title text-2xl mb-8">Tech Stack</h2>
+        
+        <div class="tech-stack-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Frontend -->
+          <div *ngIf="project.fullStack && project.fullStack.frontend && project.fullStack.frontend.length > 0" class="tech-stack-card material-card p-6">
+            <h3 class="text-xl mb-4 flex items-center">
+              <i class="fas fa-laptop-code mr-2 text-primary"></i> Frontend
+            </h3>
+            <ul class="list-disc pl-5 text-gray-300">
+              <li *ngFor="let tech of project.fullStack.frontend" class="mb-1">{{ tech }}</li>
+            </ul>
+          </div>
+          
+          <!-- Backend -->
+          <div *ngIf="project.fullStack && project.fullStack.backend && project.fullStack.backend.length > 0" class="tech-stack-card material-card p-6">
+            <h3 class="text-xl mb-4 flex items-center">
+              <i class="fas fa-server mr-2 text-primary"></i> Backend
+            </h3>
+            <ul class="list-disc pl-5 text-gray-300">
+              <li *ngFor="let tech of project.fullStack.backend" class="mb-1">{{ tech }}</li>
+            </ul>
+          </div>
+          
+          <!-- Database -->
+          <div *ngIf="project.fullStack && project.fullStack.database && project.fullStack.database.length > 0" class="tech-stack-card material-card p-6">
+            <h3 class="text-xl mb-4 flex items-center">
+              <i class="fas fa-database mr-2 text-primary"></i> Database
+            </h3>
+            <ul class="list-disc pl-5 text-gray-300">
+              <li *ngFor="let tech of project.fullStack.database" class="mb-1">{{ tech }}</li>
+            </ul>
+          </div>
+          
+          <!-- Extension -->
+          <div *ngIf="project.fullStack && project.fullStack.extension && project.fullStack.extension.length > 0" class="tech-stack-card material-card p-6">
+            <h3 class="text-xl mb-4 flex items-center">
+              <i class="fas fa-puzzle-piece mr-2 text-primary"></i> Extension
+            </h3>
+            <ul class="list-disc pl-5 text-gray-300">
+              <li *ngFor="let tech of project.fullStack.extension" class="mb-1">{{ tech }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Back button at bottom -->
+      <div class="flex justify-center mt-12">
+        <button (click)="navigateBack()" 
+          class="px-6 py-3 bg-primary hover:bg-primary-dark transition-colors duration-300 rounded">
+          Back to Projects
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

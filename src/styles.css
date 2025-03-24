@@ -8,6 +8,11 @@
   --texture-highlight: rgba(255, 255, 255, 0.03);
   --texture-shadow: rgba(0, 0, 0, 0.15);
   --geo-line-color: rgba(139, 90, 43, 0.09);
+  --primary: #D3AC92;
+  --primary-dark: #b5936d;
+  --card-bg: rgba(18, 49, 71, 0.6);
+  --card-hover: rgba(20, 55, 80, 0.75);
+  --card-border: rgba(211, 172, 146, 0.2);
 }
 
 body {
@@ -58,4 +63,35 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Lato', sans-serif;
+}
+
+/* Material Design inspired elements */
+.material-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.material-card:hover {
+  box-shadow: 0 7px 14px rgba(0, 0, 0, 0.25), 0 5px 5px rgba(0, 0, 0, 0.22);
+  background: var(--card-hover);
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  color: var(--primary);
+  position: relative;
+  display: inline-block;
+}
+
+.section-title:after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background-color: var(--primary);
 }
