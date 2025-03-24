@@ -115,6 +115,33 @@ article:hover {
   margin-left: 6px;
 }
 
+.view-all-link {
+  position: relative;
+  color: var(--primary);
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border: 1px solid rgba(211, 172, 146, 0.2);
+  border-radius: 9999px;
+  background-color: rgba(211, 172, 146, 0.1);
+}
+
+.view-all-link:hover {
+  background-color: var(--primary);
+  color: var(--bg-color);
+  border-color: var(--primary);
+}
+
+.view-all-link i {
+  transition: transform 0.3s ease;
+}
+
+.view-all-link:hover i {
+  transform: translateX(4px);
+}
+
 @media (min-width: 768px) {
   .projects-grid {
     display: grid;

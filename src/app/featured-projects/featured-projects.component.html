@@ -1,7 +1,13 @@
 <section class="featured-projects-section relative py-20">
   <div class="section-background absolute inset-0"></div>
   <div class="relative z-10 max-w-6xl mx-auto px-6">
-    <h2 class="section-title text-3xl mb-10">Featured Projects</h2>
+    <div class="flex justify-between items-center mb-10">
+      <h2 class="section-title text-3xl">Featured Projects</h2>
+      <a routerLink="/projects" class="view-all-link">
+        View All Projects
+        <i class="fas fa-arrow-right ml-2"></i>
+      </a>
+    </div>
 
     <div class="projects-grid">
       <article *ngFor="let project of featuredProjects"

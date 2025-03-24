@@ -5,6 +5,7 @@ import { ContactComponent } from './contact/contact.component';
 import { AboutComponent } from './about/about.component';
 import { FeaturedProjectsComponent } from './featured-projects/featured-projects.component';
 import { ProjectDetailComponent } from './project-detail/project-detail.component';
+import { ProjectsListComponent } from './projects-list/projects-list.component';
 
 export const routes: Routes = [
     {
@@ -22,6 +23,10 @@ export const routes: Routes = [
     {
         path: 'projects-highlight',
         component: FeaturedProjectsComponent
+    },
+    {
+        path: 'projects',
+        component: ProjectsListComponent
     },
     {
         path: 'contact',
