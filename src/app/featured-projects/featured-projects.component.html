@@ -19,31 +19,7 @@
 
         <div class="project-content p-6">
           <h3 class="text-2xl font-playfair mb-3 text-white">{{project.title}}</h3>
-          <p class="project-description text-gray-300 mb-6 text-base">{{project.description}}</p>
-
-          <div class="flex flex-wrap gap-2 mb-6">
-            <span *ngFor="let tag of project.tags"
-              class="project-tag px-3 py-1 rounded-full text-sm">
-              {{tag}}
-            </span>
-          </div>
-
-          <div class="flex gap-6 mt-auto">
-            <a *ngIf="project.github.frontend" [href]="project.github.frontend" target="_blank"
-              class="project-link" (click)="$event.stopPropagation()">
-              GitHub
-              <span class="project-link-icon">
-                <i class="fas fa-code-branch text-xs ml-1"></i>
-              </span>
-            </a>
-            <a *ngIf="project.website" [href]="project.website" target="_blank"
-              class="project-link" (click)="$event.stopPropagation()">
-              Live Demo
-              <span class="project-link-icon">
-                <i class="fas fa-external-link-alt text-xs ml-1"></i>
-              </span>
-            </a>
-          </div>
+          <p class="project-description text-gray-300 text-base">{{project.subtitle}}</p>
         </div>
       </article>
     </div>
