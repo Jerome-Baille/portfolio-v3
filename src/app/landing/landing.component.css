@@ -1,0 +1,17 @@
+main {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 300px;
+}
+
+#top {
+    min-height: 100vh;
+    width: 100%;
+}
+
+#about,
+#projects,
+#contact {
+    padding: 5rem 0;
+    width: 100%;
+}
