@@ -155,6 +155,7 @@ article:hover {
   .featured-projects-section {
     padding: 2rem 1rem;
     box-sizing: border-box;
+    min-height: 600px; /* Set a minimum height to prevent layout shifts */
   }
 
   .projects-grid {
@@ -171,6 +172,10 @@ article:hover {
     transition: all 0.3s ease;
     margin-bottom: 0;
     position: relative;
+    /* Add fixed height to prevent layout shifts on hover */
+    height: 450px;
+    display: flex;
+    flex-direction: column;
   }
 
   /* Remove card effect for logo cards */
@@ -190,6 +195,26 @@ article:hover {
   }
 
   .project-card:not(:first-child) .project-description {
+    color: var(--text-muted);
+  }
+
+  /* When any card (except first) is hovered, remove card effect from first card */
+  .projects-grid:has(.project-card:nth-child(n+2):hover) .project-card:first-child {
+    border: none;
+    box-shadow: none;
+    background: transparent;
+  }
+
+  /* Adjust content styling for first card when another card is hovered */
+  .projects-grid:has(.project-card:nth-child(n+2):hover) .project-card:first-child .project-content {
+    background: transparent;
+  }
+
+  .projects-grid:has(.project-card:nth-child(n+2):hover) .project-card:first-child h3 {
+    color: var(--text-color);
+  }
+
+  .projects-grid:has(.project-card:nth-child(n+2):hover) .project-card:first-child .project-description {
     color: var(--text-muted);
   }
 
@@ -223,6 +248,9 @@ article:hover {
     object-fit: cover;
     padding: 0;
     height: 250px; /* Same height as other logos for consistency */
+    /* Reset vertical positioning to match other cards */
+    top: 0;
+    transform: none;
   }
 
   /* Show logo by default on other cards */
@@ -274,6 +302,9 @@ article:hover {
     aspect-ratio: 16/9;
     overflow: hidden;
     width: 100%;
+    /* Make sure image container matches the mockup height */
+    height: 300px;
+    flex-shrink: 0;
   }
 
   .project-image img {
@@ -289,6 +320,10 @@ article:hover {
   .project-image img.logo {
     object-fit: contain;
     padding: 2rem;
+    /* Logo height is different but contained within the image container */
+    height: 250px;
+    top: 0; /* Position at the top consistently for all cards */
+    transform: none; /* Remove the vertical centering */
   }
   
   /* Override for logo cards to make the logo fill the space */
@@ -296,5 +331,15 @@ article:hover {
     object-fit: cover;
     padding: 0;
     height: 250px; /* Fixed height for logo images */
+    top: 0;
+    transform: none;
+  }
+
+  .project-content {
+    /* Make content take remaining space but maintain consistent height */
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
   }
 }
