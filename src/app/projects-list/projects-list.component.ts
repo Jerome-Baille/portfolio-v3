@@ -19,6 +19,8 @@ export class ProjectsListComponent implements OnInit {
   constructor(private dataService: DataService) {}
 
   ngOnInit() {
+    window.scrollTo(0, 0);
+    
     // Get all projects sorted by date
     this.dataService.getProjectsSortedByDate().subscribe(projects => {
       this.projects = projects;

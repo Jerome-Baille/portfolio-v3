@@ -23,6 +23,9 @@ export class ProjectDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // Scroll to top when component initializes
+    window.scrollTo(0, 0);
+    
     this.route.params.subscribe(params => {
       const projectId = params['id'];
       if (projectId) {
