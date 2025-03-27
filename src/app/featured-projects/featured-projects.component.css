@@ -28,6 +28,42 @@ article:hover {
   position: relative;
   overflow: hidden;
   height: 300px;
+  border-bottom: none; /* Remove the full-width border */
+}
+
+/* Hide the separator line when mockups are displayed but show it for logos */
+.project-image::after {
+  content: '';
+  display: block;
+  width: 30%;
+  height: 2px;
+  background-color: var(--primary);
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0; /* Hidden by default */
+  transition: opacity 0.3s ease;
+}
+
+/* Show the line when logo is visible and card is not hovered */
+.project-card:not(:hover) .project-image::after {
+  opacity: 1;
+}
+
+/* Hide the line when mockup is visible */
+.project-card:hover .project-image::after {
+  opacity: 0;
+}
+
+/* Hide the line on the first card by default (when no other card is hovered) */
+.project-card:first-child .project-image::after {
+  opacity: 0;
+}
+
+/* Show the line on first card when another card is hovered (and first card shows logo) */
+.projects-grid:hover .project-card:first-child:not(:hover) .project-image::after {
+  opacity: 1;
 }
 
 .project-image img {
