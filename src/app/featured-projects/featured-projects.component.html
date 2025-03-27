@@ -14,7 +14,8 @@
         class="project-card material-card overflow-hidden mb-8 cursor-pointer"
         [routerLink]="['/project', project.id]">
         <div class="project-image">
-          <img [src]="project.mockups[0]" [alt]="project.title" class="w-full h-full object-cover">
+          <img [src]="project.mockups[0]" [alt]="project.title" class="mockup w-full h-full object-cover">
+          <img [src]="project.logo" [alt]="project.title + ' logo'" class="logo w-full h-full">
         </div>
 
         <div class="project-content p-6">

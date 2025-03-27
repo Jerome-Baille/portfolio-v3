@@ -116,15 +116,149 @@ article:hover {
 }
 
 @media (min-width: 768px) {
+  .featured-projects-section {
+    padding: 2rem 1rem;
+    box-sizing: border-box;
+  }
+
   .projects-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
+    grid-template-columns: 4fr 2fr 2fr;
+    gap: 1rem;
+    width: 100%;
+    margin: 0 auto;
+    transition: all 0.3s ease;
   }
-}
 
-@media (min-width: 1024px) {
-  .projects-grid {
-    grid-template-columns: repeat(3, 1fr);
+  .project-card {
+    min-width: 0;
+    transition: all 0.3s ease;
+    margin-bottom: 0;
+    position: relative;
+  }
+
+  /* Remove card effect for logo cards */
+  .project-card:not(:first-child) {
+    border: none;
+    box-shadow: none;
+    background: transparent;
+  }
+
+  /* Keep padding and positioning but adjust text color for content in logo cards */
+  .project-card:not(:first-child) .project-content {
+    background: transparent;
+  }
+
+  .project-card:not(:first-child) h3 {
+    color: var(--text-color);
+  }
+
+  .project-card:not(:first-child) .project-description {
+    color: var(--text-muted);
+  }
+
+  /* Restore card effect when logo cards are hovered */
+  .project-card:not(:first-child):hover {
+    border: 1px solid rgba(211, 172, 146, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    background: rgba(12, 42, 66, 0.3);
+  }
+
+  /* Restore background for content when logo cards are hovered */
+  .project-card:not(:first-child):hover .project-content {
+    background: rgba(12, 42, 66, 0.3);
+  }
+
+  .project-card:not(:first-child):hover h3 {
+    color: white;
+  }
+
+  .project-card:not(:first-child):hover .project-description {
+    color: var(--gray-300);
+  }
+
+  /* Show mockup by default on first card */
+  .project-card:first-child .project-image img.mockup {
+    opacity: 1;
+  }
+
+  .project-card:first-child .project-image img.logo {
+    opacity: 0;
+    object-fit: cover;
+    padding: 0;
+    height: 250px; /* Same height as other logos for consistency */
+  }
+
+  /* Show logo by default on other cards */
+  .project-card:not(:first-child) .project-image img.mockup {
+    opacity: 0;
+  }
+
+  .project-card:not(:first-child) .project-image img.logo {
+    opacity: 1;
+    object-fit: cover;
+    padding: 0;
+    height: 250px; /* Fixed height for logo images */
+  }
+
+  /* Grid column adjustments on hover */
+  .projects-grid:has(.project-card:nth-child(2):hover) {
+    grid-template-columns: 2fr 4fr 2fr;
+  }
+
+  .projects-grid:has(.project-card:nth-child(3):hover) {
+    grid-template-columns: 2fr 2fr 4fr;
+  }
+
+  /* Hover states for all cards */
+  .project-card:hover {
+    z-index: 2;
+  }
+
+  /* When any card is hovered, show logo on all other cards */
+  .projects-grid:hover .project-card:not(:hover) .project-image img.mockup {
+    opacity: 0;
+  }
+
+  .projects-grid:hover .project-card:not(:hover) .project-image img.logo {
+    opacity: 1;
+  }
+
+  /* Show mockup on hovered card */
+  .project-card:hover .project-image img.mockup {
+    opacity: 1;
+  }
+
+  .project-card:hover .project-image img.logo {
+    opacity: 0;
+  }
+
+  .project-image {
+    position: relative;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .project-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.3s ease;
+  }
+
+  .project-image img.logo {
+    object-fit: contain;
+    padding: 2rem;
+  }
+  
+  /* Override for logo cards to make the logo fill the space */
+  .project-card:not(:first-child) .project-image img.logo {
+    object-fit: cover;
+    padding: 0;
+    height: 250px; /* Fixed height for logo images */
   }
 }
