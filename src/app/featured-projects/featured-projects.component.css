@@ -10,18 +10,87 @@ article:hover {
 
 .featured-projects-section {
   position: relative;
+  padding: 5rem 0; /* Changed from 4rem to 5rem to match other sections */
+  overflow: hidden; /* Ensure the background effects don't spill out */
 }
 
 .section-background {
   position: absolute;
   inset: 0;
   z-index: 0;
+  /* Premium gradient background with texture and subtle animation */
+  background: 
+    /* Main gradient with the site's primary colors */
+    radial-gradient(
+      ellipse at center,
+      rgba(20, 60, 90, 0.8) 0%,
+      rgba(12, 42, 66, 0.9) 70%
+    ),
+    /* Subtle diagonal pattern */
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      rgba(211, 172, 146, 0.03) 10px,
+      rgba(211, 172, 146, 0.03) 11px
+    ),
+    /* Horizontal lines */
+    repeating-linear-gradient(
+      to right,
+      transparent,
+      transparent 50px,
+      rgba(211, 172, 146, 0.02) 50px,
+      rgba(211, 172, 146, 0.02) 51px
+    ),
+    /* Vertical lines */
+    repeating-linear-gradient(
+      to bottom,
+      transparent,
+      transparent 50px,
+      rgba(211, 172, 146, 0.02) 50px,
+      rgba(211, 172, 146, 0.02) 51px
+    );
+  /* Add a soft blur for a modern effect */
+  backdrop-filter: blur(5px);
+  /* Add subtle shadow edges for depth */
+  box-shadow: 
+    inset 0 20px 30px -20px rgba(0,0,0,0.6),
+    inset 0 -20px 30px -20px rgba(0,0,0,0.6);
+}
+
+/* Add a subtle animated accent border at the top and bottom */
+.featured-projects-section::before,
+.featured-projects-section::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--primary) 20%,
+    var(--primary) 80%,
+    transparent
+  );
+  opacity: 0.3;
+  z-index: 1;
+}
+
+.featured-projects-section::before {
+  top: 0;
+}
+
+.featured-projects-section::after {
+  bottom: 0;
 }
 
 .project-card {
   display: flex;
   flex-direction: column;
   height: 100%;
+  /* Increase shadow for better contrast against the new background */
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
 }
 
 .project-image {
@@ -153,7 +222,7 @@ article:hover {
 
 @media (min-width: 768px) {
   .featured-projects-section {
-    padding: 2rem 1rem;
+    padding: 4rem 1rem;
     box-sizing: border-box;
     min-height: 600px; /* Set a minimum height to prevent layout shifts */
   }
