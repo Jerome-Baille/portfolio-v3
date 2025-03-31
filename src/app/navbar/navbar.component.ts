@@ -78,22 +78,22 @@ export class NavbarComponent implements OnInit {
       this.router.navigate(['']).then(() => {
         // Wait for the landing component to load
         setTimeout(() => {
-          const element = document.getElementById(sectionId);
-          if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-          } else if (sectionId === 'top') {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }
+          this.performScrollToSection(sectionId);
         }, 100);
       });
     } else {
       // We're already on the root path, just scroll
-      const element = document.getElementById(sectionId);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      } else if (sectionId === 'top') {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
+      this.performScrollToSection(sectionId);
+    }
+  }
+  
+  private performScrollToSection(sectionId: string) {
+    // Default behavior for other sections
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    } else if (sectionId === 'top') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }
 }

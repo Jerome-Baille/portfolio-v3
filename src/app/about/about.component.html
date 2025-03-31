@@ -3,9 +3,7 @@
     <h2 class="text-3xl mb-12 section-title">About Me</h2>
 
     <div class="flex flex-col-reverse lg:flex-row items-center lg:items-start gap-[50px]">
-      <div class="flex-1 relative bg-[rgba(18,49,71,0.7)] rounded-xl backdrop-blur-lg shadow-lg border border-[rgba(211,172,146,0.18)] p-7 z-10 
-                 before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-br before:from-[rgba(211,172,146,0.05)] before:to-transparent 
-                 before:rounded-xl before:-z-10">
+      <div class="flex-1 relative z-10">
         <p class="text-gray-100 leading-relaxed mb-6 text-lg font-light text-shadow">
           Driven by excellence, Jérôme earned a Mlit and a GD in Computer Science, with a strong foundation in banking
           that sparked his passion for coding and web development.
@@ -104,8 +102,6 @@
 
         <!-- Certificates Section -->
         <div class="mt-8 w-full">
-          <h3 class="font-['playfair'] text-xl text-[#D3AC92] mb-4 text-center">Professional Certifications</h3>
-          
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
             @for (cert of certificates; track cert.name) {
             <div class="flex flex-col items-center transform transition-all duration-300 p-2 rounded-lg 
