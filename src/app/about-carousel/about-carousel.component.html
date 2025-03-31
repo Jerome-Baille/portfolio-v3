@@ -6,17 +6,19 @@
   
   <!-- Full width carousel container -->
   <div class="relative overflow-hidden" role="region" aria-label="Certificate carousel">
-    <!-- Carousel container with custom animation -->
-    <div class="flex flex-nowrap gap-6 py-4 carousel-container">
+    <!-- Carousel container with animation -->
+    <div class="flex flex-nowrap gap-6 py-4 animate-scroll-left animate-pause min-w-fit w-max px-12">
       <!-- First copy of certificates -->
       @for (cert of certificates; track cert.name + '-1'; let i = $index) {
       <div
-        class="carousel-item flex-shrink-0 w-64 transform transition-all duration-500 p-4 rounded-lg bg-[rgba(18,49,71,0.7)] border border-[rgba(211,172,146,0.2)] backdrop-blur-sm"
+        class="flex-shrink-0 w-64 transform transition-all duration-500 p-4 rounded-lg bg-[rgba(18,49,71,0.7)] border border-[rgba(211,172,146,0.2)]
+               shadow-lg hover:shadow-xl hover:-translate-y-1 hover:scale-[1.02] hover:border-[rgba(211,172,146,0.4)] hover:z-10
+               relative before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-tr before:from-[rgba(211,172,146,0.05)] before:to-transparent before:rounded-lg before:-z-10"
         role="group" [attr.aria-label]="cert.name">
         <div class="flex flex-col items-center">
-          <div class="h-28 w-28 mb-3 overflow-hidden rounded flex items-center justify-center">
+          <div class="h-28 w-28 mb-3 overflow-hidden rounded flex items-center justify-center bg-white/10">
             <img [ngSrc]="'assets/' + cert.image" [alt]="cert.name" width="224" height="224" [sizes]="imageSizes"
-              class="object-contain w-full h-full" [priority]="i === 0" />
+              class="object-contain w-full h-full transition-transform duration-300" [priority]="i === 0" />
           </div>
           <p class="text-sm text-center text-[#D3AC92] font-light">{{ cert.name }}</p>
         </div>
@@ -26,12 +28,14 @@
       <!-- Duplicated certificates for seamless looping -->
       @for (cert of certificates; track cert.name + '-2') {
       <div
-        class="carousel-item flex-shrink-0 w-64 transform transition-all duration-500 p-4 rounded-lg bg-[rgba(18,49,71,0.7)] border border-[rgba(211,172,146,0.2)] backdrop-blur-sm"
+        class="flex-shrink-0 w-64 transform transition-all duration-500 p-4 rounded-lg bg-[rgba(18,49,71,0.7)] border border-[rgba(211,172,146,0.2)]
+               shadow-lg hover:shadow-xl hover:-translate-y-1 hover:scale-[1.02] hover:border-[rgba(211,172,146,0.4)] hover:z-10
+               relative before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-tr before:from-[rgba(211,172,146,0.05)] before:to-transparent before:rounded-lg before:-z-10"
         role="group" [attr.aria-label]="cert.name">
         <div class="flex flex-col items-center">
-          <div class="h-28 w-28 mb-3 overflow-hidden rounded flex items-center justify-center">
+          <div class="h-28 w-28 mb-3 overflow-hidden rounded flex items-center justify-center bg-white/10">
             <img [ngSrc]="'assets/' + cert.image" [alt]="cert.name" width="224" height="224" [sizes]="imageSizes"
-              class="object-contain w-full h-full" loading="lazy" />
+              class="object-contain w-full h-full transition-transform duration-300" loading="lazy" />
           </div>
           <p class="text-sm text-center text-[#D3AC92] font-light">{{ cert.name }}</p>
         </div>
@@ -39,10 +43,8 @@
       }
     </div>
 
-    <!-- Gradient overlays for smoother visual transition -->
-    <div class="absolute top-0 left-0 h-full w-16 bg-gradient-to-r from-[rgba(10,35,56,0.7)] to-transparent" aria-hidden="true">
-    </div>
-    <div class="absolute top-0 right-0 h-full w-16 bg-gradient-to-l from-[rgba(10,35,56,0.7)] to-transparent" aria-hidden="true">
-    </div>
+    <!-- Enhanced gradient overlays for smoother visual transition -->
+    <div class="absolute top-0 left-0 h-full w-32 bg-gradient-to-r from-[rgba(10,35,56,0.95)] via-[rgba(10,35,56,0.8)] to-transparent z-10" aria-hidden="true"></div>
+    <div class="absolute top-0 right-0 h-full w-32 bg-gradient-to-l from-[rgba(10,35,56,0.95)] via-[rgba(10,35,56,0.8)] to-transparent z-10" aria-hidden="true"></div>
   </div>
 </div>

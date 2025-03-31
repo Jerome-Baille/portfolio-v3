@@ -5,8 +5,7 @@ import { AboutCarouselComponent } from "../about-carousel/about-carousel.compone
   selector: 'app-about',
   standalone: true,
   imports: [AboutCarouselComponent],
-  templateUrl: './about.component.html',
-  styleUrl: './about.component.css'
+  templateUrl: './about.component.html'
 })
 export class AboutComponent {
 

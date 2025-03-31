@@ -18,8 +18,7 @@ export const customImageLoader: ImageLoader = (config: ImageLoaderConfig): strin
   selector: 'app-about-carousel',
   standalone: true,
   imports: [CommonModule, NgOptimizedImage],
-  templateUrl: './about-carousel.component.html',
-  styleUrl: './about-carousel.component.css'
+  templateUrl: './about-carousel.component.html'
 })
 export class AboutCarouselComponent {
   certificates: Certificate[] = [
