@@ -97,12 +97,30 @@
         </div>
       </div>
 
-      <div class="flex-1 relative min-w-[300px] flex justify-center">
+      <div class="flex-1 relative min-w-[300px] flex flex-col items-center">
+        <!-- Profile Image -->
         <img src="assets/portrait.png" alt="Jérôme Baille"
           class="w-full max-w-[400px] rounded-lg shadow-2xl border-3 border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)]">
+
+        <!-- Certificates Section -->
+        <div class="mt-8 w-full">
+          <h3 class="font-['playfair'] text-xl text-[#D3AC92] mb-4 text-center">Professional Certifications</h3>
+          
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            @for (cert of certificates; track cert.name) {
+            <div class="flex flex-col items-center transform transition-all duration-300 p-2 rounded-lg 
+                       bg-[rgba(18,49,71,0.7)] border border-[rgba(211,172,146,0.2)] shadow-lg 
+                       hover:shadow-xl hover:-translate-y-1 hover:scale-[1.03] hover:border-[rgba(211,172,146,0.4)]">
+              <div class="h-16 w-16 md:h-24 md:w-24 mb-2 overflow-hidden rounded flex items-center justify-center bg-white/10">
+                <img [ngSrc]="'assets/' + cert.image" [alt]="cert.name" width="96" height="96" [sizes]="imageSizes"
+                  class="object-contain w-full h-full transition-transform duration-300" />
+              </div>
+              <p class="text-xs sm:text-sm text-center text-[#D3AC92] font-light">{{ cert.name }}</p>
+            </div>
+            }
+          </div>
+        </div>
       </div>
     </div>
   </div>
-
-  <app-about-carousel></app-about-carousel>
 </section>
