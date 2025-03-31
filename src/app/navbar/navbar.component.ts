@@ -1,8 +1,9 @@
-import { Component, HostListener, inject } from '@angular/core';
+import { Component, HostListener, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Observable, map } from 'rxjs';
 import { Router } from '@angular/router';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-navbar',
@@ -11,9 +12,17 @@ import { Router } from '@angular/router';
   ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
-  standalone: true
+  standalone: true,
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('300ms ease-in', style({ opacity: 1 }))
+      ])
+    ])
+  ]
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit {
   private breakpointObserver = inject(BreakpointObserver);
   private router = inject(Router);
   
@@ -23,16 +32,20 @@ export class NavbarComponent {
       map(result => result.matches)
     );
 
-  mobileMenuOpen = false;
   activeSection: string = '';
   isScrolled = false;
 
-  toggleMobileMenu() {
-    this.mobileMenuOpen = !this.mobileMenuOpen;
+  ngOnInit() {
+    // Check scroll position on init to set correct navbar state
+    this.checkScrollPosition();
   }
 
   @HostListener('window:scroll', ['$event'])
   onScroll() {
+    this.checkScrollPosition();
+  }
+  
+  checkScrollPosition() {
     this.isScrolled = window.scrollY > 20;
 
     const sections = ['about', 'projects', 'contact'];

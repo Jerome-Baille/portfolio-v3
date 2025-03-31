@@ -6,11 +6,11 @@
 
 .contact-container {
   position: relative;
-  background: rgba(18, 49, 71, 0.7);
+  background: rgba(12, 42, 66, 0.9);
   border-radius: 12px;
   backdrop-filter: blur(8px);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(211, 172, 146, 0.18);
+  border: 1px solid rgba(211, 172, 146, 0.25);
   z-index: 1;
 }
 
@@ -26,4 +26,18 @@
     radial-gradient(circle at 70% 30%, rgba(211, 172, 146, 0.08) 0%, transparent 70%);
   border-radius: 12px;
   z-index: -1;
+}
+
+/* Updated input colors */
+.contact-container input,
+.contact-container textarea {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--card-border);
+  color: white;
+}
+
+.contact-container input:focus,
+.contact-container textarea:focus {
+  border-color: var(--primary);
+  background-color: rgba(255, 255, 255, 0.1);
 }

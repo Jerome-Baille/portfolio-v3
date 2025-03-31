@@ -1,84 +1,53 @@
-<!-- Desktop Navbar -->
-<nav *ngIf="isDesktop$ | async" class="fixed top-0 w-full bg-transparent z-50">
-  <div class="max-w-6xl mx-auto px-6">
-    <div class="flex justify-center items-center h-20">
-      <div class="inline-flex items-center justify-between nav-container" [class.nav-pill-bg]="isScrolled">
-        <div class="flex items-baseline space-x-6">
-          <a href="#about" 
-             (click)="scrollToSection('about', $event)" 
-             [class.active]="activeSection === 'about'"
-             class="text-light-blue hover:text-brown transition duration-300">
-            About
-          </a>
-          <span class="text-light-blue text-xs opacity-25">•</span>
-        </div>
-
-        <a href="#top" 
-           (click)="scrollToSection('top', $event)" 
-           [class.active]="activeSection === 'top'"
-           class="font-['Whisper'] text-4xl text-brown hover:text-brown transition duration-300 mx-6">
-          JB
-        </a>
-
-        <div class="flex items-baseline space-x-6">
-          <span class="text-light-blue text-xs opacity-25">•</span>
-          <a href="#projects" 
-             (click)="scrollToSection('projects', $event)" 
-             [class.active]="activeSection === 'projects'"
-             class="text-light-blue hover:text-brown transition duration-300">
-            Projects
-          </a>
-          <span class="text-light-blue text-xs opacity-25">•</span>
-          <a href="#contact" 
-             (click)="scrollToSection('contact', $event)" 
-             [class.active]="activeSection === 'contact'"
-             class="text-light-blue hover:text-brown transition duration-300">
-            Contact
-          </a>
-        </div>
-      </div>
+<!-- Redesigned Header/Navigation -->
+<header [class.scrolled]="isScrolled">
+  <nav>
+    <!-- Logo -->
+    <div class="logo">
+      Jérôme
+      <span> Baille</span>
     </div>
-  </div>
-</nav>
 
-<!-- Mobile Bottom Tab Bar -->
-<nav *ngIf="!(isDesktop$ | async)" class="fixed bottom-0 w-full bg-dark-blue bg-opacity-90 z-50">
-  <div class="flex justify-around items-center h-16">
-    <a href="#top" 
-       (click)="scrollToSection('top', $event)"
-       [class.active]="activeSection === 'top'"
-       class="flex flex-col items-center text-light-blue hover:text-brown transition duration-300">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-      </svg>
-      <span class="text-xs mt-1">Home</span>
-    </a>
-    <a href="#about" 
-       (click)="scrollToSection('about', $event)"
-       [class.active]="activeSection === 'about'"
-       class="flex flex-col items-center text-light-blue hover:text-brown transition duration-300">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-      </svg>
-      <span class="text-xs mt-1">About</span>
-    </a>
-    <a href="#projects" 
-       (click)="scrollToSection('projects', $event)"
-       [class.active]="activeSection === 'projects'"
-       class="flex flex-col items-center text-light-blue hover:text-brown transition duration-300">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-      </svg>
-      <span class="text-xs mt-1">Projects</span>
-    </a>
-    <a href="#contact" 
-       (click)="scrollToSection('contact', $event)"
-       [class.active]="activeSection === 'contact'"
-       class="flex flex-col items-center text-light-blue hover:text-brown transition duration-300">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-      </svg>
-      <span class="text-xs mt-1">Contact</span>
-    </a>
-  </div>
-</nav>
+    <!-- Desktop Navigation Links -->
+    <ul class="nav-links">
+      <li><a href="#top" (click)="scrollToSection('top', $event)" [class.active]="activeSection === 'top'">Home</a></li>
+      <li><a href="#about" (click)="scrollToSection('about', $event)"
+          [class.active]="activeSection === 'about'">About</a></li>
+      <li><a href="#projects" (click)="scrollToSection('projects', $event)"
+          [class.active]="activeSection === 'projects'">Projects</a></li>
+      <li><a href="#contact" (click)="scrollToSection('contact', $event)"
+          [class.active]="activeSection === 'contact'">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- Mobile Bottom Navigation (only visible on mobile) -->
+<div class="mobile-nav" *ngIf="!(isDesktop$ | async)">
+  <a href="#top" (click)="scrollToSection('top', $event)" [class.active]="activeSection === 'top'">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+    </svg>
+    <span>Home</span>
+  </a>
+  <a href="#about" (click)="scrollToSection('about', $event)" [class.active]="activeSection === 'about'">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+    </svg>
+    <span>About</span>
+  </a>
+  <a href="#projects" (click)="scrollToSection('projects', $event)" [class.active]="activeSection === 'projects'">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+    </svg>
+    <span>Projects</span>
+  </a>
+  <a href="#contact" (click)="scrollToSection('contact', $event)" [class.active]="activeSection === 'contact'">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+    </svg>
+    <span>Contact</span>
+  </a>
+</div>
