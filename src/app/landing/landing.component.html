@@ -2,13 +2,13 @@
     <div id="top">
         <app-home></app-home>
     </div>
-    <div id="about">
+    <div id="about" appViewportAnimation animationClass="fade-in" [repeatAnimation]="true">
         <app-about></app-about>
     </div>
-    <div id="projects">
+    <div id="projects" appViewportAnimation animationClass="slide-in-up" [animationDelay]="200" [repeatAnimation]="true">
         <app-featured-projects></app-featured-projects>
     </div>
-    <div id="contact">
+    <div id="contact" appViewportAnimation animationClass="zoom-in" [animationDelay]="300" [repeatAnimation]="true">
         <app-contact></app-contact>
     </div>
 </main>
