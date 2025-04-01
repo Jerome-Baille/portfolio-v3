@@ -10,23 +10,19 @@
     <!-- Error state -->
     <div *ngIf="error" class="min-h-[50vh] flex flex-col items-center justify-center">
       <h2 class="text-2xl text-red-400 mb-4">Project not found</h2>
-      <button (click)="navigateBack()" 
-        class="px-4 py-2 bg-primary hover:bg-primary-dark transition-colors duration-300 rounded">
-        Back to Projects
-      </button>
     </div>
 
     <!-- Project content -->
     <div *ngIf="!loading && !error && project" class="project-content">
-      <!-- Back button -->
-      <button (click)="navigateBack()" 
-        class="back-button mb-8 flex items-center text-primary hover:text-primary-dark transition-colors">
-        <i class="fas fa-arrow-left mr-2"></i> Back to Projects
-      </button>
-
       <!-- Project header -->
       <header class="project-header mb-12">
-        <h1 class="section-title text-4xl mb-3">{{ project.title }}</h1>
+        <div class="flex justify-between items-center mb-3">
+          <h1 class="section-title text-4xl">{{ project.title }}</h1>
+          <a routerLink="/projects" class="view-all-link">
+            View All Projects
+            <i class="fas fa-arrow-right ml-2"></i>
+          </a>
+        </div>
         <p *ngIf="project.subtitle" class="text-xl text-gray-300 mb-6">{{ project.subtitle }}</p>
         
         <div *ngIf="project.tags && project.tags.length > 0" class="flex flex-wrap gap-3 mb-6">
@@ -85,22 +81,36 @@
           <div class="flex flex-col gap-3 mt-6">
             <a *ngIf="project.website" [href]="project.website" target="_blank" 
               class="project-link flex items-center text-primary hover:text-primary-dark transition-colors">
-              <i class="fas fa-external-link-alt mr-2"></i> View Live Site
+              <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>Live Demo
             </a>
             
             <a *ngIf="project.github && project.github.frontend" [href]="project.github.frontend" target="_blank" 
               class="project-link flex items-center text-primary hover:text-primary-dark transition-colors">
-              <i class="fab fa-github mr-2"></i> Frontend Repository
+              <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+              </svg>GitHub
             </a>
             
             <a *ngIf="project.github && project.github.backend" [href]="project.github.backend" target="_blank" 
               class="project-link flex items-center text-primary hover:text-primary-dark transition-colors">
-              <i class="fab fa-github mr-2"></i> Backend Repository
+              <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+              </svg>Backend Repository
             </a>
             
             <a *ngIf="project.github && project.github.extension" [href]="project.github.extension" target="_blank" 
               class="project-link flex items-center text-primary hover:text-primary-dark transition-colors">
-              <i class="fab fa-chrome mr-2"></i> Extension Repository
+              <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <circle cx="12" cy="12" r="4"></circle>
+                <line x1="21.17" y1="8" x2="12" y2="8"></line>
+                <line x1="3.95" y1="6.06" x2="8.54" y2="14"></line>
+                <line x1="10.88" y1="21.94" x2="15.46" y2="14"></line>
+              </svg>Extension Repository
             </a>
           </div>
         </div>
@@ -114,7 +124,11 @@
           <!-- Frontend -->
           <div *ngIf="project.fullStack && project.fullStack.frontend && project.fullStack.frontend.length > 0" class="tech-stack-card material-card p-6">
             <h3 class="text-xl mb-4 flex items-center">
-              <i class="fas fa-laptop-code mr-2 text-primary"></i> Frontend
+              <svg class="w-5 h-5 mr-2 text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
+              </svg>Frontend
             </h3>
             <ul class="list-disc pl-5 text-gray-300">
               <li *ngFor="let tech of project.fullStack.frontend" class="mb-1">{{ tech }}</li>
@@ -124,7 +138,12 @@
           <!-- Backend -->
           <div *ngIf="project.fullStack && project.fullStack.backend && project.fullStack.backend.length > 0" class="tech-stack-card material-card p-6">
             <h3 class="text-xl mb-4 flex items-center">
-              <i class="fas fa-server mr-2 text-primary"></i> Backend
+              <svg class="w-5 h-5 mr-2 text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+                <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+                <line x1="6" y1="6" x2="6.01" y2="6"></line>
+                <line x1="6" y1="18" x2="6.01" y2="18"></line>
+              </svg>Backend
             </h3>
             <ul class="list-disc pl-5 text-gray-300">
               <li *ngFor="let tech of project.fullStack.backend" class="mb-1">{{ tech }}</li>
@@ -134,7 +153,11 @@
           <!-- Database -->
           <div *ngIf="project.fullStack && project.fullStack.database && project.fullStack.database.length > 0" class="tech-stack-card material-card p-6">
             <h3 class="text-xl mb-4 flex items-center">
-              <i class="fas fa-database mr-2 text-primary"></i> Database
+              <svg class="w-5 h-5 mr-2 text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+                <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+              </svg>Database
             </h3>
             <ul class="list-disc pl-5 text-gray-300">
               <li *ngFor="let tech of project.fullStack.database" class="mb-1">{{ tech }}</li>
@@ -144,21 +167,18 @@
           <!-- Extension -->
           <div *ngIf="project.fullStack && project.fullStack.extension && project.fullStack.extension.length > 0" class="tech-stack-card material-card p-6">
             <h3 class="text-xl mb-4 flex items-center">
-              <i class="fas fa-puzzle-piece mr-2 text-primary"></i> Extension
+              <svg class="w-5 h-5 mr-2 text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+              </svg>Extension
             </h3>
             <ul class="list-disc pl-5 text-gray-300">
               <li *ngFor="let tech of project.fullStack.extension" class="mb-1">{{ tech }}</li>
             </ul>
           </div>
         </div>
-      </div>
-
-      <!-- Back button at bottom -->
-      <div class="flex justify-center mt-12">
-        <button (click)="navigateBack()" 
-          class="px-6 py-3 bg-primary hover:bg-primary-dark transition-colors duration-300 rounded">
-          Back to Projects
-        </button>
       </div>
     </div>
   </div>

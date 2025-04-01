@@ -46,8 +46,4 @@ export class ProjectDetailComponent implements OnInit {
       }
     });
   }
-
-  navigateBack(): void {
-    this.router.navigate(['/projects-highlight']);
-  }
 }
