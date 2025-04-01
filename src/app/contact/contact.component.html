@@ -28,6 +28,15 @@
           </div>
         </div>
       </div>
+      <div class="mb-6">
+        <label for="subject" class="block uppercase tracking-wide text-gray-300 text-xs font-bold mb-2">Subject</label>
+        <input type="text" id="subject" formControlName="subject"
+          class="appearance-none block w-full bg-gray-800 text-white border border-gray-700 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-gray-700 focus:border-[#D3AC92] placeholder-gray-400">
+        <div *ngIf="isSubmitted() && formControls['subject'].errors" class="mt-1">
+          <p class="text-red-500 text-xs italic" *ngIf="formControls['subject'].errors?.['required']">Subject is required</p>
+          <p class="text-red-500 text-xs italic" *ngIf="formControls['subject'].errors?.['minlength']">Subject must be at least 3 characters</p>
+        </div>
+      </div>
       <div class="mb-10">
         <label for="message" class="block uppercase tracking-wide text-gray-300 text-xs font-bold mb-2">Message</label>
         <textarea id="message" formControlName="message" rows="4"
