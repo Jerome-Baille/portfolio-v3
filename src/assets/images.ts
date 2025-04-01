@@ -11,7 +11,7 @@ const GroupomaniaLogo = 'assets/projects/Groupomania/Groupomania-logo.png';
 const PiiquanteLogo = 'assets/projects/Piiquante/Piiquante-logo.png';
 const LexirLogo = 'assets/projects/Lexir/Lexir-logo.png';
 const LaChouetteAgenceLogo = 'assets/projects/LaChouetteAgence/LaChouetteAgence-logo.png';
-const OhMyFoodLogo = 'assets/projects/Ohmyfood/Ohmyfood-logo.png';
+const OhMyFoodLogo = 'assets/projects/OhMyFood/OhMyFood-logo.png';
 const PhoceaTravelLogo = 'assets/projects/PhoceaTravel/phocea-travel-logo.png';
 const KiCultureLogo = 'assets/projects/KiCulture/KiCulture-logo.png';
 const MesGourmandysLogo = 'assets/projects/MesGourmandys/MesGourmandys-logo.png';
@@ -34,8 +34,8 @@ const KanapMockup1 = 'assets/projects/Kanap/mockup-1.png';
 const KanapMockup2 = 'assets/projects/Kanap/mockup-2.png';
 const LaChouetteAgenceMockup1 = 'assets/projects/LaChouetteAgence/mockup-1.png';
 const LaChouetteAgenceMockup2 = 'assets/projects/LaChouetteAgence/mockup-2.png';
-const OhmyfoodMockup1 = 'assets/projects/Ohmyfood/mockup-1.png';
-const OhmyfoodMockup2 = 'assets/projects/Ohmyfood/mockup-2.png';
+const OhmyfoodMockup1 = 'assets/projects/OhMyFood/mockup-1.png';
+const OhmyfoodMockup2 = 'assets/projects/OhMyFood/mockup-2.png';
 const PhoceaTravelMockup1 = 'assets/projects/PhoceaTravel/mockup-1.png';
 const PhoceaTravelMockup2 = 'assets/projects/PhoceaTravel/mockup-2.png';
 const PiiquanteMockup1 = 'assets/projects/Piiquante/mockup-1.png';
@@ -44,7 +44,7 @@ const LexirMockup1 = 'assets/projects/Lexir/mockup-1.png';
 const LexirMockup2 = 'assets/projects/Lexir/mockup-2.png';
 
 // Screenshots
-const PortfolioV1Screenshot = 'assets/projects/Portfolio-v1/portfolio-v1-screenshot.png';
+const PortfolioV1Screenshot = 'assets/projects/Portfolio-v1/Portfolio-v1-screenshot.png';
 const JobTrackerScreenshot = 'assets/projects/JobVisualiser/JobTracker-screenshot.png';
 const PantryPalScreenshot = 'assets/projects/PantryPal/PantryPal-screenshot.png';
 const FlickPickScreenshot = 'assets/projects/FlickPick/FlickPick-screenshot.png';
@@ -53,7 +53,7 @@ const MesGourmandysScreenshot = 'assets/projects/MesGourmandys/MesGourmandys-scr
 const KanapScreenshot = 'assets/projects/Kanap/Kanap-screenshot.png';
 const LexirScreenshot = 'assets/projects/Lexir/Lexir-screenshot.png';
 const LaChouetteAgenceScreenshot = 'assets/projects/LaChouetteAgence/LaChouetteAgence-screenshot.png';
-const OhMyFoodScreenshot = 'assets/projects/Ohmyfood/Ohmyfood-screenshot.png';
+const OhMyFoodScreenshot = 'assets/projects/OhMyFood/OhMyFood-screenshot.png';
 const PhoceaTravelScreenshot = 'assets/projects/PhoceaTravel/PhoceaTravel-screenshot.png';
 const KiCultureScreenshot = 'assets/projects/KiCulture/KiCulture-screenshot.png';
 
