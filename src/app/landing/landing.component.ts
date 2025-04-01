@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HomeComponent } from "../home/home.component";
 import { AboutComponent } from "../about/about.component";
+import { AboutCarouselComponent } from "../about-carousel/about-carousel.component";
 import { FeaturedProjectsComponent } from "../featured-projects/featured-projects.component";
 import { ContactComponent } from "../contact/contact.component";
 import { ViewportAnimationDirective } from "../shared/directives/viewport-animation.directive";
@@ -10,6 +11,7 @@ import { ViewportAnimationDirective } from "../shared/directives/viewport-animat
   imports: [
     HomeComponent, 
     AboutComponent, 
+    AboutCarouselComponent,
     FeaturedProjectsComponent, 
     ContactComponent,
     ViewportAnimationDirective

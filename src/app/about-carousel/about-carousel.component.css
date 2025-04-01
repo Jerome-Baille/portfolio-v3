@@ -50,6 +50,24 @@
   border-color: rgba(211, 172, 146, 0.4) !important;
 }
 
+/* Black and white filter for images that transforms to color on hover */
+.certificate-image {
+  filter: grayscale(100%);
+  transition: filter 0.5s ease, transform 0.3s ease;
+}
+
+/* Apply color when hovering the card instead of the image */
+.carousel-item:hover .certificate-image {
+  filter: grayscale(0%);
+  transform: scale(1.05);
+}
+
+/* Remove the direct hover on image effect */
+.certificate-image:hover {
+  filter: grayscale(100%); /* Keep grayscale unless the card is hovered */
+  transform: none; /* No scale change on direct image hover */
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .carousel-container {

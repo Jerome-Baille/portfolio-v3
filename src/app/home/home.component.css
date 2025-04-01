@@ -196,23 +196,6 @@
     transform: scaleX(0.95);
 }
 
-.business-card:hover {
-    animation-play-state: paused;
-    transform: rotate(1deg) translateY(-15px) translateZ(10px);
-    box-shadow: 
-        0 30px 40px -15px rgba(0, 0, 0, 0.25), 
-        0 15px 20px -10px rgba(0, 0, 0, 0.15),
-        0 0 0 1px rgba(0, 0, 0, 0.05);
-}
-
-/* Subtle movement with mouse hover - material design response */
-@media (hover: hover) {
-    .business-card:hover::after {
-        opacity: 0.8;
-        transition: all 0.5s ease;
-    }
-}
-
 /* Material design elevation layer */
 .elevation-layer {
     position: absolute;

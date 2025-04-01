@@ -9,6 +9,4 @@ import { CommonModule } from '@angular/common';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  // Component is lean and follows best practices
-  // No unused imports or methods
 }

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgOptimizedImage, ImageLoader, ImageLoaderConfig } from '@angular/common';
+import { ViewportAnimationDirective } from '../shared/directives/viewport-animation.directive';
 
 interface Certificate {
   name: string;
@@ -17,8 +18,9 @@ export const customImageLoader: ImageLoader = (config: ImageLoaderConfig): strin
 @Component({
   selector: 'app-about-carousel',
   standalone: true,
-  imports: [CommonModule, NgOptimizedImage],
-  templateUrl: './about-carousel.component.html'
+  imports: [CommonModule, NgOptimizedImage, ViewportAnimationDirective],
+  templateUrl: './about-carousel.component.html',
+  styleUrl: './about-carousel.component.css'
 })
 export class AboutCarouselComponent {
   certificates: Certificate[] = [
