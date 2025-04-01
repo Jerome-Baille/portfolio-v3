@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, firstValueFrom, of } from 'rxjs';
 import { Project, Images, Mockups, Screenshots } from '../interfaces/project.interface';
 
 @Injectable({
@@ -16,14 +16,23 @@ export class DataService {
   readonly images$ = this.imagesSubject.asObservable();
   readonly mockups$ = this.mockupsSubject.asObservable();
   readonly screenshots$ = this.screenshotsSubject.asObservable();
+  
+  // Track if data is loaded
+  private dataInitialized = false;
+  private initializationPromise: Promise<void> | null = null;
 
   constructor() {
-    this.initializeData();
+    this.initializationPromise = this.initializeData();
   }
 
-  private initializeData(): void {
-    // Import images
-    import('../../assets/images').then(({ Images, Mockups, Screenshots }) => {
+  private async initializeData(): Promise<void> {
+    if (this.dataInitialized) {
+      return;
+    }
+
+    try {
+      // Import images
+      const { Images, Mockups, Screenshots } = await import('../../assets/images');
       this.imagesSubject.next(Images);
       this.mockupsSubject.next(Mockups);
       this.screenshotsSubject.next(Screenshots);
@@ -686,75 +695,71 @@ export class DataService {
       ];
 
       this.projectsSubject.next(projects);
-    });
+      this.dataInitialized = true;
+    } catch (error) {
+      console.error('Error initializing data:', error);
+      throw error;
+    }
+  }
+
+  // Helper method to ensure data is loaded
+  private async ensureDataLoaded(): Promise<void> {
+    if (!this.dataInitialized) {
+      await this.initializationPromise;
+    }
   }
 
   // Method to get a project by ID
-  getProjectById(id: string): Observable<Project | undefined> {
-    return new Observable(subscriber => {
-      this.projects$.subscribe(projects => {
-        const project = projects.find(p => p.id === id);
-        subscriber.next(project);
-        subscriber.complete();
-      });
-    });
+  async getProjectById(id: string): Promise<Project | undefined> {
+    await this.ensureDataLoaded();
+    const projects = this.projectsSubject.getValue();
+    return projects.find(p => p.id === id);
   }
 
   // Method to get filtered projects
-  getFilteredProjects(filters: { [key: string]: any }): Observable<Project[]> {
-    return new Observable(subscriber => {
-      this.projects$.subscribe(projects => {
-        let filteredProjects = [...projects];
+  async getFilteredProjects(filters: { [key: string]: any }): Promise<Project[]> {
+    await this.ensureDataLoaded();
+    let filteredProjects = [...this.projectsSubject.getValue()];
 
-        Object.entries(filters).forEach(([key, value]) => {
-          if (value) {
-            filteredProjects = filteredProjects.filter(project => {
-              // Check if the key exists in the project
-              if (!(key in project)) {
-                return true; // Skip filtering if the key doesn't exist
-              }
-
-              const projectValue = project[key as keyof Project];
-
-              // Handle array values (like tags)
-              if (Array.isArray(projectValue)) {
-                return projectValue.includes(value);
-              }
-
-              // Handle non-array values
-              return projectValue === value;
-            });
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value) {
+        filteredProjects = filteredProjects.filter(project => {
+          // Check if the key exists in the project
+          if (!(key in project)) {
+            return true; // Skip filtering if the key doesn't exist
           }
-        });
 
-        subscriber.next(filteredProjects);
-        subscriber.complete();
-      });
+          const projectValue = project[key as keyof Project];
+
+          // Handle array values (like tags)
+          if (Array.isArray(projectValue)) {
+            return projectValue.includes(value);
+          }
+
+          // Handle non-array values
+          return projectValue === value;
+        });
+      }
     });
+
+    return filteredProjects;
   }
 
   // Method to get unique tags
-  getAllTags(): Observable<string[]> {
-    return new Observable(subscriber => {
-      this.projects$.subscribe(projects => {
-        const tags = new Set<string>();
-        projects.forEach(project => {
-          project.tags.forEach(tag => tags.add(tag));
-        });
-        subscriber.next(Array.from(tags));
-        subscriber.complete();
-      });
+  async getAllTags(): Promise<string[]> {
+    await this.ensureDataLoaded();
+    const projects = this.projectsSubject.getValue();
+    const tags = new Set<string>();
+    projects.forEach(project => {
+      project.tags.forEach(tag => tags.add(tag));
     });
+    return Array.from(tags);
   }
 
   // Method to get projects sorted by date
-  getProjectsSortedByDate(): Observable<Project[]> {
-    return new Observable(subscriber => {
-      this.projects$.subscribe(projects => {
-        const sortedProjects = [...projects].sort((a, b) => b.date - a.date);
-        subscriber.next(sortedProjects);
-        subscriber.complete();
-      });
-    });
+  async getProjectsSortedByDate(): Promise<Project[]> {
+    await this.ensureDataLoaded();
+    const projects = this.projectsSubject.getValue();
+    return [...projects].sort((a, b) => b.date - a.date);
   }
 }

@@ -13,12 +13,18 @@ import { Project } from '../interfaces/project.interface';
 })
 export class FeaturedProjectsComponent implements OnInit {
   featuredProjects: Project[] = [];
+  loading = true;
 
   constructor(private dataService: DataService) {}
 
-  ngOnInit() {
-    this.dataService.projects$.subscribe(projects => {
-      this.featuredProjects = projects.filter(project => project.featured);
-    });
+  async ngOnInit() {
+    try {
+      this.loading = true;
+      this.featuredProjects = await this.dataService.getFilteredProjects({ featured: true });
+    } catch (err) {
+      console.error('Error loading featured projects:', err);
+    } finally {
+      this.loading = false;
+    }
   }
 }

@@ -26,24 +26,23 @@ export class ProjectDetailComponent implements OnInit {
     // Scroll to top when component initializes
     window.scrollTo(0, 0);
     
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe(async params => {
       const projectId = params['id'];
       if (projectId) {
-        this.dataService.getProjectById(projectId).subscribe({
-          next: (project) => {
-            if (project) {
-              this.project = project;
-              this.loading = false;
-            } else {
-              this.error = true;
-              this.loading = false;
-            }
-          },
-          error: () => {
+        try {
+          this.loading = true;
+          const project = await this.dataService.getProjectById(projectId);
+          if (project) {
+            this.project = project;
+          } else {
             this.error = true;
-            this.loading = false;
           }
-        });
+        } catch (err) {
+          console.error('Error loading project:', err);
+          this.error = true;
+        } finally {
+          this.loading = false;
+        }
       }
     });
   }
