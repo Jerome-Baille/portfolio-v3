@@ -1,38 +1,157 @@
+.project-detail-container {
+  position: relative;
+  padding: 5rem 0;
+  overflow: hidden; /* Ensure the background effects don't spill out */
+}
+
 .section-background {
-  background-color: var(--bg-texture-color);
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  /* Premium gradient background with texture and subtle animation */
+  background: 
+    /* Main gradient with the site's primary colors */
+    radial-gradient(
+      ellipse at center,
+      rgba(20, 60, 90, 0.8) 0%,
+      rgba(12, 42, 66, 0.9) 70%
+    ),
+    /* Subtle diagonal pattern */
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      rgba(211, 172, 146, 0.03) 10px,
+      rgba(211, 172, 146, 0.03) 11px
+    ),
+    /* Horizontal lines */
+    repeating-linear-gradient(
+      to right,
+      transparent,
+      transparent 50px,
+      rgba(211, 172, 146, 0.02) 50px,
+      rgba(211, 172, 146, 0.02) 51px
+    ),
+    /* Vertical lines */
+    repeating-linear-gradient(
+      to bottom,
+      transparent,
+      transparent 50px,
+      rgba(211, 172, 146, 0.02) 50px,
+      rgba(211, 172, 146, 0.02) 51px
+    );
+  /* Add a soft blur for a modern effect */
+  backdrop-filter: blur(5px);
+  /* Add subtle shadow edges for depth */
+  box-shadow: 
+    inset 0 20px 30px -20px rgba(0,0,0,0.6),
+    inset 0 -20px 30px -20px rgba(0,0,0,0.6);
+}
+
+/* Add a subtle animated accent border at the top and bottom */
+.project-detail-container::before,
+.project-detail-container::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--primary) 20%,
+    var(--primary) 80%,
+    transparent
+  );
+  opacity: 0.3;
+  z-index: 1;
+}
+
+.project-detail-container::before {
+  top: 0;
+}
+
+.project-detail-container::after {
+  bottom: 0;
+}
+
+.material-card {
+  border: 1px solid rgba(211, 172, 146, 0.1);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  background: rgba(12, 42, 66, 0.3);
+}
+
+.material-card:hover {
+  border-color: rgba(211, 172, 146, 0.2);
+}
+
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.back-button i {
+  transition: transform 0.3s ease;
+}
+
+.back-button:hover i {
+  transform: translateX(-4px);
 }
 
 .project-tag {
   background-color: rgba(211, 172, 146, 0.15);
   color: var(--primary);
-  border: 1px solid var(--primary);
+  border: 1px solid rgba(211, 172, 146, 0.3);
+  transition: background-color 0.3s ease;
 }
 
-.tech-stack-card {
-  height: 100%;
+.project-link {
+  position: relative;
+  padding-bottom: 0.25rem;
+  width: fit-content;
 }
 
-.mockup {
-  aspect-ratio: 16/9;
+.project-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--primary);
+  transition: width 0.3s ease;
+}
+
+.project-link:hover::after {
+  width: 100%;
 }
 
 .main-screenshot {
   max-height: 600px;
   overflow: hidden;
+  border-radius: 8px;
 }
 
-.main-screenshot img {
-  width: 100%;
-  height: auto;
-  object-fit: contain;
+.mockup {
+  border-radius: 8px;
+  overflow: hidden;
+  aspect-ratio: 16/9;
 }
 
-/* Animations */
-.project-content {
-  animation: fadeIn 0.5s ease-in;
+.tech-stack-card {
+  border-radius: 8px;
+  height: 100%;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+@media (max-width: 768px) {
+  .project-showcase {
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
+  }
+  
+  .main-screenshot, .mockup {
+    border-radius: 0;
+  }
 }
