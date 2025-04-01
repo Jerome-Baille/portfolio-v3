@@ -2,8 +2,9 @@ import { Component, HostListener, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Observable, map } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-navbar',
@@ -34,8 +35,27 @@ export class NavbarComponent implements OnInit {
 
   activeSection: string = '';
   isScrolled = false;
+  isLandingPage = true;
 
   ngOnInit() {
+    // Check current route on init
+    this.isLandingPage = this.router.url === '/';
+    
+    // Subscribe to route changes
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: any) => {
+      this.isLandingPage = event.url === '/';
+      
+      // Reset active section when not on landing page
+      if (!this.isLandingPage) {
+        this.activeSection = '';
+      } else {
+        // If we're back to the landing page, update active section based on scroll
+        this.checkScrollPosition();
+      }
+    });
+
     // Check scroll position on init to set correct navbar state
     this.checkScrollPosition();
   }
@@ -47,6 +67,11 @@ export class NavbarComponent implements OnInit {
   
   checkScrollPosition() {
     this.isScrolled = window.scrollY > 20;
+
+    // Only update active section if on landing page
+    if (!this.isLandingPage) {
+      return;
+    }
 
     const sections = ['about', 'projects', 'contact'];
     const scrollPosition = window.scrollY + 100; // offset for better activation
