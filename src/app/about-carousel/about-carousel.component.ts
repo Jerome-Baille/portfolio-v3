@@ -24,14 +24,14 @@ export const customImageLoader: ImageLoader = (config: ImageLoaderConfig): strin
 })
 export class AboutCarouselComponent {
   certificates: Certificate[] = [
-    { name: 'Google AI Essentials', image: 'google_ai_essentials.png' },
-    { name: 'Google Data Analytics', image: 'google_analyst.png' },
-    { name: 'Google Cybersecurity', image: 'google_cybersecurity.png' },
-    { name: 'Google IT Support', image: 'google_it_support.png' },
-    { name: 'Google Project Management', image: 'google_project_management.png' },
-    { name: 'Meta Backend Developer', image: 'meta_backend.png' },
-    { name: 'Meta Frontend Developer', image: 'meta_frontend.png' },
-    { name: 'Meta Full Stack Developer', image: 'meta_fullstack.png' }
+    { name: 'Google AI Essentials', image: 'certificates/google_ai_essentials.png' },
+    { name: 'Google Data Analytics', image: 'certificates/google_analyst.png' },
+    { name: 'Google Cybersecurity', image: 'certificates/google_cybersecurity.png' },
+    { name: 'Google IT Support', image: 'certificates/google_it_support.png' },
+    { name: 'Google Project Management', image: 'certificates/google_project_management.png' },
+    { name: 'Meta Backend Developer', image: 'certificates/meta_backend.png' },
+    { name: 'Meta Frontend Developer', image: 'certificates/meta_frontend.png' },
+    { name: 'Meta Full Stack Developer', image: 'certificates/meta_fullstack.png' }
   ];
 
   // Image sizes using responsive values

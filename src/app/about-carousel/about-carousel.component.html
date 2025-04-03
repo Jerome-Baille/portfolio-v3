@@ -15,7 +15,7 @@
                shadow-lg hover:shadow-xl carousel-item"
         role="group" [attr.aria-label]="cert.name">
         <div class="flex flex-col items-center">
-          <div class="h-28 w-28 mb-3 overflow-hidden rounded flex items-center justify-center bg-white/10">
+          <div class="h-28 w-28 mb-3 overflow-hidden rounded flex items-center justify-center bg-transparent">
             <img [ngSrc]="'assets/' + cert.image" [alt]="cert.name" width="224" height="224" [sizes]="imageSizes"
               class="object-contain w-full h-full transition-transform duration-300 certificate-image" [priority]="i === 0" />
           </div>
@@ -31,7 +31,7 @@
                shadow-lg hover:shadow-xl carousel-item"
         role="group" [attr.aria-label]="cert.name">
         <div class="flex flex-col items-center">
-          <div class="h-28 w-28 mb-3 overflow-hidden rounded flex items-center justify-center bg-white/10">
+          <div class="h-28 w-28 mb-3 overflow-hidden rounded flex items-center justify-center bg-transparent">
             <img [ngSrc]="'assets/' + cert.image" [alt]="cert.name" width="224" height="224" [sizes]="imageSizes"
               class="object-contain w-full h-full transition-transform duration-300 certificate-image" loading="lazy" />
           </div>
