@@ -1,0 +1,13 @@
+<div class="fixed inset-0 flex items-center justify-center z-50 bg-[#0C2A42] bg-opacity-90 transition-opacity duration-300" 
+     [ngClass]="{'opacity-100': isLoading, 'opacity-0 pointer-events-none': !isLoading}">
+  <div class="relative">
+    <!-- Outer ring -->
+    <div class="w-20 h-20 rounded-full border-4 border-[#D3AC92]/20 animate-reverse-spin"></div>
+    
+    <!-- Inner spinner -->
+    <div class="absolute top-0 left-0 w-20 h-20 rounded-full border-t-4 border-l-4 border-[#D3AC92] animate-spin"></div>
+    
+    <!-- Loading text -->
+    <p class="absolute -bottom-10 text-[#D3AC92] font-playfair text-lg tracking-wider">Loading...</p>
+  </div>
+</div>
