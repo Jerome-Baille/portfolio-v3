@@ -48,12 +48,34 @@
       </div>
       <div class="mb-6 flex justify-end">
         <button type="submit"
-          class="bg-[#D3AC92] hover:bg-[#c19b81] text-[#0C2A42] font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-          Send Message
+          class="bg-[#D3AC92] hover:bg-[#c19b81] text-[#0C2A42] font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex items-center"
+          [disabled]="isLoading()">
+          <span *ngIf="isLoading()" class="inline-block mr-2">
+            <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-[#0C2A42]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+          </span>
+          {{ isLoading() ? 'Sending...' : 'Send Message' }}
         </button>
       </div>
-      <div *ngIf="submitSuccess()" class="mt-4 p-4 bg-green-800 text-green-100 rounded-md">
-        Thank you! Your message has been sent successfully.
+      
+      <div *ngIf="submitSuccess()" class="mt-4 p-4 bg-green-800 text-green-100 rounded-md flex justify-between items-center">
+        <span>Thank you! Your message has been sent successfully.</span>
+        <button type="button" (click)="closeSuccessMessage()" class="text-green-100 hover:text-white focus:outline-none">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+          </svg>
+        </button>
+      </div>
+      
+      <div *ngIf="errorMessage()" class="mt-4 p-4 bg-red-800 text-red-100 rounded-md flex justify-between items-center">
+        <span>{{ errorMessage() }}</span>
+        <button type="button" (click)="closeErrorMessage()" class="text-red-100 hover:text-white focus:outline-none">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+          </svg>
+        </button>
       </div>
     </form>
   </div>
