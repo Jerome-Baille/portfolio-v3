@@ -1,16 +1,3 @@
-/* Carousel animation */
-.carousel-container {
-  animation: scroll-left 30s linear infinite;
-  min-width: fit-content;
-  width: max-content;
-  display: flex;
-}
-
-/* Pause the animation on hover */
-.carousel-container:hover {
-  animation-play-state: paused;
-}
-
 /* Animation keyframes for continuous scrolling */
 @keyframes scroll-left {
   0% {
@@ -22,14 +9,7 @@
   }
 }
 
-/* Animation for each item when hovering */
-.carousel-item {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  position: relative;
-  overflow: hidden;
-}
-
+/* Kept for pseudo-element gradient overlay */
 .carousel-item::before {
   content: "";
   position: absolute;
@@ -41,30 +21,6 @@
               radial-gradient(circle at 70% 30%, rgba(211, 172, 146, 0.08) 0%, transparent 70%);
   border-radius: 0.5rem;
   z-index: -1;
-}
-
-.carousel-item:hover {
-  transform: translateY(-5px) scale(1.02);
-  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
-  z-index: 10;
-  border-color: rgba(211, 172, 146, 0.4) !important;
-}
-
-/* Black and white effect for certificate images with color on hover */
-.certificate-image {
-  transition: transform 0.3s ease, filter 0.3s ease;
-  filter: grayscale(100%);
-}
-
-/* Apply transform effect and remove grayscale when hovering the card */
-.carousel-item:hover .certificate-image {
-  transform: scale(1.05);
-  filter: grayscale(0%);
-}
-
-/* Removed direct hover effect on image */
-.certificate-image:hover {
-  transform: none; /* No scale change on direct image hover */
 }
 
 /* Responsive adjustments */

@@ -13,7 +13,16 @@ module.exports = {
       colors: {
         'primary': '#955922',
         'secondary': '#0C2A42',
-      }
+      },
+      animation: {
+        'scroll-left': 'scroll-left 30s linear infinite',
+      },
+      keyframes: {
+        'scroll-left': {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
+      },
     },
   },
   plugins: [],

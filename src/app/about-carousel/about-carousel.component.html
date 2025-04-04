@@ -6,34 +6,32 @@
   
   <!-- Full width carousel container -->
   <div class="relative overflow-hidden" role="region" aria-label="Certificate carousel">
-    <!-- Carousel container with animation -->
-    <div class="flex flex-nowrap gap-6 py-4 carousel-container px-12">
+    <!-- Update inner carousel container -->
+    <div class="flex flex-nowrap gap-6 py-4 animate-scroll-left min-w-fit w-max px-12">
       <!-- First copy of certificates -->
       @for (cert of certificates; track cert.name + '-1'; let i = $index) {
-      <div
-        class="flex-shrink-0 w-64 transform transition-all duration-500 p-4 rounded-lg bg-[rgba(18,49,71,0.7)] border border-[rgba(211,172,146,0.2)]
-               shadow-lg hover:shadow-xl carousel-item"
+      <div 
+        class="flex-shrink-0 w-[200px] md:w-64 transform transition-transform duration-300 p-4 rounded-lg bg-[rgba(18,49,71,0.7)] border border-[rgba(211,172,146,0.2)] shadow-lg hover:shadow-xl hover:-translate-y-[5px] hover:scale-[1.02] hover:border-[rgba(211,172,146,0.4)]"
         role="group" [attr.aria-label]="cert.name + ' certification'">
         <div class="flex flex-col items-center">
           <div class="h-28 w-28 mb-3 overflow-hidden rounded flex items-center justify-center bg-transparent">
             <img [ngSrc]="'assets/' + cert.image" [alt]="cert.name + ' certificate'" width="224" height="224" [sizes]="imageSizes"
-              class="object-contain w-full h-full transition-transform duration-300 certificate-image" [priority]="i === 0" />
+              class="object-contain w-full h-full transition-transform duration-300 filter grayscale hover:grayscale-0" [priority]="i === 0" />
           </div>
           <p class="text-sm text-center text-[#D3AC92] font-light">{{ cert.name }}</p>
         </div>
       </div>
       }
 
-      <!-- Duplicated certificates for seamless looping - hidden from screen readers -->
+      <!-- Duplicated certificates for seamless looping -->
       @for (cert of certificates; track cert.name + '-2') {
-      <div
-        class="flex-shrink-0 w-64 transform transition-all duration-500 p-4 rounded-lg bg-[rgba(18,49,71,0.7)] border border-[rgba(211,172,146,0.2)]
-               shadow-lg hover:shadow-xl carousel-item"
+      <div 
+        class="flex-shrink-0 w-[200px] md:w-64 transform transition-transform duration-300 p-4 rounded-lg bg-[rgba(18,49,71,0.7)] border border-[rgba(211,172,146,0.2)] shadow-lg hover:shadow-xl hover:-translate-y-[5px] hover:scale-[1.02] hover:border-[rgba(211,172,146,0.4)]"
         role="group" [attr.aria-label]="cert.name + ' certification'" aria-hidden="true">
         <div class="flex flex-col items-center">
           <div class="h-28 w-28 mb-3 overflow-hidden rounded flex items-center justify-center bg-transparent">
             <img [ngSrc]="'assets/' + cert.image" [alt]="cert.name + ' certificate'" width="224" height="224" [sizes]="imageSizes"
-              class="object-contain w-full h-full transition-transform duration-300 certificate-image" loading="lazy" />
+              class="object-contain w-full h-full transition-transform duration-300 filter grayscale hover:grayscale-0" loading="lazy" />
           </div>
           <p class="text-sm text-center text-[#D3AC92] font-light">{{ cert.name }}</p>
         </div>
