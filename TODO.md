@@ -1,2 +1,0 @@
-- Connect the contact form to the backend
-- Modify the backend to accept "subject" field
