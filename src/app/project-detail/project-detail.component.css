@@ -1,13 +1,9 @@
 .project-detail-container {
   position: relative;
-  padding: 5rem 0;
   overflow: hidden; /* Ensure the background effects don't spill out */
 }
 
 .section-background {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
   /* Premium gradient background with texture and subtle animation */
   background: 
     /* Main gradient with the site's primary colors */
@@ -75,16 +71,44 @@
   bottom: 0;
 }
 
-.material-card {
-  border: 1px solid rgba(211, 172, 146, 0.1);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-  background: rgba(12, 42, 66, 0.3);
+/* Ensure project links use primary color */
+.project-link {
+  color: var(--primary) !important;
 }
 
-.material-card:hover {
-  border-color: rgba(211, 172, 146, 0.2);
+.project-link span {
+  color: var(--primary) !important;
 }
 
+.project-link svg {
+  color: var(--primary) !important;
+  stroke: var(--primary) !important;
+}
+
+.project-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--primary);
+  transition: width 0.3s ease;
+}
+
+.project-link:hover::after {
+  width: 100%;
+}
+
+/* Material card for region elements - no hover effects needed */
+.material-card-region {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  box-shadow: 0 7px 14px rgba(0, 0, 0, 0.25), 0 5px 5px rgba(0, 0, 0, 0.22);
+  background: var(--card-hover);
+}
+
+/* Update view-all-link to exactly match style in featured-projects component */
 .view-all-link {
   position: relative;
   color: var(--primary);
@@ -104,29 +128,15 @@
   border-color: var(--primary);
 }
 
-.view-all-link i {
+.view-all-link svg {
   transition: transform 0.3s ease;
 }
 
-.view-all-link:hover i {
+.view-all-link:hover svg {
   transform: translateX(4px);
 }
 
-.back-button {
-  display: inline-flex;
-  align-items: center;
-  font-weight: 500;
-  transition: all 0.3s ease;
-}
-
-.back-button i {
-  transition: transform 0.3s ease;
-}
-
-.back-button:hover i {
-  transform: translateX(-4px);
-}
-
+/* Project tag styling to match projects-list component */
 .project-tag {
   background-color: rgba(211, 172, 146, 0.15);
   color: var(--primary);
@@ -134,45 +144,7 @@
   transition: background-color 0.3s ease;
 }
 
-.project-link {
-  position: relative;
-  padding-bottom: 0.25rem;
-  width: fit-content;
-  color: var(--primary);
-}
-
-.project-link::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background-color: var(--primary);
-  transition: width 0.3s ease;
-}
-
-.project-link:hover::after {
-  width: 100%;
-}
-
-.main-screenshot {
-  max-height: 600px;
-  overflow: hidden;
-  border-radius: 8px;
-}
-
-.mockup {
-  border-radius: 8px;
-  overflow: hidden;
-  aspect-ratio: 16/9;
-}
-
-.tech-stack-card {
-  border-radius: 8px;
-  height: 100%;
-}
-
+/* Mobile responsiveness adjustments */
 @media (max-width: 768px) {
   .project-showcase {
     margin-left: -1.5rem;

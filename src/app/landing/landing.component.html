@@ -1,17 +1,17 @@
-<main role="main">
-    <section id="top" role="region" aria-label="Home">
+<main role="main" class="flex flex-col">
+    <section id="top" class="min-h-screen w-full" role="region" aria-label="Home">
         <app-home></app-home>
     </section>
-    <section id="about" appViewportAnimation animationClass="fade-in" [repeatAnimation]="true" role="region" aria-labelledby="about-heading">
+    <section id="about" class="py-20 w-full" appViewportAnimation animationClass="fade-in" [repeatAnimation]="true" role="region" aria-labelledby="about-heading">
         <app-about></app-about>
     </section>
-    <section id="certifications" appViewportAnimation animationClass="fade-in" [repeatAnimation]="true" role="region" aria-labelledby="certifications-heading">
+    <section id="certifications" class="py-20 w-full" appViewportAnimation animationClass="fade-in" [repeatAnimation]="true" role="region" aria-labelledby="certifications-heading">
         <app-about-carousel></app-about-carousel>
     </section>
-    <section id="projects" appViewportAnimation animationClass="slide-in-up" [animationDelay]="200" [repeatAnimation]="true" role="region" aria-labelledby="featured-projects-heading">
+    <section id="projects" class="py-20 w-full" appViewportAnimation animationClass="slide-in-up" [animationDelay]="200" [repeatAnimation]="true" role="region" aria-labelledby="featured-projects-heading">
         <app-featured-projects></app-featured-projects>
     </section>
-    <section id="contact" appViewportAnimation animationClass="zoom-in" [animationDelay]="300" [repeatAnimation]="true" role="region" aria-labelledby="contact-heading">
+    <section id="contact" class="py-20 w-full" appViewportAnimation animationClass="zoom-in" [animationDelay]="300" [repeatAnimation]="true" role="region" aria-labelledby="contact-heading">
         <app-contact></app-contact>
     </section>
 </main>

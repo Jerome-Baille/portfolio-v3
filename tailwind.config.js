@@ -11,7 +11,8 @@ module.exports = {
         'playfair': ['Playfair Display', 'serif']
       },
       colors: {
-        'primary': '#955922',
+        'primary': '#D3AC92',
+        'primary-dark': '#b5936d',
         'secondary': '#0C2A42',
       },
       animation: {

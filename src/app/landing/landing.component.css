@@ -1,16 +1,1 @@
-main {
-    display: flex;
-    flex-direction: column;
-}
-
-#top {
-    min-height: 100vh;
-    width: 100%;
-}
-
-#about,
-#projects,
-#contact {
-    padding: 5rem 0;
-    width: 100%;
-}
+/* CSS styles have been replaced by Tailwind utility classes in the HTML template */
