@@ -1,11 +1,12 @@
 {
-  "name": "portfolio-v3",
-  "short_name": "portfolio-v3",
-  "theme_color": "#1976d2",
-  "background_color": "#fafafa",
+  "name": "Jérôme Baille | Frontend Engineer",
+  "short_name": "J. Baille",
+  "theme_color": "#D3AC92",
+  "background_color": "#0C2A42",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
+  "description": "Portfolio of Jérôme Baille, a Frontend Engineer specializing in Angular, React, Node.js, and the MEAN stack",
   "icons": [
     {
       "src": "icons/icon-72x72.png",
