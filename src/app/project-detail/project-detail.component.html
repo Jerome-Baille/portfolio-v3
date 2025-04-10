@@ -22,32 +22,33 @@
               <polyline points="12 5 19 12 12 19"></polyline>
             </svg>
           </a>
-        </div>
-          <p *ngIf="project()?.subtitle" class="text-xl text-gray-300 mb-6">{{ project()?.subtitle }}</p>        <div *ngIf="project()?.tags && (project()?.tags?.length || 0) > 0" class="flex flex-wrap gap-3 mb-6" role="list" aria-label="Project technologies">
+        </div>          <p *ngIf="project()?.subtitle" class="text-xl text-gray-300 mb-6">{{ project()?.subtitle }}</p>        <div *ngIf="project()?.tags && (project()?.tags?.length || 0) > 0" 
+            class="flex flex-wrap gap-3 mb-6" 
+            [class.mt-6]="!project()?.subtitle"
+            role="list" 
+            aria-label="Project technologies">
           <span *ngFor="let tag of project()?.tags || []" 
             class="project-tag px-3 py-1 rounded-full text-sm"
             role="listitem">
             {{ tag }}
           </span>
         </div>
-      </header>
-
-      <!-- Project showcase -->
-      <div class="mb-16" role="region" aria-label="Project visuals">        <!-- Main screenshot -->
-        <div *ngIf="project()?.screenshot" class="material-card-region overflow-hidden mb-8 rounded-lg max-h-[600px]">
-          <picture>
-            <source [srcset]="project()?.screenshot?.replace('.png', '.avif') || ''" type="image/avif">
-            <source [srcset]="project()?.screenshot?.replace('.png', '.webp') || ''" type="image/webp">
-            <img [src]="project()?.screenshot" [alt]="project()?.title + ' screenshot'" class="w-full">
-          </picture>
-        </div>
-
-        <!-- Mockups gallery -->
-        <div *ngIf="project()?.mockups && (project()?.mockups?.length || 0) > 0" class="grid grid-cols-1 md:grid-cols-3 gap-6" role="list" aria-label="Project mockups">          <div *ngFor="let mockup of project()?.mockups || []; let i = index" class="material-card-region overflow-hidden rounded-lg aspect-video" role="listitem">
+      </header>      <!-- Project showcase -->
+      <div class="mb-16" role="region" aria-label="Project visuals">        <!-- Main screenshot -->        <div class="material-card-region overflow-hidden mb-8 rounded-lg max-h-[600px]">          <ng-container *ngIf="project()?.screenshot?.png; else placeholderImage">
             <picture>
-              <source [srcset]="mockup.replace('.png', '.avif')" type="image/avif">
-              <source [srcset]="mockup.replace('.png', '.webp')" type="image/webp">
-              <img [src]="mockup" [alt]="(project()?.title || 'Project') + ' mockup ' + (i+1)" class="w-full h-full object-cover">
+              <source [srcset]="project()?.screenshot?.avif" type="image/avif">
+              <source [srcset]="project()?.screenshot?.webp" type="image/webp">
+              <img [src]="project()?.screenshot?.png" [alt]="project()?.title + ' screenshot'" class="w-full">
+            </picture>
+          </ng-container>
+          <ng-template #placeholderImage>
+            <img src="assets/placeholder-project.svg" [alt]="project()?.title + ' placeholder'" class="w-full">
+          </ng-template>
+        </div><!-- Mockups gallery -->
+        <div *ngIf="project()?.mockups && (project()?.mockups?.length || 0) > 0" class="grid grid-cols-1 md:grid-cols-3 gap-6" role="list" aria-label="Project mockups">          <div *ngFor="let mockup of project()?.mockups || []; let i = index" class="material-card-region overflow-hidden rounded-lg aspect-video" role="listitem">            <picture>
+              <source [srcset]="mockup.avif" type="image/avif">
+              <source [srcset]="mockup.webp" type="image/webp">
+              <img [src]="mockup.png" [alt]="(project()?.title || 'Project') + ' mockup ' + (i+1)" class="w-full h-full object-cover">
             </picture>
           </div>
         </div>

@@ -11,6 +11,12 @@ export interface Github {
     extension: string;
 }
 
+export interface ImageFormats {
+    png: string;
+    avif: string;
+    webp: string;
+}
+
 export interface Project {
     id: string;
     featured: boolean;
@@ -23,9 +29,9 @@ export interface Project {
     involvement: string;
     fullStack: FullStack;
     tags: string[];
-    logo: string;
-    screenshot: string;
-    mockups: string[];
+    logo: ImageFormats;
+    screenshot: ImageFormats;
+    mockups: ImageFormats[];
     website: string;
     github: Github;
 }

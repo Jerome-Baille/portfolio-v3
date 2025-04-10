@@ -15,6 +15,13 @@ interface Asset {
   updatedAt: string;
 }
 
+// Interface for image assets with different formats
+interface ImageFormats {
+  png: string;
+  avif: string;
+  webp: string;
+}
+
 // Interface for the ProjectResponse from the backend
 interface ProjectResponse extends Omit<Project, 'featured' | 'logo' | 'screenshot' | 'mockups'> {
   featured: number; // 0 or 1 in the backend
@@ -40,27 +47,50 @@ export class DataService {
     // Convert backend's 0/1 featured to boolean
     const featured = project.featured === 1 ? true : false;
     
-    // Transform Assets to expected frontend format
-    const logo = project.Assets?.find((asset: Asset) => asset.type === 'logo')?.url || '';
-    const screenshot = project.Assets?.find((asset: Asset) => asset.type === 'screenshot')?.url || '';
+    // Helper function to create an ImageFormats object from assets
+    const createImageFormats = (assets: Asset[]): ImageFormats => {
+      return {
+        png: assets.find(a => a.format === 'png')?.url || '',
+        avif: assets.find(a => a.format === 'avif')?.url || '',
+        webp: assets.find(a => a.format === 'webp')?.url || '',
+      };
+    };
     
-    // Get all mockups sorted by their ID
-    const mockups = project.Assets
+    // Transform Assets to expected frontend format with all image formats
+    const logoAssets = project.Assets?.filter((asset: Asset) => asset.type === 'logo') || [];
+    const screenshotAssets = project.Assets?.filter((asset: Asset) => asset.type === 'screenshot') || [];
+    
+    // Group mockup assets by their base name (without format extension)
+    const mockupGroups: { [key: string]: Asset[] } = {};
+    
+    project.Assets
       ?.filter((asset: Asset) => asset.type === 'mockup')
-      .sort((a: Asset, b: Asset) => a.id - b.id)
-      .map((asset: Asset) => asset.url) || [];
+      .forEach((asset: Asset) => {
+        // Extract the base name without extension (e.g., "mockup-1" from "mockup-1.png")
+        const baseName = asset.url.replace(/\.(png|avif|webp)$/, '');
+        
+        if (!mockupGroups[baseName]) {
+          mockupGroups[baseName] = [];
+        }
+        mockupGroups[baseName].push(asset);
+      });
+    
+    // Sort mockup groups by their ID and convert to ImageFormats array
+    const mockups = Object.values(mockupGroups)
+      .sort((a, b) => Math.min(...a.map(asset => asset.id)) - Math.min(...b.map(asset => asset.id)))
+      .map(assets => createImageFormats(assets));
 
     // Return the transformed project
     return {
       ...project,
       featured,
-      logo,
-      screenshot,
+      logo: createImageFormats(logoAssets),
+      screenshot: createImageFormats(screenshotAssets),
       mockups,
       // Make sure github is properly structured even if it's empty/null
       github: project.github || { frontend: '', backend: '', extension: '' }
     };
-  }  // To store the ongoing request for concurrent calls
+  }// To store the ongoing request for concurrent calls
   private currentRequest: Observable<Project[]> | null = null;
 
   // Load projects from the backend

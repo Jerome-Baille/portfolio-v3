@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800px" height="450px" viewBox="0 0 800 450" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <linearGradient x1="0%" y1="0%" x2="100%" y2="100%" id="linearGradient">
+      <stop stop-color="#0C2A42" offset="0%"></stop>
+      <stop stop-color="#143E5A" offset="100%"></stop>
+    </linearGradient>
+    <pattern id="pattern-lines" width="100" height="100" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="100" stroke="rgba(211, 172, 146, 0.05)" stroke-width="1"></line>
+      <line x1="50" y1="0" x2="50" y2="100" stroke="rgba(211, 172, 146, 0.05)" stroke-width="1"></line>
+    </pattern>
+  </defs>
+  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+    <rect fill="url(#linearGradient)" x="0" y="0" width="800" height="450"></rect>
+    <rect fill="url(#pattern-lines)" x="0" y="0" width="800" height="450"></rect>
+    <g transform="translate(350, 165)">
+      <circle fill-opacity="0.1" fill="#D3AC92" cx="50" cy="50" r="50"></circle>
+      <path d="M70,50 L40,70 L40,30 Z" fill="#D3AC92"></path>
+    </g>
+    <text font-family="Playfair Display, serif" font-size="24" font-weight="400" fill="#D3AC92" x="275" y="260">
+      <tspan>Project Preview Not Available</tspan>
+    </text>
+    <rect stroke="rgba(211, 172, 146, 0.2)" stroke-width="2" x="1" y="1" width="798" height="448" rx="2"></rect>
+  </g>
+</svg>
