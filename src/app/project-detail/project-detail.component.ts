@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { DataService } from '../services/data.service';
 import { Project } from '../interfaces/project.interface';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-project-detail',
@@ -12,37 +13,46 @@ import { Project } from '../interfaces/project.interface';
   styleUrl: './project-detail.component.css'
 })
 export class ProjectDetailComponent implements OnInit {
-  project?: Project;
-  loading = true;
-  error = false;
+  project = signal<Project | undefined>(undefined);
+  loading = signal<boolean>(true);
+  error = signal<boolean>(false);
   
   constructor(
     private route: ActivatedRoute,
-    private dataService: DataService,
-    private router: Router
+    private dataService: DataService
   ) {}
 
   ngOnInit(): void {
     // Scroll to top when component initializes
     window.scrollTo(0, 0);
     
-    this.route.params.subscribe(async params => {
-      const projectId = params['id'];
-      if (projectId) {
-        try {
-          this.loading = true;
-          const project = await this.dataService.getProjectById(projectId);
-          if (project) {
-            this.project = project;
-          } else {
-            this.error = true;
-          }
-        } catch (err) {
-          console.error('Error loading project:', err);
-          this.error = true;
-        } finally {
-          this.loading = false;
+    // Use RxJS operators for cleaner handling of async operations
+    this.route.params.pipe(
+      switchMap(params => {
+        const projectId = params['id'];
+        if (!projectId) {
+          this.error.set(true);
+          this.loading.set(false);
+          return [];
         }
+        
+        this.loading.set(true);
+        return this.dataService.getProjectById(projectId);
+      })
+    ).subscribe({
+      next: (project) => {
+        if (project && Object.keys(project).length > 0) {
+          this.project.set(project);
+          this.error.set(false);
+        } else {
+          this.error.set(true);
+        }
+        this.loading.set(false);
+      },
+      error: (err) => {
+        console.error('Error loading project:', err);
+        this.error.set(true);
+        this.loading.set(false);
       }
     });
   }

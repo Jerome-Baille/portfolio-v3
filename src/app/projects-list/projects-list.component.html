@@ -6,35 +6,30 @@
     <h2 id="projects-heading" class="section-title text-3xl mb-10">All Projects</h2>
 
     <!-- Categories filter -->
-    <div class="flex flex-wrap gap-4 justify-center mb-8" role="group" aria-label="Filter projects by category">
-      <button 
-        [class.active]="!selectedCategory"
+    <div class="flex flex-wrap gap-4 justify-center mb-8" role="group" aria-label="Filter projects by category">      <button 
+        [class.active]="!selectedCategory()"
         (click)="filterByCategory(null)" 
         class="filter-button project-tag px-6 py-2 rounded-full text-sm"
-        [attr.aria-pressed]="!selectedCategory">
+        [attr.aria-pressed]="!selectedCategory()">
         All
       </button>
       <button 
-        *ngFor="let category of categories"
-        [class.active]="selectedCategory === category"
+        *ngFor="let category of categories()"
+        [class.active]="selectedCategory() === category"
         (click)="filterByCategory(category)"
         class="filter-button project-tag px-6 py-2 rounded-full text-sm"
-        [attr.aria-pressed]="selectedCategory === category">
+        [attr.aria-pressed]="selectedCategory() === category">
         {{category}}
       </button>
-    </div>
-
-    <div class="md:grid md:grid-cols-2 lg:grid-cols-3 gap-8" role="list" aria-label="Projects">
-      <article *ngFor="let project of projects"
+    </div>    <div class="md:grid md:grid-cols-2 lg:grid-cols-3 gap-8" role="list" aria-label="Projects">
+      <article *ngFor="let project of projects()"
         class="material-card overflow-hidden mb-8 cursor-pointer border border-primary/10 shadow-lg bg-secondary/30 transition-all hover:border-primary/20"
         [routerLink]="['/project', project.id]"
         role="listitem"
         tabindex="0"
-        [attr.aria-label]="project.title + ' project'">
-        
-        <!-- Project Image -->
+        [attr.aria-label]="project.title + ' project'">        <!-- Project Image -->
         <div class="relative overflow-hidden h-[300px]" *ngIf="project.mockups && project.mockups.length > 0 || project.screenshot">
-          <img [src]="project.mockups && project.mockups.length > 0 ? project.mockups[0] : project.screenshot" 
+          <img [src]="project.mockups && project.mockups.length > 0 ? project.mockups[0] : (project.screenshot || '')" 
                [alt]="project.title + ' project screenshot'" 
                class="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105">
         </div>

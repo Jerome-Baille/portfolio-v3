@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { DataService } from '../services/data.service';
 import { Project } from '../interfaces/project.interface';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-projects-list',
@@ -12,43 +13,52 @@ import { Project } from '../interfaces/project.interface';
   styleUrl: './projects-list.component.css'
 })
 export class ProjectsListComponent implements OnInit {
-  projects: Project[] = [];
-  categories: string[] = [];
-  selectedCategory: string | null = null;
-  loading = true;
+  projects = signal<Project[]>([]);
+  categories = signal<string[]>([]);
+  selectedCategory = signal<string | null>(null);
+  loading = signal<boolean>(true);
 
   constructor(private dataService: DataService) {}
-
-  async ngOnInit() {
+  
+  ngOnInit() {
     window.scrollTo(0, 0);
     
-    try {
-      // Get all projects sorted by date
-      this.projects = await this.dataService.getProjectsSortedByDate();
-      
-      // Get unique tags for filtering
-      this.categories = await this.dataService.getAllTags();
-    } catch (err) {
-      console.error('Error loading projects data:', err);
-    } finally {
-      this.loading = false;
-    }
+    // Always fetch fresh data when navigating to projects list
+    const forceRefresh = true;
+    
+    // Load initial data in parallel
+    const projectsData$ = this.dataService.getProjectsSortedByDate(forceRefresh);
+    const categories$ = this.dataService.getAllTags(forceRefresh);
+    
+    forkJoin([projectsData$, categories$]).subscribe({
+      next: ([projects, categories]) => {
+        this.projects.set(projects);
+        this.categories.set(categories);
+        this.loading.set(false);
+      },
+      error: (err) => {
+        console.error('Error loading projects data:', err);
+        this.loading.set(false);
+      }
+    });
   }
 
-  async filterByCategory(category: string | null) {
-    this.loading = true;
-    this.selectedCategory = category;
+  filterByCategory(category: string | null) {
+    this.loading.set(true);
+    this.selectedCategory.set(category);
     
-    try {
-      if (category) {
-        this.projects = await this.dataService.getFilteredProjects({ tags: category });
-      } else {
-        this.projects = await this.dataService.getProjectsSortedByDate();
+    (category ? 
+      this.dataService.getFilteredProjects({ tags: category }) : 
+      this.dataService.getProjectsSortedByDate()
+    ).subscribe({
+      next: (projects) => {
+        this.projects.set(projects);
+        this.loading.set(false);
+      },
+      error: (err) => {
+        console.error('Error filtering projects:', err);
+        this.loading.set(false);
       }
-    } catch (err) {
-      console.error('Error filtering projects:', err);
-    } finally {
-      this.loading = false;
-    }
+    });
   }
 }

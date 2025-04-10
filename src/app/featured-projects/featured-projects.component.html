@@ -13,15 +13,20 @@
     </div>
 
     <div class="projects-grid" role="list" aria-label="Featured projects">
-      <article *ngFor="let project of featuredProjects"
+      <article *ngFor="let project of featuredProjects()"
         class="project-card material-card overflow-hidden mb-8 cursor-pointer backdrop-blur-sm"
         [routerLink]="['/project', project.id]"
         role="listitem"
         tabindex="0"
-        [attr.aria-label]="project.title + ' project'">
-        <div class="project-image">
-          <img [src]="project.mockups[0]" [alt]="project.title + ' screenshot'" class="mockup w-full h-full object-cover">
-          <img [src]="project.logo" [alt]="project.title + ' logo'" class="logo w-full h-full">
+        [attr.aria-label]="project.title + ' project'">        <div class="project-image">
+          <img *ngIf="project.mockups && project.mockups.length > 0" 
+               [src]="project.mockups[0]" 
+               [alt]="project.title + ' screenshot'" 
+               class="mockup w-full h-full object-cover">
+          <img *ngIf="project.logo" 
+               [src]="project.logo" 
+               [alt]="project.title + ' logo'" 
+               class="logo w-full h-full">
         </div>
 
         <div class="project-content p-6">
