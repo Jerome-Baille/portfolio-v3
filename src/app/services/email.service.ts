@@ -17,13 +17,12 @@ export class EmailService {
   private emailUrl = environment.emailURL;
 
   constructor(private http: HttpClient) { }
-
   /**
    * Sends an email with the contact form data
    * @param emailData Object containing name, email, subject and message
-   * @returns Observable with the server response
+   * @returns Observable with the server response as text
    */
-  sendEmail(emailData: EmailData): Observable<any> {
-    return this.http.post(this.emailUrl, emailData);
+  sendEmail(emailData: EmailData): Observable<string> {
+    return this.http.post(this.emailUrl, emailData, { responseType: 'text' });
   }
 }
