@@ -29,9 +29,13 @@
         tabindex="0"
         [attr.aria-label]="project.title + ' project'">        <!-- Project Image -->
         <div class="relative overflow-hidden h-[300px]" *ngIf="project.mockups && project.mockups.length > 0 || project.screenshot">
-          <img [src]="project.mockups && project.mockups.length > 0 ? project.mockups[0] : (project.screenshot || '')" 
+          <picture>
+            <source [srcset]="(project.mockups && project.mockups.length > 0 ? project.mockups[0] : (project.screenshot || '')).replace('.png', '.avif')" type="image/avif">
+            <source [srcset]="(project.mockups && project.mockups.length > 0 ? project.mockups[0] : (project.screenshot || '')).replace('.png', '.webp')" type="image/webp">
+            <img [src]="project.mockups && project.mockups.length > 0 ? project.mockups[0] : (project.screenshot || '')" 
                [alt]="project.title + ' project screenshot'" 
                class="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105">
+          </picture>
         </div>
 
         <div class="p-6 flex flex-col h-full">

@@ -35,12 +35,20 @@
       <!-- Project showcase -->
       <div class="mb-16" role="region" aria-label="Project visuals">        <!-- Main screenshot -->
         <div *ngIf="project()?.screenshot" class="material-card-region overflow-hidden mb-8 rounded-lg max-h-[600px]">
-          <img [src]="project()?.screenshot" [alt]="project()?.title + ' screenshot'" class="w-full">
+          <picture>
+            <source [srcset]="project()?.screenshot?.replace('.png', '.avif') || ''" type="image/avif">
+            <source [srcset]="project()?.screenshot?.replace('.png', '.webp') || ''" type="image/webp">
+            <img [src]="project()?.screenshot" [alt]="project()?.title + ' screenshot'" class="w-full">
+          </picture>
         </div>
 
         <!-- Mockups gallery -->
         <div *ngIf="project()?.mockups && (project()?.mockups?.length || 0) > 0" class="grid grid-cols-1 md:grid-cols-3 gap-6" role="list" aria-label="Project mockups">          <div *ngFor="let mockup of project()?.mockups || []; let i = index" class="material-card-region overflow-hidden rounded-lg aspect-video" role="listitem">
-            <img [src]="mockup" [alt]="(project()?.title || 'Project') + ' mockup ' + (i+1)" class="w-full h-full object-cover">
+            <picture>
+              <source [srcset]="mockup.replace('.png', '.avif')" type="image/avif">
+              <source [srcset]="mockup.replace('.png', '.webp')" type="image/webp">
+              <img [src]="mockup" [alt]="(project()?.title || 'Project') + ' mockup ' + (i+1)" class="w-full h-full object-cover">
+            </picture>
           </div>
         </div>
       </div>

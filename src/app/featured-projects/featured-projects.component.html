@@ -19,14 +19,24 @@
         role="listitem"
         tabindex="0"
         [attr.aria-label]="project.title + ' project'">        <div class="project-image">
-          <img *ngIf="project.mockups && project.mockups.length > 0" 
-               [src]="project.mockups[0]" 
-               [alt]="project.title + ' screenshot'" 
-               class="mockup w-full h-full object-cover">
-          <img *ngIf="project.logo" 
-               [src]="project.logo" 
-               [alt]="project.title + ' logo'" 
-               class="logo w-full h-full">
+          <ng-container *ngIf="project.mockups && project.mockups.length > 0">
+            <picture>
+              <source [srcset]="project.mockups[0].replace('.png', '.avif')" type="image/avif">
+              <source [srcset]="project.mockups[0].replace('.png', '.webp')" type="image/webp">
+              <img [src]="project.mockups[0]" 
+                   [alt]="project.title + ' screenshot'" 
+                   class="mockup w-full h-full object-cover">
+            </picture>
+          </ng-container>
+          <ng-container *ngIf="project.logo">
+            <picture>
+              <source [srcset]="project.logo.replace('.png', '.avif')" type="image/avif">
+              <source [srcset]="project.logo.replace('.png', '.webp')" type="image/webp">
+              <img [src]="project.logo" 
+                   [alt]="project.title + ' logo'" 
+                   class="logo w-full h-full">
+            </picture>
+          </ng-container>
         </div>
 
         <div class="project-content p-6">
