@@ -20,6 +20,5 @@
     <text font-family="Playfair Display, serif" font-size="24" font-weight="400" fill="#D3AC92" x="275" y="260">
       <tspan>Project Preview Not Available</tspan>
     </text>
-    <rect stroke="rgba(211, 172, 146, 0.2)" stroke-width="2" x="1" y="1" width="798" height="448" rx="2"></rect>
   </g>
 </svg>

@@ -24,14 +24,14 @@ export const customImageLoader: ImageLoader = (config: ImageLoaderConfig): strin
 })
 export class AboutCarouselComponent {
   certificates: Certificate[] = [
-    { name: 'Google AI Essentials', image: 'certificates/google_ai_essentials.png' },
-    { name: 'Google Data Analytics', image: 'certificates/google_analyst.png' },
-    { name: 'Google Cybersecurity', image: 'certificates/google_cybersecurity.png' },
-    { name: 'Google IT Support', image: 'certificates/google_it_support.png' },
-    { name: 'Google Project Management', image: 'certificates/google_project_management.png' },
-    { name: 'Meta Backend Developer', image: 'certificates/meta_backend.png' },
-    { name: 'Meta Frontend Developer', image: 'certificates/meta_frontend.png' },
-    { name: 'Meta Full Stack Developer', image: 'certificates/meta_fullstack.png' }
+    { name: 'Google AI Essentials', image: 'certificates/google_ai_essentials.webp' },
+    { name: 'Google Data Analytics', image: 'certificates/google_analyst.webp' },
+    { name: 'Google Cybersecurity', image: 'certificates/google_cybersecurity.webp' },
+    { name: 'Google IT Support', image: 'certificates/google_it_support.webp' },
+    { name: 'Google Project Management', image: 'certificates/google_project_management.webp' },
+    { name: 'Meta Backend Developer', image: 'certificates/meta_backend.webp' },
+    { name: 'Meta Frontend Developer', image: 'certificates/meta_frontend.webp' },
+    { name: 'Meta Full Stack Developer', image: 'certificates/meta_fullstack.webp' }
   ];
 
   // Image sizes using responsive values

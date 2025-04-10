@@ -1,94 +1,70 @@
-import { Injectable, NgZone } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Injectable, NgZone, signal } from '@angular/core';
+import { toObservable } from '@angular/core/rxjs-interop';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoadingService {
-  private loadingSubject = new BehaviorSubject<boolean>(true);
-  public loading$: Observable<boolean> = this.loadingSubject.asObservable();
+  /**
+   * Signal for the loading state using Angular 19's signals
+   * Initially false as we don't want to show the spinner right away
+   */
+  private isLoading = signal<boolean>(false);
   
-  private totalImages = 0;
-  private loadedImages = 0;
-  private imagesRegistered = false;
+  /**
+   * Public observable for components that need to subscribe to loading state
+   */
+  public loading$ = toObservable(this.isLoading);
+  
+  /**
+   * Request counter to manage multiple concurrent requests
+   */
+  private pendingRequests = 0;
 
-  constructor(private ngZone: NgZone) { }
+  constructor(private ngZone: NgZone) {}
 
   /**
-   * Show the loading spinner
+   * Show the loading spinner when an API request starts
    */
-  showLoading(): void {
+  startLoading(): void {
     this.ngZone.runOutsideAngular(() => {
-      setTimeout(() => {
-        this.loadingSubject.next(true);
-      }, 0);
+      this.pendingRequests++;
+      if (this.pendingRequests === 1) {
+        // Only update the signal when transitioning from 0 to 1 pending requests
+        this.isLoading.set(true);
+      }
     });
   }
 
   /**
-   * Hide the loading spinner
+   * Hide the loading spinner when an API request completes
    */
-  hideLoading(): void {
+  stopLoading(): void {
     this.ngZone.runOutsideAngular(() => {
-      setTimeout(() => {
-        this.loadingSubject.next(false);
-      }, 0);
-    });
-  }
-
-  /**
-   * Register the total number of images on the current page to track loading progress
-   */
-  registerImages(total: number): void {
-    this.totalImages = total;
-    this.loadedImages = 0;
-    this.imagesRegistered = true;
-    
-    if (total === 0) {
-      this.hideLoading(); // No images to load
-    } else {
-      this.showLoading();
-    }
-  }
-
-  /**
-   * Mark an image as loaded and check if all images are loaded
-   */
-  imageLoaded(): void {
-    if (!this.imagesRegistered) {
-      return;
-    }
-    
-    this.loadedImages++;
-    
-    if (this.loadedImages >= this.totalImages) {
-      // All images loaded, hide the spinner after a small delay
-      // to ensure smooth transition
-      this.ngZone.runOutsideAngular(() => {
+      this.pendingRequests = Math.max(0, this.pendingRequests - 1);
+      if (this.pendingRequests === 0) {
+        // Small delay for smoother transition
         setTimeout(() => {
-          this.hideLoading();
-        }, 300);
-      });
-    }
+          this.isLoading.set(false);
+        }, 200);
+      }
+    });
   }
-
+  
   /**
-   * Reset the image loading tracker
+   * Force reset the loading state (useful for error scenarios)
    */
-  resetImageTracking(): void {
-    this.totalImages = 0;
-    this.loadedImages = 0;
-    this.imagesRegistered = false;
+  resetLoading(): void {
+    this.ngZone.runOutsideAngular(() => {
+      this.pendingRequests = 0;
+      this.isLoading.set(false);
+    });
   }
-
+  
   /**
-   * Get the current loading status
+   * Check if currently loading
    */
-  getLoadingStatus(): {total: number, loaded: number, isRegistered: boolean} {
-    return {
-      total: this.totalImages,
-      loaded: this.loadedImages,
-      isRegistered: this.imagesRegistered
-    };
+  getLoadingState(): boolean {
+    return this.isLoading();
   }
 }
