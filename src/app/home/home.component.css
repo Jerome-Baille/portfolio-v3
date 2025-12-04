@@ -168,6 +168,16 @@
     padding: 0.1em 0.2em;
 }
 
+/* Responsive font sizing using clamp() for improved scaling */
+.debossed-text {
+    font-size: clamp(1.75rem, 6vw, 4.5rem);
+}
+
+/* Subheading / role text responsive size */
+.role-text {
+    font-size: clamp(0.95rem, 2.4vw, 1.5rem);
+}
+
 .debossed-text::before {
     content: attr(data-text);
     position: absolute;
