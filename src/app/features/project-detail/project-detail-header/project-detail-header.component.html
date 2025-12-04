@@ -1,0 +1,24 @@
+<header class="mb-12">
+  <div class="flex justify-between items-center mb-3">
+    <h1 id="project-title" class="section-title text-4xl">
+      {{ project()?.title }}
+    </h1>
+    <!-- Breadcrumb sits above; header is presentational only -->
+  </div>
+  @if (project()?.subtitle) {
+  <p class="text-xl text-gray-300 mb-6">{{ project()?.subtitle }}</p>
+  } @if (project()?.tags && (project()?.tags?.length || 0) > 0) {
+  <div
+    class="flex flex-wrap gap-3 mb-6"
+    [class.mt-6]="!project()?.subtitle"
+    role="list"
+    aria-label="Project technologies"
+  >
+    @for (tag of project()?.tags || []; track tag) {
+    <span class="project-tag px-3 py-1 rounded-full text-sm" role="listitem">
+      {{ tag }}
+    </span>
+    }
+  </div>
+  }
+</header>

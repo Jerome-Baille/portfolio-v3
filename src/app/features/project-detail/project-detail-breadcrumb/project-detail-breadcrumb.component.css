@@ -1,0 +1,35 @@
+/* Breadcrumb styling matching the project detail aesthetic */
+.breadcrumb-wrapper {
+	margin-bottom: 1rem;
+}
+
+.breadcrumb-list {
+	display: flex;
+	gap: 0.5rem;
+	align-items: center;
+	font-size: 0.9rem;
+	color: var(--muted-text, #9aa4b2);
+}
+
+.breadcrumb-item {
+	display: inline-flex;
+	align-items: center;
+}
+
+.breadcrumb-link {
+	color: var(--primary);
+	text-decoration: none;
+	padding: 0.25rem 0.5rem;
+	border-radius: 9999px;
+	transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.breadcrumb-link:hover {
+	background-color: rgba(20,60,90,0.05);
+	color: var(--primary-dark, #0b4569);
+}
+
+.breadcrumb-separator { color: rgba(255,255,255,0.12); }
+
+.breadcrumb-current { color: #e6eef6; font-weight: 600; }
+

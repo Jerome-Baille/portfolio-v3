@@ -1,0 +1,20 @@
+
+/* Gallery / showcase styles */
+.project-showcase {
+	margin-left: -1.5rem;
+	margin-right: -1.5rem;
+}
+
+.main-screenshot,
+.mockup {
+	border-radius: 0;
+}
+
+/* preserve material-card-region appearance locally */
+.material-card-region {
+	background: var(--card-bg);
+	border: 1px solid var(--card-border);
+	box-shadow: 0 7px 14px rgba(0, 0, 0, 0.25), 0 5px 5px rgba(0, 0, 0, 0.22);
+	background: var(--card-hover);
+}
+

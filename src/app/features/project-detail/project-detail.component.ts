@@ -4,11 +4,16 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Project } from '../../shared/interfaces/project.interface';
 import { switchMap } from 'rxjs';
 import { DataService } from '../../core/services/data.service';
+import { ProjectDetailHeaderComponent } from "./project-detail-header/project-detail-header.component";
+import { ProjectDetailGalleryComponent } from './project-detail-gallery/project-detail-gallery.component';
+import { ProjectDetailDescriptionComponent } from './project-detail-description/project-detail-description.component';
+import { ProjectDetailTechStackComponent } from './project-detail-tech-stack/project-detail-tech-stack.component';
+import { ProjectDetailBreadcrumbComponent } from "./project-detail-breadcrumb/project-detail-breadcrumb.component";
 
 @Component({
   selector: 'app-project-detail',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, ProjectDetailHeaderComponent, ProjectDetailGalleryComponent, ProjectDetailDescriptionComponent, ProjectDetailTechStackComponent, ProjectDetailBreadcrumbComponent],
   templateUrl: './project-detail.component.html',
   styleUrl: './project-detail.component.css'
 })

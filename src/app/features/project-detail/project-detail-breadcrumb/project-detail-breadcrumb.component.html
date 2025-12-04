@@ -1,0 +1,9 @@
+<nav aria-label="Breadcrumb" class="breadcrumb-wrapper">
+	<ol class="breadcrumb-list">
+		<li class="breadcrumb-item">
+			<a routerLink="/projects" class="breadcrumb-link" aria-label="Back to projects list">Projects</a>
+		</li>
+		<li class="breadcrumb-separator" aria-hidden="true">/</li>
+		<li class="breadcrumb-current" aria-current="page">{{ project()?.title }}</li>
+	</ol>
+</nav>

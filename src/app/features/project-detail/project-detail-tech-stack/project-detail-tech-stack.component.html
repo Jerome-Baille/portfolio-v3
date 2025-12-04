@@ -1,0 +1,87 @@
+<!-- Tech stack (moved from parent) -->
+<div class="mb-16" role="region" aria-labelledby="tech-stack-heading">
+	<h2 id="tech-stack-heading" class="section-title text-2xl mb-8">Tech Stack</h2>
+	<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+		@if (project()?.fullStack && project()?.fullStack?.frontend && (project()?.fullStack?.frontend?.length || 0) > 0) {
+		<div
+			class="material-card-region p-6 rounded-lg h-full"
+			role="region"
+			aria-labelledby="frontend-tech"
+		>
+			<h3 id="frontend-tech" class="text-xl mb-4 flex items-center">
+				<svg class="w-5 h-5 mr-2 text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+					<rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+					<line x1="8" y1="21" x2="16" y2="21"></line>
+					<line x1="12" y1="17" x2="12" y2="21"></line></svg>Frontend
+			</h3>
+			<ul class="list-disc pl-5 text-gray-300" aria-label="Frontend technologies">
+				@for (tech of project()?.fullStack?.frontend || []; track tech) {
+				<li class="mb-1">{{ tech }}</li>
+				}
+			</ul>
+		</div>
+		}
+
+		@if (project()?.fullStack && project()?.fullStack?.backend && (project()?.fullStack?.backend?.length || 0) > 0) {
+		<div
+			class="material-card-region p-6 rounded-lg h-full"
+			role="region"
+			aria-labelledby="backend-tech"
+		>
+			<h3 id="backend-tech" class="text-xl mb-4 flex items-center">
+				<svg class="w-5 h-5 mr-2 text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+					<rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+					<rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+					<line x1="6" y1="6" x2="6.01" y2="6"></line>
+					<line x1="6" y1="18" x2="6.01" y2="18"></line></svg>Backend
+			</h3>
+			<ul class="list-disc pl-5 text-gray-300" aria-label="Backend technologies">
+				@for (tech of project()?.fullStack?.backend || []; track tech) {
+				<li class="mb-1">{{ tech }}</li>
+				}
+			</ul>
+		</div>
+		}
+
+		@if (project()?.fullStack && project()?.fullStack?.database && (project()?.fullStack?.database?.length || 0) > 0) {
+		<div
+			class="material-card-region p-6 rounded-lg h-full"
+			role="region"
+			aria-labelledby="database-tech"
+		>
+			<h3 id="database-tech" class="text-xl mb-4 flex items-center">
+				<svg class="w-5 h-5 mr-2 text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+					<ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+					<path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+					<path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>Database
+			</h3>
+			<ul class="list-disc pl-5 text-gray-300" aria-label="Database technologies">
+				@for (tech of project()?.fullStack?.database || []; track tech) {
+				<li class="mb-1">{{ tech }}</li>
+				}
+			</ul>
+		</div>
+		}
+
+		@if (project()?.fullStack && project()?.fullStack?.extension && (project()?.fullStack?.extension?.length || 0) > 0) {
+		<div
+			class="material-card-region p-6 rounded-lg h-full"
+			role="region"
+			aria-labelledby="extension-tech"
+		>
+			<h3 id="extension-tech" class="text-xl mb-4 flex items-center">
+				<svg class="w-5 h-5 mr-2 text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+					<rect x="3" y="3" width="7" height="7"></rect>
+					<rect x="14" y="3" width="7" height="7"></rect>
+					<rect x="14" y="14" width="7" height="7"></rect>
+					<rect x="3" y="14" width="7" height="7"></rect></svg>Extension
+			</h3>
+			<ul class="list-disc pl-5 text-gray-300" aria-label="Extension technologies">
+				@for (tech of project()?.fullStack?.extension || []; track tech) {
+				<li class="mb-1">{{ tech }}</li>
+				}
+			</ul>
+		</div>
+		}
+	</div>
+</div>

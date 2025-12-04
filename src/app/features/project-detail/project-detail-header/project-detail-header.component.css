@@ -1,0 +1,11 @@
+
+/* Header-specific styles */
+
+/* Project tags */
+.project-tag {
+	background-color: rgba(211, 172, 146, 0.15);
+	color: var(--primary);
+	border: 1px solid rgba(211, 172, 146, 0.3);
+	transition: background-color 0.3s ease;
+}
+

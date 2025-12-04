@@ -1,0 +1,49 @@
+<!-- Gallery (moved from parent) -->
+<div class="mb-16" role="region" aria-label="Project visuals">
+	@if (project()?.mockups && (project()?.mockups?.length || 0) > 0) {
+	<div class="material-card-region overflow-hidden mb-8 rounded-lg">
+		<picture>
+			<source [srcset]="project()?.mockups?.[0]?.avif" type="image/avif" />
+			<source [srcset]="project()?.mockups?.[0]?.webp" type="image/webp" />
+			<img
+				[src]="project()?.mockups?.[0]?.png"
+				[alt]="(project()?.title || 'Project') + ' main mockup'"
+				class="w-full object-contain"
+			/>
+		</picture>
+	</div>
+	} @if (!(project()?.mockups && (project()?.mockups?.length || 0) > 0)) {
+	<div class="material-card-region overflow-hidden mb-8 rounded-lg">
+		<img
+			src="assets/placeholder-project.svg"
+			[alt]="project()?.title + ' placeholder'"
+			class="w-full object-contain"
+		/>
+	</div>
+	}
+
+	@if (project()?.mockups && (project()?.mockups?.length || 0) > 1) {
+	<div
+		class="grid grid-cols-1 md:grid-cols-3 gap-6"
+		role="list"
+		aria-label="Additional project mockups"
+	>
+		@for (mockup of (project()?.mockups?.slice(1) || []); track mockup; let i = $index) {
+		<div
+			class="material-card-region overflow-hidden rounded-lg aspect-video"
+			role="listitem"
+		>
+			<picture>
+				<source [srcset]="mockup.avif" type="image/avif" />
+				<source [srcset]="mockup.webp" type="image/webp" />
+				<img
+					[src]="mockup.png"
+					[alt]="(project()?.title || 'Project') + ' mockup ' + (i + 2)"
+					class="w-full h-full object-cover"
+				/>
+			</picture>
+		</div>
+		}
+	</div>
+	}
+</div>
