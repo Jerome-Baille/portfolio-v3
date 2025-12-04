@@ -1,8 +1,8 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { DataService } from '../services/data.service';
-import { Project } from '../interfaces/project.interface';
+import { DataService } from '../../../core/services/data.service';
+import { Project } from '../../../shared/interfaces/project.interface';
 
 @Component({
   selector: 'app-featured-projects',

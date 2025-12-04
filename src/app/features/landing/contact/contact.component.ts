@@ -1,8 +1,8 @@
 import { Component, signal, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { EmailService } from '../services/email.service';
 import { finalize } from 'rxjs';
+import { EmailService } from '../../../core/services/email.service';
 
 @Component({
   selector: 'app-contact',

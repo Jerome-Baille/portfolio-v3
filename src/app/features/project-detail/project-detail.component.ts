@@ -1,9 +1,9 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { DataService } from '../services/data.service';
-import { Project } from '../interfaces/project.interface';
+import { Project } from '../../shared/interfaces/project.interface';
 import { switchMap } from 'rxjs';
+import { DataService } from '../../core/services/data.service';
 
 @Component({
   selector: 'app-project-detail',

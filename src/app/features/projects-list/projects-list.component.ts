@@ -1,9 +1,9 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { DataService } from '../services/data.service';
-import { Project } from '../interfaces/project.interface';
+import { Project } from '../../shared/interfaces/project.interface';
 import { forkJoin } from 'rxjs';
+import { DataService } from '../../core/services/data.service';
 
 @Component({
   selector: 'app-projects-list',

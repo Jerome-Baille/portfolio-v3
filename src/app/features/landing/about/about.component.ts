@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { ViewportAnimationDirective } from '../shared/directives/viewport-animation.directive';
+import { ViewportAnimationDirective } from '../../../shared/directives';
+
 
 @Component({
   selector: 'app-about',

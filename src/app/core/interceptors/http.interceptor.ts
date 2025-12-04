@@ -1,7 +1,7 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { LoadingService } from '../services/loading.service';
 import { finalize } from 'rxjs/operators';
+import { LoadingService } from '../services/loading.service';
 
 /**
  * HTTP interceptor that shows/hides the loading spinner automatically

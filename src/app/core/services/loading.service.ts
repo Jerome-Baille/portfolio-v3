@@ -67,4 +67,14 @@ export class LoadingService {
   getLoadingState(): boolean {
     return this.isLoading();
   }
+
+  /**
+   * Called by non-HTTP consumers (for example image directives) when
+   * an individual resource has finished loading. This is a public
+   * convenience wrapper around stopLoading so callers don't need to
+   * know about request semantics.
+   */
+  imageLoaded(): void {
+    this.stopLoading();
+  }
 }

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgOptimizedImage, ImageLoader, ImageLoaderConfig } from '@angular/common';
-import { ViewportAnimationDirective } from '../shared/directives/viewport-animation.directive';
+import { ViewportAnimationDirective } from '../../../shared/directives';
 
 interface Certificate {
   name: string;

@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
-import { LandingComponent } from './landing/landing.component';
-import { ProjectDetailComponent } from './project-detail/project-detail.component';
-import { ProjectsListComponent } from './projects-list/projects-list.component';
+import { ProjectDetailComponent } from './features/project-detail/project-detail.component';
+import { ProjectsListComponent } from './features/projects-list/projects-list.component';
+import { LandingComponent } from './features/landing/landing.component';
 
 export const routes: Routes = [
     {

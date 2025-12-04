@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, catchError, map, of, shareReplay, tap } from 'rxjs';
-import { Project } from '../interfaces/project.interface';
-import { environment } from '../../environments/environment';
+import { Project } from '../../shared/interfaces/project.interface';
+import { environment } from '../../../environments/environment';
+
 
 // Interface for the Asset model from the backend
 interface Asset {

@@ -1,5 +1,5 @@
 import { AfterViewInit, Directive, ElementRef, HostListener, OnDestroy } from '@angular/core';
-import { LoadingService } from '../../services/loading.service';
+import { LoadingService } from '../../core/services/loading.service';
 
 @Directive({
   selector: 'img[appImageLoad]',

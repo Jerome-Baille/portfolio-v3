@@ -61,7 +61,7 @@ export class NavbarComponent implements OnInit {
   }
 
   @HostListener('window:scroll', ['$event'])
-  onScroll() {
+  onScroll(event?: Event) {
     this.checkScrollPosition();
   }
   
