@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ChangeDetectorRef, NgZone, ApplicationRef } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoadingService } from '../services/loading.service';
 import { Subscription } from 'rxjs';
@@ -16,29 +16,21 @@ export class SpinnerComponent implements OnInit, OnDestroy {
 
   constructor(
     private loadingService: LoadingService,
-    private ngZone: NgZone,
-    private appRef: ApplicationRef
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    // Run outside Angular zone to prevent excessive change detection
-    this.ngZone.runOutsideAngular(() => {
-      // Subscribe to the loading status
-      this.loadingSubscription = this.loadingService.loading$.subscribe(
-        (isLoading) => {
-          // Update the isLoading value
+    // Subscribe to the loading status. Updating in setTimeout defers
+    // the change to the next macrotask which prevents
+    // ExpressionChangedAfterItHasBeenCheckedError.
+    this.loadingSubscription = this.loadingService.loading$.subscribe(
+      (isLoading) => {
+        setTimeout(() => {
           this.isLoading = isLoading;
-          
-          // Manually trigger change detection in a safe way
-          this.ngZone.run(() => {
-            // Use setTimeout to ensure changes happen in a separate cycle
-            setTimeout(() => {
-              this.appRef.tick();
-            }, 0);
-          });
-        }
-      );
-    });
+          this.cdr.detectChanges();
+        }, 0);
+      }
+    );
   }
 
   ngOnDestroy(): void {
