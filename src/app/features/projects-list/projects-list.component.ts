@@ -1,5 +1,5 @@
-import { Component, OnInit, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, signal, inject } from '@angular/core';
+
 import { RouterModule } from '@angular/router';
 import { Project } from '../../shared/interfaces/project.interface';
 import { forkJoin } from 'rxjs';
@@ -8,17 +8,17 @@ import { DataService } from '../../core/services/data.service';
 @Component({
   selector: 'app-projects-list',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [RouterModule],
   templateUrl: './projects-list.component.html',
   styleUrl: './projects-list.component.css'
 })
 export class ProjectsListComponent implements OnInit {
+  private dataService = inject(DataService);
+
   projects = signal<Project[]>([]);
   categories = signal<string[]>([]);
   selectedCategory = signal<string | null>(null);
   loading = signal<boolean>(true);
-
-  constructor(private dataService: DataService) {}
   
   ngOnInit() {
     window.scrollTo(0, 0);

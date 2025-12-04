@@ -1,5 +1,5 @@
-import { Component, OnInit, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, signal, inject } from '@angular/core';
+
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Project } from '../../shared/interfaces/project.interface';
 import { switchMap } from 'rxjs';
@@ -8,19 +8,17 @@ import { DataService } from '../../core/services/data.service';
 @Component({
   selector: 'app-project-detail',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [RouterModule],
   templateUrl: './project-detail.component.html',
   styleUrl: './project-detail.component.css'
 })
 export class ProjectDetailComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private dataService = inject(DataService);
+
   project = signal<Project | undefined>(undefined);
   loading = signal<boolean>(true);
   error = signal<boolean>(false);
-  
-  constructor(
-    private route: ActivatedRoute,
-    private dataService: DataService
-  ) {}
 
   ngOnInit(): void {
     // Scroll to top when component initializes

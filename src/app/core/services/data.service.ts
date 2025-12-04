@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, catchError, map, of, shareReplay, tap } from 'rxjs';
 import { Project } from '../../shared/interfaces/project.interface';
@@ -35,15 +35,15 @@ interface ProjectResponse extends Omit<Project, 'featured' | 'logo' | 'screensho
   providedIn: 'root'
 })
 export class DataService {
+  private http = inject(HttpClient);
+
   private readonly projectsSubject = new BehaviorSubject<Project[]>([]);
   
   // Expose the observables
   readonly projects$ = this.projectsSubject.asObservable();
   
   // Track if data is loaded
-  private projectsLoaded = false;
-
-  constructor(private http: HttpClient) {}  // Process project data to match frontend model
+  private projectsLoaded = false;  // Process project data to match frontend model
   private processProjectData(project: ProjectResponse): Project {
     // Convert backend's 0/1 featured to boolean
     const featured = project.featured === 1 ? true : false;
@@ -62,7 +62,7 @@ export class DataService {
     const screenshotAssets = project.Assets?.filter((asset: Asset) => asset.type === 'screenshot') || [];
     
     // Group mockup assets by their base name (without format extension)
-    const mockupGroups: { [key: string]: Asset[] } = {};
+    const mockupGroups: Record<string, Asset[]> = {};
     
     project.Assets
       ?.filter((asset: Asset) => asset.type === 'mockup')
@@ -95,7 +95,7 @@ export class DataService {
   private currentRequest: Observable<Project[]> | null = null;
 
   // Load projects from the backend
-  loadProjects(forceRefresh: boolean = false): Observable<Project[]> {
+  loadProjects(forceRefresh = false): Observable<Project[]> {
     // If we have already loaded projects and aren't forcing a refresh, return cached data
     if (this.projectsLoaded && !forceRefresh) {
       return this.projects$;
@@ -107,7 +107,7 @@ export class DataService {
     }
 
     // Create a new request and store it
-    this.currentRequest = this.http.get<any[]>(environment.projectURL).pipe(
+    this.currentRequest = this.http.get<ProjectResponse[]>(environment.projectURL).pipe(
       map(projects => projects.map(project => this.processProjectData(project))),
       tap(processedProjects => {
         this.projectsSubject.next(processedProjects);
@@ -138,7 +138,7 @@ export class DataService {
     }
     
     // If not in cache, fetch from backend
-    return this.http.get<any>(`${environment.projectURL}/${id}`).pipe(
+    return this.http.get<ProjectResponse>(`${environment.projectURL}/${id}`).pipe(
       map(project => this.processProjectData(project)),
       catchError(error => {
         console.error(`Error fetching project with ID ${id}:`, error);
@@ -147,14 +147,14 @@ export class DataService {
     );
   }
   // Method to get filtered projects
-  getFilteredProjects(filters: { [key: string]: any }, forceRefresh: boolean = false): Observable<Project[]> {
+  getFilteredProjects(filters: Record<string, Project[keyof Project]>, forceRefresh = false): Observable<Project[]> {
     // First ensure projects are loaded
     return this.loadProjects(forceRefresh).pipe(
       map(projects => {
         let filteredProjects = [...projects];
 
         Object.entries(filters).forEach(([key, value]) => {
-          if (value) {
+          if (value !== undefined && value !== null) {
             filteredProjects = filteredProjects.filter(project => {
               // Check if the key exists in the project
               if (!(key in project)) {
@@ -164,8 +164,8 @@ export class DataService {
               const projectValue = project[key as keyof Project];
 
               // Handle array values (like tags)
-              if (Array.isArray(projectValue)) {
-                return projectValue.includes(value);
+              if (Array.isArray(projectValue) && typeof value === 'string') {
+                return (projectValue as string[]).includes(value);
               }
 
               // Handle non-array values
@@ -179,7 +179,7 @@ export class DataService {
     );
   }
   // Method to get unique tags
-  getAllTags(forceRefresh: boolean = false): Observable<string[]> {
+  getAllTags(forceRefresh = false): Observable<string[]> {
     return this.loadProjects(forceRefresh).pipe(
       map(projects => {
         const tags = new Set<string>();
@@ -190,7 +190,7 @@ export class DataService {
       })
     );
   }  // Method to get projects sorted by date
-  getProjectsSortedByDate(forceRefresh: boolean = false): Observable<Project[]> {
+  getProjectsSortedByDate(forceRefresh = false): Observable<Project[]> {
     return this.loadProjects(forceRefresh).pipe(
       map(projects => [...projects].sort((a, b) => b.date - a.date))
     );

@@ -33,7 +33,7 @@ export class NavbarComponent implements OnInit {
       map(result => result.matches)
     );
 
-  activeSection: string = '';
+  activeSection = '';
   isScrolled = false;
   isLandingPage = true;
 
@@ -44,7 +44,7 @@ export class NavbarComponent implements OnInit {
     // Subscribe to route changes
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
-    ).subscribe((event: any) => {
+    ).subscribe((event: NavigationEnd) => {
       this.isLandingPage = event.url === '/';
       
       // Reset active section when not on landing page
@@ -60,8 +60,8 @@ export class NavbarComponent implements OnInit {
     this.checkScrollPosition();
   }
 
-  @HostListener('window:scroll', ['$event'])
-  onScroll(event?: Event) {
+  @HostListener('window:scroll')
+  onScroll() {
     this.checkScrollPosition();
   }
   

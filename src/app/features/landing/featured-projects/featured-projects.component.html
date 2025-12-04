@@ -13,37 +13,38 @@
     </div>
 
     <div class="projects-grid" role="list" aria-label="Featured projects">
-      <article *ngFor="let project of featuredProjects()"
-        class="project-card material-card overflow-hidden mb-8 cursor-pointer backdrop-blur-sm"
-        [routerLink]="['/project', project.id]"
-        role="listitem"
-        tabindex="0"
-        [attr.aria-label]="project.title + ' project'">        <div class="project-image">
-          <ng-container *ngIf="project.mockups && project.mockups.length > 0">
+      @for (project of featuredProjects(); track project) {
+        <article
+          class="project-card material-card overflow-hidden mb-8 cursor-pointer backdrop-blur-sm"
+          [routerLink]="['/project', project.id]"
+          role="listitem"
+          tabindex="0"
+          [attr.aria-label]="project.title + ' project'">        <div class="project-image">
+          @if (project.mockups && project.mockups.length > 0) {
             <picture>
               <source [srcset]="project.mockups[0].avif" type="image/avif">
               <source [srcset]="project.mockups[0].webp" type="image/webp">
-              <img [src]="project.mockups[0].png" 
-                   [alt]="project.title + ' screenshot'" 
-                   class="mockup w-full h-full object-cover">
-            </picture>
-          </ng-container>
-          <ng-container *ngIf="project.logo">
-            <picture>
-              <source [srcset]="project.logo.avif" type="image/avif">
-              <source [srcset]="project.logo.webp" type="image/webp">
-              <img [src]="project.logo.png" 
-                   [alt]="project.title + ' logo'" 
-                   class="logo w-full h-full">
-            </picture>
-          </ng-container>
-        </div>
-
-        <div class="project-content p-6">
-          <h3 class="text-2xl font-playfair mb-3 text-white">{{project.title}}</h3>
-          <p class="project-description text-gray-300 text-base">{{project.subtitle}}</p>
-        </div>
-      </article>
+              <img [src]="project.mockups[0].png"
+                [alt]="project.title + ' screenshot'"
+                class="mockup w-full h-full object-cover">
+              </picture>
+            }
+            @if (project.logo) {
+              <picture>
+                <source [srcset]="project.logo.avif" type="image/avif">
+                <source [srcset]="project.logo.webp" type="image/webp">
+                <img [src]="project.logo.png"
+                  [alt]="project.title + ' logo'"
+                  class="logo w-full h-full">
+                </picture>
+              }
+            </div>
+            <div class="project-content p-6">
+              <h3 class="text-2xl font-playfair mb-3 text-white">{{project.title}}</h3>
+              <p class="project-description text-gray-300 text-base">{{project.subtitle}}</p>
+            </div>
+          </article>
+        }
+      </div>
     </div>
-  </div>
-</section>
+  </section>

@@ -1,10 +1,12 @@
-import { Injectable, NgZone, signal } from '@angular/core';
+import { Injectable, NgZone, signal, inject } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoadingService {
+  private ngZone = inject(NgZone);
+
   /**
    * Signal for the loading state using Angular 19's signals
    * Initially false as we don't want to show the spinner right away
@@ -20,8 +22,6 @@ export class LoadingService {
    * Request counter to manage multiple concurrent requests
    */
   private pendingRequests = 0;
-
-  constructor(private ngZone: NgZone) {}
 
   /**
    * Show the loading spinner when an API request starts

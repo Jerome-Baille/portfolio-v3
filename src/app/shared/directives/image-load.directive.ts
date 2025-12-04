@@ -1,4 +1,4 @@
-import { AfterViewInit, Directive, ElementRef, HostListener, OnDestroy } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, HostListener, OnDestroy, inject } from '@angular/core';
 import { LoadingService } from '../../core/services/loading.service';
 
 @Directive({
@@ -6,12 +6,10 @@ import { LoadingService } from '../../core/services/loading.service';
   standalone: true
 })
 export class ImageLoadDirective implements AfterViewInit, OnDestroy {
-  private isLoaded = false;
+  private el = inject(ElementRef);
+  private loadingService = inject(LoadingService);
 
-  constructor(
-    private el: ElementRef,
-    private loadingService: LoadingService
-  ) {}
+  private isLoaded = false;
 
   ngAfterViewInit(): void {
     // Check if image is already cached and loaded

@@ -1,5 +1,5 @@
-import { Component, OnInit, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, signal, inject } from '@angular/core';
+
 import { RouterModule } from '@angular/router';
 import { DataService } from '../../../core/services/data.service';
 import { Project } from '../../../shared/interfaces/project.interface';
@@ -7,15 +7,15 @@ import { Project } from '../../../shared/interfaces/project.interface';
 @Component({
   selector: 'app-featured-projects',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [RouterModule],
   templateUrl: './featured-projects.component.html',
   styleUrl: './featured-projects.component.css'
 })
 export class FeaturedProjectsComponent implements OnInit {
+  private dataService = inject(DataService);
+
   featuredProjects = signal<Project[]>([]);
   loading = signal<boolean>(true);
-
-  constructor(private dataService: DataService) {}
 
   ngOnInit() {
     this.loading.set(true);

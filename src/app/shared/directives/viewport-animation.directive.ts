@@ -1,20 +1,21 @@
-import { Directive, ElementRef, Input, OnInit, OnDestroy, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, Input, OnInit, OnDestroy, Renderer2, inject } from '@angular/core';
 
 @Directive({
   selector: '[appViewportAnimation]',
   standalone: true
 })
 export class ViewportAnimationDirective implements OnInit, OnDestroy {
-  @Input() animationClass: string = 'fade-in';
-  @Input() threshold: number = 0.1;
-  @Input() animationDelay: number = 0; // Delay in milliseconds
-  @Input() repeatAnimation: boolean = false; // Whether to repeat the animation when scrolling in and out
+  private el = inject(ElementRef);
+  private renderer = inject(Renderer2);
+
+  @Input() animationClass = 'fade-in';
+  @Input() threshold = 0.1;
+  @Input() animationDelay = 0; // Delay in milliseconds
+  @Input() repeatAnimation = false; // Whether to repeat the animation when scrolling in and out
   
   private observer: IntersectionObserver | null = null;
-  private isVisible: boolean = false;
-  private outAnimationClass: string = '';
-
-  constructor(private el: ElementRef, private renderer: Renderer2) {}
+  private isVisible = false;
+  private outAnimationClass = '';
 
   ngOnInit() {
     // Add initial hidden class

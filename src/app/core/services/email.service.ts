@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -14,9 +14,9 @@ interface EmailData {
   providedIn: 'root'
 })
 export class EmailService {
-  private emailUrl = environment.emailURL;
+  private http = inject(HttpClient);
 
-  constructor(private http: HttpClient) { }
+  private emailUrl = environment.emailURL;
   /**
    * Sends an email with the contact form data
    * @param emailData Object containing name, email, subject and message

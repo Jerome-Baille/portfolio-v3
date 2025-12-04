@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { NgOptimizedImage, ImageLoader, ImageLoaderConfig } from '@angular/common';
 import { ViewportAnimationDirective } from '../../../shared/directives';
 
@@ -10,7 +10,6 @@ interface Certificate {
 
 // Custom image loader that generates URLs for different sizes
 export const customImageLoader: ImageLoader = (config: ImageLoaderConfig): string => {
-  const width = config.width || 224; // Default to 224 if width is undefined
   const basePath = config.src.startsWith('/') ? config.src.slice(1) : config.src;
   return basePath;
 };
@@ -18,7 +17,7 @@ export const customImageLoader: ImageLoader = (config: ImageLoaderConfig): strin
 @Component({
   selector: 'app-about-carousel',
   standalone: true,
-  imports: [CommonModule, NgOptimizedImage, ViewportAnimationDirective],
+  imports: [NgOptimizedImage, ViewportAnimationDirective],
   templateUrl: './about-carousel.component.html',
   styleUrl: './about-carousel.component.css'
 })

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnDestroy, OnInit, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { LoadingService } from '../../services/loading.service';
@@ -11,13 +11,11 @@ import { LoadingService } from '../../services/loading.service';
   styleUrl: './spinner.component.css'
 })
 export class SpinnerComponent implements OnInit, OnDestroy {
+  private loadingService = inject(LoadingService);
+  private cdr = inject(ChangeDetectorRef);
+
   isLoading = true;
   private loadingSubscription!: Subscription;
-
-  constructor(
-    private loadingService: LoadingService,
-    private cdr: ChangeDetectorRef
-  ) {}
 
   ngOnInit(): void {
     // Subscribe to the loading status. Updating in setTimeout defers
