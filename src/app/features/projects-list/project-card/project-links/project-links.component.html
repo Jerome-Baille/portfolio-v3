@@ -1,0 +1,32 @@
+<div class="flex items-center gap-6">
+@if (github && github.frontend) {
+  <a
+  [href]="github.frontend"
+  target="_blank"
+  class="inline-flex items-center text-primary font-medium relative transition-colors hover:text-primary-dark after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-primary hover:after:w-full after:transition-all"
+  (click)="$event.stopPropagation()"
+  [attr.aria-label]="'View GitHub repository for ' + title"
+>
+  <span class="material-symbols-outlined"> code </span>
+  GitHub
+  <span class="ml-1" aria-hidden="true"
+    ><i class="fas fa-code-branch text-xs"></i
+  ></span>
+  </a>
+}
+@if (website) {
+  <a
+  [href]="website"
+  target="_blank"
+  class="inline-flex items-center text-primary font-medium relative transition-colors hover:text-primary-dark after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-primary hover:after:w-full after:transition-all"
+  (click)="$event.stopPropagation()"
+  [attr.aria-label]="'Visit live demo of ' + title"
+>
+  <span class="material-symbols-outlined"> open_in_new </span>
+  Live Demo
+  <span class="ml-1" aria-hidden="true"
+    ><i class="fas fa-external-link-alt text-xs"></i
+  ></span>
+  </a>
+}
+</div>

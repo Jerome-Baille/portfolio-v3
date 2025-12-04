@@ -1,6 +1,9 @@
 import { Component, OnInit, signal, inject } from '@angular/core';
 
 import { RouterModule } from '@angular/router';
+import { ProjectFilterComponent } from './project-filter/project-filter.component';
+import { ProjectsGridComponent } from './projects-grid/projects-grid.component';
+import { CommonModule } from '@angular/common';
 import { Project } from '../../shared/interfaces/project.interface';
 import { forkJoin } from 'rxjs';
 import { DataService } from '../../core/services/data.service';
@@ -8,7 +11,7 @@ import { DataService } from '../../core/services/data.service';
 @Component({
   selector: 'app-projects-list',
   standalone: true,
-  imports: [RouterModule],
+  imports: [CommonModule, RouterModule, ProjectFilterComponent, ProjectsGridComponent],
   templateUrl: './projects-list.component.html',
   styleUrl: './projects-list.component.css'
 })

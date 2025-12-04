@@ -1,0 +1,22 @@
+
+.project-tag {
+	background-color: rgba(211, 172, 146, 0.15);
+	color: var(--primary);
+	border: 1px solid rgba(211, 172, 146, 0.3);
+	transition: background-color 0.3s ease;
+}
+
+/* Make the component host transparent so tags become direct children
+   of the parent wrapper; this allows the parent's flex gap to apply. */
+:host {
+	display: contents;
+}
+.project-tag {
+	background-color: rgba(211, 172, 146, 0.15);
+	color: var(--primary);
+	border: 1px solid rgba(211, 172, 146, 0.3);
+	transition: background-color 0.3s ease;
+}
+
+/* parent wrapper should control positioning/layout; keep styling local to tags */
+

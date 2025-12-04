@@ -1,0 +1,12 @@
+
+/* Subtitle color override moved from projects-list.component.css */
+.p-6 .text-sm.text-primary {
+	color: var(--primary) !important;
+}
+
+/* Ensure tag wrapper sits above content like the original single-component layout */
+.flex.flex-wrap.gap-3.mb-6 {
+	position: relative;
+	z-index: 2;
+}
+

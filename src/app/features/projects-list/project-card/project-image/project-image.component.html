@@ -1,0 +1,25 @@
+<ng-container *ngIf="(mockups && mockups.length > 0 && mockups[0].png) || (screenshot && screenshot.png); else placeholder">
+	<picture>
+		<source
+			[srcset]="mockups && mockups.length > 0 ? mockups[0].avif : screenshot?.avif"
+			type="image/avif"
+		/>
+		<source
+			[srcset]="mockups && mockups.length > 0 ? mockups[0].webp : screenshot?.webp"
+			type="image/webp"
+		/>
+		<img
+			[src]="mockups && mockups.length > 0 ? mockups[0].png : screenshot?.png"
+			[alt]="title + ' project screenshot'"
+			class="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
+		/>
+	</picture>
+</ng-container>
+
+<ng-template #placeholder>
+	<img
+		src="assets/placeholder-project.svg"
+		[alt]="title + ' placeholder image'"
+		class="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
+	/>
+</ng-template>

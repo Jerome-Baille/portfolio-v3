@@ -1,0 +1,20 @@
+
+/* Keep project link appearance consistent with other project-link styles */
+a {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+/* Allow anchors inside this component to be direct children of the parent
+	 so parent flex gap spacing applies correctly. */
+:host {
+	display: contents;
+}
+
+.project-link-fallback {
+	position: relative;
+}
+
+/* ensure icons inside links follow the same spacing as other components */
+.project-link-fallback .mr-2 { margin-right: 0.5rem; }

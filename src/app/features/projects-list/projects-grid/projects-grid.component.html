@@ -1,0 +1,10 @@
+<div
+	class="md:grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+	role="list"
+	aria-label="Projects"
+>
+	@for (project of projects || []; track project.id) {
+	<app-project-card [project]="project"></app-project-card>
+	}
+
+</div>

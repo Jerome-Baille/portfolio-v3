@@ -1,0 +1,31 @@
+
+/* Description truncation/mask styles moved from projects-list.component.css */
+.description-container {
+	height: 4.5em; /* Approximately 3 lines of text */
+	position: relative;
+	overflow: hidden;
+	margin-bottom: 1.5rem;
+	z-index: 1;
+}
+
+.project-description {
+	margin: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+	line-clamp: 3;
+	max-height: 4.5em;
+}
+
+.description-container::after {
+	content: "";
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	width: 70%;
+	height: 1.5em;
+	background: linear-gradient(to right, rgba(12, 42, 66, 0), rgba(12, 42, 66, 0.3) 50%);
+}
+
