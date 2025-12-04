@@ -1,10 +1,16 @@
 
 /* Project link styles used in details */
 .project-link {
+	color: white !important;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.project-link:hover {
 	color: var(--primary) !important;
 }
-.project-link span { color: var(--primary) !important; }
-.project-link svg { color: var(--primary) !important; stroke: var(--primary) !important; }
+
 .project-link::after {
 	content: '';
 	position: absolute;

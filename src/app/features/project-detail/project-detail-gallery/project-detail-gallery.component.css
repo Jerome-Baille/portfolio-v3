@@ -18,3 +18,18 @@
 	background: var(--card-hover);
 }
 
+/* Thumbnail button reset and styling */
+button.material-card-region {
+	padding: 0;
+	border: 1px solid var(--card-border);
+	background: var(--card-bg);
+}
+
+button.material-card-region:hover {
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), 0 6px 6px rgba(0, 0, 0, 0.25);
+}
+
+button.material-card-region:active {
+	transform: scale(0.98);
+}
+
