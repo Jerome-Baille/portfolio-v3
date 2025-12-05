@@ -1,7 +1,13 @@
 /* Custom business card styling with enhanced material design */
 .business-card {
-    width: 400px;
-    max-width: 90vw;
+    width: min(600px, 90vw);
+    aspect-ratio: 1.75 / 1;
+    container-type: inline-size;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5cqw;
     background-color: #fffef8;
     box-shadow: 
         0 15px 30px -10px rgba(0, 0, 0, 0.3), 
@@ -168,14 +174,25 @@
     padding: 0.1em 0.2em;
 }
 
-/* Responsive font sizing using clamp() for improved scaling */
+/* Responsive font sizing using container queries */
 .debossed-text {
-    font-size: clamp(1.75rem, 6vw, 4.5rem);
+    font-size: 12cqw;
+    margin-bottom: 2cqw;
+    line-height: 1.2;
 }
 
 /* Subheading / role text responsive size */
 .role-text {
-    font-size: clamp(0.95rem, 2.4vw, 1.5rem);
+    font-size: 5cqw;
+    margin-bottom: 1cqw;
+}
+
+.separator-line {
+    width: 30cqw;
+    height: 1px;
+    background-color: #d1d5db;
+    margin-top: 1cqw;
+    margin-bottom: 2cqw;
 }
 
 .debossed-text::before {
