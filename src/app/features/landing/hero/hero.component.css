@@ -176,7 +176,7 @@
 
 /* Responsive font sizing using container queries */
 .debossed-text {
-    font-size: 12cqw;
+    font-size: 18cqw;
     margin-bottom: 2cqw;
     line-height: 1.2;
 }
