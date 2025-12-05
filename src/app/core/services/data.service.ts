@@ -1,26 +1,42 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, catchError, map, of, shareReplay, tap } from 'rxjs';
-import { Project } from '../../shared/interfaces/project.interface';
+import { Project, ImageFormats } from '../../shared/interfaces/project.interface';
 import { environment } from '../../../environments/environment';
 
 
-// Interface for the Asset model from the backend
+// Interface for the new Asset model from the backend (with formats JSON)
 interface Asset {
   id: number;
   projectId: string;
   type: string;
-  format: string;
-  url: string;
+  name: string;
+  order: number;
+  formats: {
+    png?: string;
+    avif?: string;
+    webp?: string;
+  };
+  alt: string | null;
   createdAt: string;
   updatedAt: string;
 }
 
-// Interface for image assets with different formats
-interface ImageFormats {
-  png: string;
-  avif: string;
-  webp: string;
+// Interface for the standardized API response
+interface ApiResponse<T> {
+  success: boolean;
+  message: string;
+  data: T;
+  meta?: {
+    pagination?: {
+      page: number;
+      limit: number;
+      total: number;
+      totalPages: number;
+      hasNextPage: boolean;
+      hasPrevPage: boolean;
+    };
+  };
 }
 
 // Interface for the ProjectResponse from the backend
@@ -43,55 +59,63 @@ export class DataService {
   readonly projects$ = this.projectsSubject.asObservable();
   
   // Track if data is loaded
-  private projectsLoaded = false;  // Process project data to match frontend model
+  private projectsLoaded = false;
+
+  // Base URL for images (served from backend)
+  private readonly imageBaseUrl = environment.portfolioURL.replace('/api', '');
+
+  // Process project data to match frontend model
   private processProjectData(project: ProjectResponse): Project {
     // Convert backend's 0/1 featured to boolean
-    const featured = project.featured === 1 ? true : false;
+    const featured = project.featured === 1;
     
-    // Helper function to create an ImageFormats object from assets
-    const createImageFormats = (assets: Asset[]): ImageFormats => {
+    // Helper function to prepend the backend URL to image paths
+    const prependBaseUrl = (path: string | undefined): string => {
+      if (!path) return '';
+      // If it's already an absolute URL, return as is
+      if (path.startsWith('http://') || path.startsWith('https://')) {
+        return path;
+      }
+      return `${this.imageBaseUrl}${path}`;
+    };
+    
+    // Helper function to create an ImageFormats object from a single asset (new format)
+    const assetToImageFormats = (asset: Asset | undefined): ImageFormats => {
+      if (!asset) {
+        return { png: '', avif: '', webp: '' };
+      }
       return {
-        png: assets.find(a => a.format === 'png')?.url || '',
-        avif: assets.find(a => a.format === 'avif')?.url || '',
-        webp: assets.find(a => a.format === 'webp')?.url || '',
+        png: prependBaseUrl(asset.formats.png),
+        avif: prependBaseUrl(asset.formats.avif),
+        webp: prependBaseUrl(asset.formats.webp),
       };
     };
     
-    // Transform Assets to expected frontend format with all image formats
-    const logoAssets = project.Assets?.filter((asset: Asset) => asset.type === 'logo') || [];
-    const screenshotAssets = project.Assets?.filter((asset: Asset) => asset.type === 'screenshot') || [];
+    // Get assets by type (new format: one asset per image with all formats)
+    const logoAsset = project.Assets?.find((asset: Asset) => asset.type === 'logo');
+    const screenshotAsset = project.Assets?.find((asset: Asset) => asset.type === 'screenshot');
     
-    // Group mockup assets by their base name (without format extension)
-    const mockupGroups: Record<string, Asset[]> = {};
-    
-    project.Assets
+    // Get mockups sorted by order
+    const mockupAssets = project.Assets
       ?.filter((asset: Asset) => asset.type === 'mockup')
-      .forEach((asset: Asset) => {
-        // Extract the base name without extension (e.g., "mockup-1" from "mockup-1.png")
-        const baseName = asset.url.replace(/\.(png|avif|webp)$/, '');
-        
-        if (!mockupGroups[baseName]) {
-          mockupGroups[baseName] = [];
-        }
-        mockupGroups[baseName].push(asset);
-      });
+      .sort((a, b) => a.order - b.order) || [];
     
-    // Sort mockup groups by their ID and convert to ImageFormats array
-    const mockups = Object.values(mockupGroups)
-      .sort((a, b) => Math.min(...a.map(asset => asset.id)) - Math.min(...b.map(asset => asset.id)))
-      .map(assets => createImageFormats(assets));
+    // Convert mockup assets to ImageFormats array
+    const mockups = mockupAssets.map(asset => assetToImageFormats(asset));
 
     // Return the transformed project
     return {
       ...project,
       featured,
-      logo: createImageFormats(logoAssets),
-      screenshot: createImageFormats(screenshotAssets),
+      logo: assetToImageFormats(logoAsset),
+      screenshot: assetToImageFormats(screenshotAsset),
       mockups,
       // Make sure github is properly structured even if it's empty/null
       github: project.github || { frontend: '', backend: '', extension: '' }
     };
-  }// To store the ongoing request for concurrent calls
+  }
+
+  // To store the ongoing request for concurrent calls
   private currentRequest: Observable<Project[]> | null = null;
 
   // Load projects from the backend
@@ -107,8 +131,13 @@ export class DataService {
     }
 
     // Create a new request and store it
-    this.currentRequest = this.http.get<ProjectResponse[]>(environment.projectURL).pipe(
-      map(projects => projects.map(project => this.processProjectData(project))),
+    // Note: Using limit=100 to get all projects in one request (adjust if you have more)
+    this.currentRequest = this.http.get<ApiResponse<ProjectResponse[]>>(`${environment.projectURL}?limit=100`).pipe(
+      map(response => {
+        // Handle the new standardized API response format
+        const projects = response.data || [];
+        return projects.map(project => this.processProjectData(project));
+      }),
       tap(processedProjects => {
         this.projectsSubject.next(processedProjects);
         this.projectsLoaded = true;
@@ -138,8 +167,8 @@ export class DataService {
     }
     
     // If not in cache, fetch from backend
-    return this.http.get<ProjectResponse>(`${environment.projectURL}/${id}`).pipe(
-      map(project => this.processProjectData(project)),
+    return this.http.get<ApiResponse<ProjectResponse>>(`${environment.projectURL}/${id}`).pipe(
+      map(response => this.processProjectData(response.data)),
       catchError(error => {
         console.error(`Error fetching project with ID ${id}:`, error);
         return of({} as Project);

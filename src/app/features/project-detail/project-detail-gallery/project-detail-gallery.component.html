@@ -38,7 +38,7 @@
 						class="material-card-region overflow-hidden rounded-lg aspect-video cursor-pointer 
 						       transition-transform duration-200 hover:scale-[1.02] focus:outline-none 
 						       focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-						(click)="swapWithFeatured(item.originalIndex)"
+					(click)="swapWithMain(item.originalIndex)"
 						[attr.aria-label]="'View ' + projectTitle() + ' mockup ' + (item.originalIndex + 1) + ' in full size'"
 					>
 						<picture>

@@ -20,10 +20,11 @@ export class ProjectDetailGalleryComponent {
   readonly project = input.required<Project | undefined>();
 
   /** 
-   * Display order: maps visual positions to original mockup indices.
-   * Position 0 = featured/main image, positions 1+ = thumbnails in order
+   * Tracks which thumbnail position image 0 is currently occupying.
+   * null means image 0 is in the main display (default state)
+   * A number means image 0 is at that thumbnail position, and that image is featured
    */
-  private readonly displayOrder = signal<number[]>([]);
+  private readonly swappedWithIndex = signal<number | null>(null);
 
   /** Computed mockups array for the template */
   readonly mockups = computed(() => this.project()?.mockups ?? []);
@@ -36,67 +37,63 @@ export class ProjectDetailGalleryComponent {
 
   /** The main featured mockup to display */
   readonly featuredMockup = computed(() => {
-    const order = this.displayOrder();
     const allMockups = this.mockups();
-    if (order.length === 0 || allMockups.length === 0) {
-      return allMockups[0] as ImageFormats;
+    if (allMockups.length === 0) {
+      return { png: '', avif: '', webp: '' } as ImageFormats;
     }
-    return allMockups[order[0]] as ImageFormats;
+    const swapped = this.swappedWithIndex();
+    // If swapped, show that image; otherwise show image 0
+    return allMockups[swapped ?? 0] as ImageFormats;
   });
 
-  /** Thumbnail mockups with their original indices for tracking */
+  /** Thumbnail mockups - images 1, 2, 3... but with image 0 swapped in if applicable */
   readonly thumbnailMockups = computed(() => {
-    const order = this.displayOrder();
     const allMockups = this.mockups();
+    if (allMockups.length <= 1) return [];
     
-    if (order.length === 0) {
-      // Initial state: thumbnails are indices 1, 2, 3, ...
-      return allMockups.slice(1).map((mockup, i) => ({ 
-        mockup, 
-        originalIndex: i + 1 
-      }));
-    }
+    const swapped = this.swappedWithIndex();
     
-    // Skip first (featured) and map the rest
-    return order.slice(1).map(originalIndex => ({
-      mockup: allMockups[originalIndex],
-      originalIndex
-    }));
+    // Build thumbnails from indices 1, 2, 3, ...
+    return allMockups.slice(1).map((mockup, i) => {
+      const originalIndex = i + 1; // Original indices are 1, 2, 3, ...
+      
+      // If this position was swapped with image 0, show image 0 here instead
+      if (swapped === originalIndex) {
+        return { mockup: allMockups[0], originalIndex };
+      }
+      
+      return { mockup, originalIndex };
+    });
   });
 
   /** Project title for alt text */
   readonly projectTitle = computed(() => this.project()?.title ?? 'Project');
 
   constructor() {
-    // Initialize display order when mockups change
+    // Reset swapped state when project changes
     effect(() => {
-      const mockupsLength = this.mockups().length;
-      if (mockupsLength > 0 && this.displayOrder().length !== mockupsLength) {
-        // Initialize with natural order: [0, 1, 2, 3, ...]
-        this.displayOrder.set(Array.from({ length: mockupsLength }, (_, i) => i));
-      }
-    }, { allowSignalWrites: true });
+      // Access mockups to create dependency
+      this.mockups();
+      // Reset to default when project changes
+      this.swappedWithIndex.set(null);
+    });
   }
 
   /**
-   * Swaps the clicked thumbnail with the featured image.
-   * The clicked image becomes featured, and the current featured takes its place.
-   * @param originalIndex - The original index of the clicked mockup
+   * Swaps the clicked thumbnail with the main display.
+   * - If clicking a new thumbnail: swap image 0 to that position, show clicked image as featured
+   * - Image 0 always returns to its original spot before swapping to a new position
+   * @param originalIndex - The original index of the thumbnail position clicked
    */
-  swapWithFeatured(originalIndex: number): void {
-    const currentOrder = [...this.displayOrder()];
-    const featuredOriginalIndex = currentOrder[0];
+  swapWithMain(originalIndex: number): void {
+    const currentSwapped = this.swappedWithIndex();
     
-    // Find where the clicked image is in the display order
-    const clickedPosition = currentOrder.indexOf(originalIndex);
-    
-    if (clickedPosition > 0) {
-      // Swap: clicked image goes to position 0 (featured)
-      // Current featured goes to where clicked image was
-      currentOrder[0] = originalIndex;
-      currentOrder[clickedPosition] = featuredOriginalIndex;
-      
-      this.displayOrder.set(currentOrder);
+    // If clicking the position where image 0 currently is, reset to default
+    if (currentSwapped === originalIndex) {
+      this.swappedWithIndex.set(null);
+    } else {
+      // Swap image 0 to this position (previous swap is automatically undone)
+      this.swappedWithIndex.set(originalIndex);
     }
   }
 
