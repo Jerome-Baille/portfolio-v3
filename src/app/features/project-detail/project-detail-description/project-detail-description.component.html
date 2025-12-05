@@ -16,9 +16,12 @@
 		role="region"
 		aria-labelledby="project-details-heading"
 	>
-		<h2 class="text-xl text-white mb-4" id="project-details-heading">Project Details</h2>
+		<h2 class="flex items-center gap-2 text-xl text-white mb-4" id="project-details-heading">
+			<span class="material-symbols-outlined"> info </span>
+			Project Details
+		</h2>
 		<div class="mb-4">
-			<h3 class="text-sm uppercase text-gray-400">Year</h3>
+			<h3 class="text-sm uppercase text-gray-400">Realeased date</h3>
 			<p class="text-white">{{ project()?.date }}</p>
 		</div>
 		<div class="mb-4">
