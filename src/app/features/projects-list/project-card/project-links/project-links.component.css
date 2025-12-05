@@ -1,10 +1,25 @@
-
-/* Keep project link appearance consistent with other project-link styles */
-a {
-	display: inline-flex;
+.project-link {
+	color: white !important;
+	display: flex;
 	align-items: center;
 	gap: 0.5rem;
 }
+
+.project-link:hover {
+	color: var(--primary) !important;
+}
+
+.project-link::after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 0;
+	height: 2px;
+	background-color: var(--primary);
+	transition: width 0.3s ease;
+}
+.project-link:hover::after { width: 100%; }
 
 /* Allow anchors inside this component to be direct children of the parent
 	 so parent flex gap spacing applies correctly. */
