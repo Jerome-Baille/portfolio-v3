@@ -5,5 +5,6 @@ export const environment = {
   production: false,
   emailURL,
   portfolioURL,
+  aboutURL: `${portfolioURL}/about`,
   projectURL: `${portfolioURL}/projects`
 };

@@ -24,20 +24,20 @@
           [animationDelay]="200"
           [repeatAnimation]="true"
         >
-          <p
-            class="text-gray-100 leading-relaxed mb-6 text-lg font-light text-shadow"
-          >
-            Driven by excellence, Jérôme earned a Mlit and a GD in Computer
-            Science, with a strong foundation in banking that sparked his
-            passion for coding and web development.
-          </p>
-          <p
-            class="text-gray-100 leading-relaxed mb-6 text-lg font-light text-shadow"
-          >
-            Over nine years, he has collaborated on projects across Europe for
-            international companies, non-profits, and individuals, developing a
-            versatile skill set in technology.
-          </p>
+          @if (loading()) {
+            <p class="text-gray-100 leading-relaxed mb-6 text-lg font-light text-shadow">Loading...</p>
+          }
+
+          @if (!loading() && about()) {
+            @for (paragraph of about()!.bio; track $index) {
+              <p class="text-gray-100 leading-relaxed mb-6 text-lg font-light text-shadow">{{ paragraph }}</p>
+            }
+          }
+
+          @if (!loading() && !about()) {
+            <p class="text-gray-100 leading-relaxed mb-6 text-lg font-light text-shadow">Driven by excellence, Jérôme earned a Mlit and a GD in Computer Science, with a strong foundation in banking that sparked his passion for coding and web development.</p>
+            <p class="text-gray-100 leading-relaxed mb-6 text-lg font-light text-shadow">Over nine years, he has collaborated on projects across Europe for international companies, non-profits, and individuals, developing a versatile skill set in technology.</p>
+          }
         </div>
 
         <div
@@ -56,41 +56,19 @@
               role="list"
               aria-label="Frontend skills"
             >
-              <span
-                class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1"
-                role="listitem"
-                >Angular</span
-              >
-              <span
-                class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1"
-                role="listitem"
-                >React</span
-              >
-              <span
-                class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1"
-                role="listitem"
-                >TypeScript</span
-              >
-              <span
-                class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1"
-                role="listitem"
-                >JavaScript</span
-              >
-              <span
-                class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1"
-                role="listitem"
-                >HTML5</span
-              >
-              <span
-                class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1"
-                role="listitem"
-                >CSS3</span
-              >
-              <span
-                class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1"
-                role="listitem"
-                >SASS</span
-              >
+              @if (about()?.skills?.frontend?.length) {
+                @for (skill of about()!.skills!.frontend; track skill) {
+                  <span class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1" role="listitem">{{ skill }}</span>
+                }
+              } @else {
+                <span class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1" role="listitem">Angular</span>
+                <span class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1" role="listitem">React</span>
+                <span class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1" role="listitem">TypeScript</span>
+                <span class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1" role="listitem">JavaScript</span>
+                <span class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1" role="listitem">HTML5</span>
+                <span class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1" role="listitem">CSS3</span>
+                <span class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1" role="listitem">SASS</span>
+              }
             </div>
           </div>
 
@@ -103,31 +81,17 @@
               role="list"
               aria-label="Backend skills"
             >
-              <span
-                class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1"
-                role="listitem"
-                >Node.js</span
-              >
-              <span
-                class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1"
-                role="listitem"
-                >Express</span
-              >
-              <span
-                class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1"
-                role="listitem"
-                >MongoDB</span
-              >
-              <span
-                class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1"
-                role="listitem"
-                >MySQL</span
-              >
-              <span
-                class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1"
-                role="listitem"
-                >REST APIs</span
-              >
+              @if (about()?.skills?.backend?.length) {
+                @for (skill of about()!.skills!.backend; track skill) {
+                  <span class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1" role="listitem">{{ skill }}</span>
+                }
+              } @else {
+                <span class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1" role="listitem">Node.js</span>
+                <span class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1" role="listitem">Express</span>
+                <span class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1" role="listitem">MongoDB</span>
+                <span class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1" role="listitem">MySQL</span>
+                <span class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1" role="listitem">REST APIs</span>
+              }
             </div>
           </div>
 
@@ -140,31 +104,17 @@
               role="list"
               aria-label="Other skills"
             >
-              <span
-                class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1"
-                role="listitem"
-                >Git</span
-              >
-              <span
-                class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1"
-                role="listitem"
-                >Docker</span
-              >
-              <span
-                class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1"
-                role="listitem"
-                >Figma</span
-              >
-              <span
-                class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1"
-                role="listitem"
-                >SEO</span
-              >
-              <span
-                class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1"
-                role="listitem"
-                >Testing</span
-              >
+              @if (about()?.skills?.others?.length) {
+                @for (skill of about()!.skills!.others; track skill) {
+                  <span class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1" role="listitem">{{ skill }}</span>
+                }
+              } @else {
+                <span class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1" role="listitem">Git</span>
+                <span class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1" role="listitem">Docker</span>
+                <span class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1" role="listitem">Figma</span>
+                <span class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1" role="listitem">SEO</span>
+                <span class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1" role="listitem">Testing</span>
+              }
             </div>
           </div>
         </div>
@@ -179,7 +129,7 @@
           aria-label="Social links"
         >
           <a
-            href="https://www.linkedin.com/in/jerome-baille"
+            [href]="about()?.linkedin || 'https://www.linkedin.com/in/jerome-baille'"
             target="_blank"
             rel="noopener noreferrer"
             class="flex items-center justify-center w-[50px] h-[50px] rounded-full bg-[rgba(18,49,71,0.6)] text-[#D3AC92] border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[#D3AC92] hover:text-[#0C2A42] hover:-translate-y-1 hover:shadow-md"
@@ -198,7 +148,7 @@
             </svg>
           </a>
           <a
-            href="https://github.com/jerome-baille"
+            [href]="about()?.github || 'https://github.com/jerome-baille'"
             target="_blank"
             rel="noopener noreferrer"
             class="flex items-center justify-center w-[50px] h-[50px] rounded-full bg-[rgba(18,49,71,0.6)] text-[#D3AC92] border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[#D3AC92] hover:text-[#0C2A42] hover:-translate-y-1 hover:shadow-md"
@@ -217,7 +167,7 @@
             </svg>
           </a>
           <a
-            href="assets/pdf/Jerome BAILLE - Frontend Engineer - MEAN.pdf"
+            [href]="resumeUrl()"
             target="_blank"
             rel="noopener noreferrer"
             class="flex items-center justify-center w-[50px] h-[50px] rounded-full bg-[rgba(18,49,71,0.6)] text-[#D3AC92] border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[#D3AC92] hover:text-[#0C2A42] hover:-translate-y-1 hover:shadow-md"
@@ -237,7 +187,7 @@
           [repeatAnimation]="true"
         >
           <img
-            src="assets/portrait.webp"
+            [src]="portraitUrl()"
             alt="Jérôme Baille"
             class="w-full max-w-[400px] rounded-lg shadow-2xl border-3 border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)]"
           />
