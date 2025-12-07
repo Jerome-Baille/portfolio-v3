@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 
 import { NgOptimizedImage, ImageLoader, ImageLoaderConfig } from '@angular/common';
 import { ViewportAnimationDirective } from '../../../shared/directives';
-import { TranslatePipe } from '@ngx-translate/core';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { CertificationService, Certification } from '../../../core/services/certification.service';
+import { environment } from '../../../../environments/environment';
 
 interface Certificate {
   name: string;
@@ -22,18 +24,28 @@ export const customImageLoader: ImageLoader = (config: ImageLoaderConfig): strin
   templateUrl: './about-carousel.component.html',
   styleUrl: './about-carousel.component.css'
 })
-export class AboutCarouselComponent {
-  certificates: Certificate[] = [
-    { name: 'Google AI Essentials', image: 'certificates/google_ai_essentials.webp' },
-    { name: 'Google Data Analytics', image: 'certificates/google_analyst.webp' },
-    { name: 'Google Cybersecurity', image: 'certificates/google_cybersecurity.webp' },
-    { name: 'Google IT Support', image: 'certificates/google_it_support.webp' },
-    { name: 'Google Project Management', image: 'certificates/google_project_management.webp' },
-    { name: 'Meta Backend Developer', image: 'certificates/meta_backend.webp' },
-    { name: 'Meta Frontend Developer', image: 'certificates/meta_frontend.webp' },
-    { name: 'Meta Full Stack Developer', image: 'certificates/meta_fullstack.webp' }
-  ];
+export class AboutCarouselComponent implements OnInit {
+  certificates: Certificate[] = [];
+
+  private svc = inject(CertificationService);
+  private translate = inject(TranslateService);
+  private readonly backendBaseUrl = environment.portfolioURL.replace('/api', '');
 
   // Image sizes using responsive values
   imageSizes = '(max-width: 768px) 15vw, 20vw';
+
+  ngOnInit(): void {
+    this.svc.getCertifications(100, true).subscribe({
+      next: resp => {
+        this.certificates = (resp.data || []).map((c: Certification) => {
+          const imagePath = c.formats.png || c.formats.webp || c.formats.avif || '';
+          const image = imagePath.startsWith('http') ? imagePath : `${this.backendBaseUrl}${imagePath}`;
+          return { name: c.name, image };
+        });
+      },
+      error: err => {
+        console.error('Error loading certifications', err);
+      }
+    });
+  }
 }
