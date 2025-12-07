@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, catchError, map, of, shareReplay, tap } from 'rxjs';
 import { Project, ImageFormats } from '../../shared/interfaces/project.interface';
 import { environment } from '../../../environments/environment';
+import { TranslateService } from '@ngx-translate/core';
 
 
 // Interface for the new Asset model from the backend (with formats JSON)
@@ -52,6 +53,7 @@ interface ProjectResponse extends Omit<Project, 'featured' | 'logo' | 'screensho
 })
 export class DataService {
   private http = inject(HttpClient);
+  private translate = inject(TranslateService);
 
   private readonly projectsSubject = new BehaviorSubject<Project[]>([]);
   
@@ -63,6 +65,12 @@ export class DataService {
 
   // Base URL for images (served from backend)
   private readonly imageBaseUrl = environment.portfolioURL.replace('/api', '');
+
+  // Get the language query param (only 'fr' if French, otherwise undefined)
+  private getLanguageParam(): string | undefined {
+    const currentLang = this.translate.getCurrentLang() || this.translate.getFallbackLang();
+    return currentLang === 'fr' ? 'fr' : undefined;
+  }
 
   // Process project data to match frontend model
   private processProjectData(project: ProjectResponse): Project {
@@ -132,7 +140,11 @@ export class DataService {
 
     // Create a new request and store it
     // Note: Using limit=100 to get all projects in one request (adjust if you have more)
-    this.currentRequest = this.http.get<ApiResponse<ProjectResponse[]>>(`${environment.projectURL}?limit=100`).pipe(
+    const language = this.getLanguageParam();
+    const url = language 
+      ? `${environment.projectURL}?limit=100&language=${language}`
+      : `${environment.projectURL}?limit=100`;
+    this.currentRequest = this.http.get<ApiResponse<ProjectResponse[]>>(url).pipe(
       map(response => {
         // Handle the new standardized API response format
         const projects = response.data || [];
@@ -167,7 +179,11 @@ export class DataService {
     }
     
     // If not in cache, fetch from backend
-    return this.http.get<ApiResponse<ProjectResponse>>(`${environment.projectURL}/${id}`).pipe(
+    const language = this.getLanguageParam();
+    const url = language 
+      ? `${environment.projectURL}/${id}?language=${language}`
+      : `${environment.projectURL}/${id}`;
+    return this.http.get<ApiResponse<ProjectResponse>>(url).pipe(
       map(response => this.processProjectData(response.data)),
       catchError(error => {
         console.error(`Error fetching project with ID ${id}:`, error);
