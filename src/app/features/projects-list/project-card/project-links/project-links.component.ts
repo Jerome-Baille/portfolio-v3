@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 
 interface Github {
   frontend?: string;
@@ -10,7 +10,7 @@ interface Github {
 @Component({
   selector: 'app-project-links',
   standalone: true,
-  imports: [CommonModule],
+  imports: [TranslatePipe],
   templateUrl: './project-links.component.html',
   styleUrl: './project-links.component.css'
 })

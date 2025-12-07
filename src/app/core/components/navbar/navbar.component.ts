@@ -5,11 +5,13 @@ import { Observable, map } from 'rxjs';
 import { Router, NavigationEnd } from '@angular/router';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { filter } from 'rxjs/operators';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-navbar',
   imports: [
-    CommonModule
+    CommonModule,
+    TranslatePipe
   ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',

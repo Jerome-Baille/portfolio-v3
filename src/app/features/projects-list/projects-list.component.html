@@ -9,7 +9,7 @@
   </div>
   <div class="relative z-10 max-w-6xl mx-auto px-6 py-10">
     <h2 id="projects-heading" class="section-title text-3xl mb-10">
-      All Projects
+      {{ "PROJECTS.FEATURED" | translate }}
     </h2>
 
     <!-- Categories filter (child component) -->
@@ -20,6 +20,6 @@
     ></app-project-filter>
 
     <!-- projects grid is now handled by the ProjectsGridComponent -->
-     <app-projects-grid [projects]="projects()"></app-projects-grid>
+    <app-projects-grid [projects]="projects()"></app-projects-grid>
   </div>
 </section>

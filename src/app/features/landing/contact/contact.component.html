@@ -1,20 +1,20 @@
 <section class="relative py-20 overflow-hidden max-w-2xl mx-auto p-6" id="contact" aria-labelledby="contact-heading">
-  <h2 id="contact-heading" class="section-title text-3xl">Get in Touch</h2>
-  <p class="my-5">Have a project in mind or want to discuss potential opportunities? I'd love to hear from you!</p>
+  <h2 id="contact-heading" class="section-title text-3xl">{{ 'CONTACT.TITLE' | translate }}</h2>
+  <p class="my-5">{{ 'CONTACT.DESCRIPTION' | translate }}</p>
 
   <div class="max-w-2xl mx-auto p-6 contact-container">
     <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="w-full">
       <!-- Name & Email Row -->
       <div class="mb-6 flex gap-6">
         <div class="w-1/2">
-          <label for="name" class="form-label">Name</label>
+          <label for="name" class="form-label">{{ 'CONTACT.NAME' | translate }}</label>
           <input type="text" id="name" formControlName="name" autocomplete="name" class="form-input">
           @if (showError('name')) {
             <p class="form-error">{{ getErrorMessage('name') }}</p>
           }
         </div>
         <div class="w-1/2">
-          <label for="email" class="form-label">Email</label>
+          <label for="email" class="form-label">{{ 'CONTACT.EMAIL' | translate }}</label>
           <input type="email" id="email" formControlName="email" autocomplete="email" class="form-input">
           @if (showError('email')) {
             <p class="form-error">{{ getErrorMessage('email') }}</p>
@@ -24,7 +24,7 @@
 
       <!-- Subject -->
       <div class="mb-6">
-        <label for="subject" class="form-label">Subject</label>
+        <label for="subject" class="form-label">{{ 'CONTACT.SUBJECT' | translate }}</label>
         <input type="text" id="subject" formControlName="subject" autocomplete="on" class="form-input">
         @if (showError('subject')) {
           <p class="form-error">{{ getErrorMessage('subject') }}</p>
@@ -33,7 +33,7 @@
 
       <!-- Message -->
       <div class="mb-10">
-        <label for="message" class="form-label">Message</label>
+        <label for="message" class="form-label">{{ 'CONTACT.MESSAGE' | translate }}</label>
         <textarea id="message" formControlName="message" rows="4" autocomplete="on" class="form-input"></textarea>
         @if (showError('message')) {
           <p class="form-error">{{ getErrorMessage('message') }}</p>
@@ -46,16 +46,16 @@
           @if (isLoading()) {
             <span class="material-symbols-outlined animate-spin text-base mr-2">progress_activity</span>
           }
-          {{ isLoading() ? 'Sending...' : 'Send Message' }}
+          {{ isLoading() ? ('CONTACT.SENDING' | translate) : ('CONTACT.SEND_BUTTON' | translate) }}
         </button>
       </div>
 
       <!-- Success Message -->
       @if (submitSuccess()) {
         <div role="alert" class="alert alert-success">
-          <span>Thank you! Your message has been sent successfully.</span>
+          <span>{{ 'CONTACT.SUCCESS_MESSAGE' | translate }}</span>
           <button type="button" (click)="closeSuccessMessage()" aria-label="Close">
-            <span class="material-symbols-outlined">close</span>
+            <span class="material-symbols-outlined">{{ 'CONTACT.CLOSE' | translate }}</span>
           </button>
         </div>
       }
@@ -65,7 +65,7 @@
         <div role="alert" class="alert alert-error">
           <span>{{ errorMessage() }}</span>
           <button type="button" (click)="closeErrorMessage()" aria-label="Close">
-            <span class="material-symbols-outlined">close</span>
+            <span class="material-symbols-outlined">{{ 'CONTACT.CLOSE' | translate }}</span>
           </button>
         </div>
       }

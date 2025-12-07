@@ -3,11 +3,12 @@ import { Component, OnInit, signal, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { DataService } from '../../../core/services/data.service';
 import { Project } from '../../../shared/interfaces/project.interface';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-featured-projects',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, TranslatePipe],
   templateUrl: './featured-projects.component.html',
   styleUrl: './featured-projects.component.css'
 })

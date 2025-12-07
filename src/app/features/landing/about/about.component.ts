@@ -2,12 +2,13 @@ import { Component, OnInit, signal, inject, computed } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { ViewportAnimationDirective } from '../../../shared/directives';
 import { AboutService, About } from '../../../core/services/about.service';
+import { TranslatePipe, TranslateService } from '@ngx-translate/core';
 
 
 @Component({
   selector: 'app-about',
   standalone: true,
-  imports: [ViewportAnimationDirective],
+  imports: [ViewportAnimationDirective, TranslatePipe],
   templateUrl: './about.component.html',
   styleUrls: ['./about.component.css']
 })
@@ -29,10 +30,13 @@ export class AboutComponent implements OnInit {
   );
 
   private svc = inject(AboutService);
+  private translate = inject(TranslateService);
 
   ngOnInit(): void {
     this.loading.set(true);
-    this.svc.getAbout('main').subscribe({
+    const currentLang = this.translate.getCurrentLang() || this.translate.getFallbackLang();
+    const language = currentLang === 'fr' ? 'fr' : undefined;
+    this.svc.getAbout('main', language).subscribe({
       next: (resp) => {
         const about = resp.data;
         if (about) {

@@ -1,0 +1,52 @@
+{
+  "NAV": {
+    "HOME": "Accueil",
+    "ABOUT": "À propos",
+    "PROJECTS": "Projets",
+    "CONTACT": "Contact"
+  },
+  "HERO": {
+    "ROLE": "Ingénieur Frontend"
+  },
+  "ABOUT": {
+    "TITLE": "À propos de moi",
+    "OTHER_SKILLS": "Autres",
+    "CERTIFICATIONS": "Certifications Professionnelles"
+  },
+  "PROJECTS": {
+    "TITLE": "Projets",
+    "FEATURED": "Projets en vedette",
+    "VIEW_ALL": "Voir tous les projets",
+    "FILTER": {
+      "ALL": "Tous"
+    },
+    "LINK": {
+      "DEMO": "Démo"
+    }
+  },
+  "PROJECT_DETAIL": {
+    "ABOUT_PROJECT": "À propos du projet",
+    "MY_INVOLVEMENT": "Mon implication",
+    "PROJECT_DETAILS": "Détails du projet",
+    "RELEASED_DATE": "Date du projet",
+    "CLIENT": "Client",
+    "ROLE": "Rôle",
+    "LINKS": "Liens",
+    "LIVE_DEMO": "Démo"
+  },
+  "CONTACT": {
+    "TITLE": "Formulaire de contact",
+    "DESCRIPTION": "Vous avez un projet en tête ou souhaitez discuter de potentielles opportunités ? Contactez-moi !",
+    "NAME": "Nom",
+    "EMAIL": "Email",
+    "SUBJECT": "Sujet",
+    "MESSAGE": "Message",
+    "SUCCESS_MESSAGE": "Merci ! Votre message a été envoyé avec succès.",
+    "CLOSE": "Fermer",
+    "SEND_BUTTON": "Envoyer le message",
+    "SENDING": "Envoi..."
+  },
+  "FOOTER": {
+    "RIGHTS_RESERVED": "Tous droits réservés"
+  }
+}

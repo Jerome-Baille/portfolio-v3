@@ -1,0 +1,52 @@
+{
+  "NAV": {
+    "HOME": "Home",
+    "ABOUT": "About",
+    "PROJECTS": "Projects",
+    "CONTACT": "Contact"
+  },
+  "HERO": {
+    "ROLE": "Frontend Engineer"
+  },
+  "ABOUT": {
+    "TITLE": "About Me",
+    "OTHER_SKILLS": "Others",
+    "CERTIFICATIONS": "Professional Certifications"
+  },
+  "PROJECTS": {
+    "TITLE": "Projects",
+    "FEATURED": "Featured Projects",
+    "VIEW_ALL": "View All Projects",
+    "FILTER": {
+      "ALL": "All"
+    },
+    "LINK": {
+      "DEMO": "Live Demo"
+    }
+  },
+  "PROJECT_DETAIL": {
+    "ABOUT_PROJECT": "About the Project",
+    "MY_INVOLVEMENT": "My Involvement",
+    "PROJECT_DETAILS": "Project Details",
+    "RELEASED_DATE": "Released Date",
+    "CLIENT": "Client",
+    "ROLE": "Role",
+    "LINKS": "Links",
+    "LIVE_DEMO": "Live Demo"
+  },
+  "CONTACT": {
+    "TITLE": "Get in Touch",
+    "DESCRIPTION": "Have a project in mind or want to discuss potential opportunities? I'd love to hear from you!",
+    "NAME": "Name",
+    "EMAIL": "Email",
+    "SUBJECT": "Subject",
+    "MESSAGE": "Message",
+    "SUCCESS_MESSAGE": "Thank you! Your message has been sent successfully.",
+    "CLOSE": "Close",
+    "SEND_BUTTON": "Send Message",
+    "SENDING": "Sending..."
+  },
+  "FOOTER": {
+    "RIGHTS_RESERVED": "All rights reserved"
+  }
+}

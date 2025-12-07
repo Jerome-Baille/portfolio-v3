@@ -1,11 +1,15 @@
 <!-- Project description and details (moved from parent) -->
 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
 	<div class="col-span-2">
-		<h2 class="section-title text-2xl mb-6" id="about-project">About the Project</h2>
+		<h2 class="section-title text-2xl mb-6" id="about-project">
+			{{ 'PROJECT_DETAIL.ABOUT_PROJECT' | translate }}
+		</h2>
 		<p class="text-gray-300 mb-6">{{ project()?.description }}</p>
 		@if (project()?.involvement) {
 		<div class="mb-6">
-			<h3 class="text-lg text-white mb-2" id="involvement">My Involvement</h3>
+			<h3 class="text-lg text-white mb-2" id="involvement">
+				{{ 'PROJECT_DETAIL.MY_INVOLVEMENT' | translate }}
+			</h3>
 			<p class="text-gray-300">{{ project()?.involvement }}</p>
 		</div>
 		}
@@ -18,18 +22,18 @@
 	>
 		<h2 class="flex items-center gap-2 text-xl text-white mb-4" id="project-details-heading">
 			<span class="material-symbols-outlined"> info </span>
-			Project Details
+			{{ 'PROJECT_DETAIL.PROJECT_DETAILS' | translate }}
 		</h2>
 		<div class="mb-4">
-			<h3 class="text-sm uppercase text-gray-400">Realeased date</h3>
+			<h3 class="text-sm uppercase text-gray-400">{{ 'PROJECT_DETAIL.RELEASED_DATE' | translate }}</h3>
 			<p class="text-white">{{ project()?.date }}</p>
 		</div>
 		<div class="mb-4">
-			<h3 class="text-sm uppercase text-gray-400">Client</h3>
+			<h3 class="text-sm uppercase text-gray-400">{{ 'PROJECT_DETAIL.CLIENT' | translate }}</h3>
 			<p class="text-white">{{ project()?.client }}</p>
 		</div>
 		<div class="mb-4">
-			<h3 class="text-sm uppercase text-gray-400">Role</h3>
+			<h3 class="text-sm uppercase text-gray-400">{{ 'PROJECT_DETAIL.ROLE' | translate }}</h3>
 			<p class="text-white">{{ project()?.role }}</p>
 		</div>
 		<div
@@ -38,7 +42,7 @@
 			aria-label="Project links"
 		>
 		@if (project()?.website || project()?.github) {
-			<h3 class="text-sm uppercase text-gray-400">Links</h3>
+			<h3 class="text-sm uppercase text-gray-400">{{ 'PROJECT_DETAIL.LINKS' | translate }}</h3>
 		}
 			@if (project()?.website) {
 			<a
@@ -49,7 +53,7 @@
 				[attr.aria-label]="'Visit live demo of ' + project()?.title"
 			>
 				<span class="material-symbols-outlined"> open_in_new </span>
-				<span class="text-primary">Live Demo</span>
+				<span class="text-primary">{{ 'PROJECT_DETAIL.LIVE_DEMO' | translate }}</span>
 			</a>
 			}
 

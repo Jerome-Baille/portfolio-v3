@@ -6,6 +6,8 @@ import { routes } from './app.routes';
 import { provideServiceWorker } from '@angular/service-worker';
 import { httpInterceptor } from './core/interceptors/http.interceptor';
 import { customImageLoader } from './features/landing/about-carousel/about-carousel.component';
+import { provideTranslateService } from '@ngx-translate/core';
+import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -18,6 +20,13 @@ export const appConfig: ApplicationConfig = {
       provide: IMAGE_LOADER,
       useValue: customImageLoader
     },
+    provideTranslateService({
+      loader: provideTranslateHttpLoader({
+        prefix: './assets/i18n/',
+        suffix: '.json'
+      }),
+      defaultLanguage: 'en'
+    }),
     provideServiceWorker('ngsw-worker.js', {
       enabled: !isDevMode(),
       registrationStrategy: 'registerWhenStable:30000'
