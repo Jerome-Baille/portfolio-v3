@@ -15,6 +15,7 @@ export interface ImageFormats {
     png: string;
     avif: string;
     webp: string;
+    backgroundColor?: string;
 }
 
 export interface Project {

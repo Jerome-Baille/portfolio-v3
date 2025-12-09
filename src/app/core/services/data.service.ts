@@ -19,6 +19,7 @@ interface Asset {
     webp?: string;
   };
   alt: string | null;
+  backgroundColor?: string | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -96,6 +97,7 @@ export class DataService {
         png: prependBaseUrl(asset.formats.png),
         avif: prependBaseUrl(asset.formats.avif),
         webp: prependBaseUrl(asset.formats.webp),
+        backgroundColor: asset.backgroundColor || undefined
       };
     };
     
