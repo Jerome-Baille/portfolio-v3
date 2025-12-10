@@ -86,8 +86,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     const sections = ['about', 'projects', 'contact'] as const;
-    // offset accounts for the fixed header
-    const offset = this.getHeaderHeight() + 30;
+    // Use a fixed offset of 48px for the header
+    const offset = 48;
     const scrollPosition = window.scrollY + offset;
 
     for (const section of sections) {
@@ -132,26 +132,18 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
   
   private performScrollToSection(sectionId: NavbarSection) {
-    // Compute header height to offset for fixed header
-    const headerOffset = this.getHeaderHeight() + 16; // small breathing room
-    // Special case for projects: add a little extra offset to avoid over-scroll
-    const additionalOffsetForProjects = sectionId === 'projects' ? 48 : 0;
+    // Use a fixed offset of 48px for the header
+    const headerOffset = 48;
     const element = document.getElementById(sectionId);
 
     if (element) {
-      const targetPosition = element.offsetTop - headerOffset - additionalOffsetForProjects;
-      // prevent scrolling past max
-      const clampedPosition = Math.max(0, Math.min(targetPosition, document.body.scrollHeight - window.innerHeight));
-      window.scrollTo({ top: clampedPosition, behavior: 'smooth' });
+      const targetPosition = element.offsetTop - headerOffset;
+      window.scrollTo({ top: Math.max(0, targetPosition), behavior: 'smooth' });
     } else if (sectionId === 'top') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }
 
-  private getHeaderHeight(): number {
-    const header = document.querySelector('header');
-    return header ? (header as HTMLElement).offsetHeight : 0;
-  }
 
   ngOnDestroy(): void {
     this.destroy$.next();

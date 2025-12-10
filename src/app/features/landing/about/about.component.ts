@@ -3,12 +3,13 @@ import { environment } from '../../../../environments/environment';
 import { ViewportAnimationDirective } from '../../../shared/directives';
 import { AboutService, About } from '../../../core/services/about.service';
 import { TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { AboutCarouselComponent } from "../about-carousel/about-carousel.component";
 
 
 @Component({
   selector: 'app-about',
   standalone: true,
-  imports: [ViewportAnimationDirective, TranslatePipe],
+  imports: [ViewportAnimationDirective, TranslatePipe, AboutCarouselComponent],
   templateUrl: './about.component.html',
   styleUrls: ['./about.component.css']
 })

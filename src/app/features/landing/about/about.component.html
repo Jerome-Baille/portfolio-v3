@@ -11,7 +11,7 @@
       animationClass="slide-in-left"
       [repeatAnimation]="true"
     >
-      {{ 'ABOUT.TITLE' | translate }}
+      {{ "ABOUT.TITLE" | translate }}
     </h2>
 
     <div
@@ -25,14 +25,19 @@
           [repeatAnimation]="true"
         >
           @if (loading()) {
-            <p class="text-gray-100 leading-relaxed mb-6 text-lg font-light text-shadow">Loading...</p>
-          }
-
-          @if (!loading() && about()) {
-            @for (paragraph of about()!.bio; track $index) {
-              <p class="text-gray-100 leading-relaxed mb-6 text-lg font-light text-shadow">{{ paragraph }}</p>
-            }
-          }
+          <p
+            class="text-gray-100 leading-relaxed mb-6 text-lg font-light text-shadow"
+          >
+            Loading...
+          </p>
+          } @if (!loading() && about()) { @for (paragraph of about()!.bio; track
+          $index) {
+          <p
+            class="text-gray-100 leading-relaxed mb-6 text-lg font-light text-shadow"
+          >
+            {{ paragraph }}
+          </p>
+          } }
         </div>
 
         <div
@@ -51,11 +56,14 @@
               role="list"
               aria-label="Frontend skills"
             >
-              @if (about()?.skills?.frontend?.length) {
-                @for (skill of about()!.skills!.frontend; track skill) {
-                  <span class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1" role="listitem">{{ skill }}</span>
-                }
-              }
+              @if (about()?.skills?.frontend?.length) { @for (skill of
+              about()!.skills!.frontend; track skill) {
+              <span
+                class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1"
+                role="listitem"
+                >{{ skill }}</span
+              >
+              } }
             </div>
           </div>
 
@@ -68,28 +76,34 @@
               role="list"
               aria-label="Backend skills"
             >
-              @if (about()?.skills?.backend?.length) {
-                @for (skill of about()!.skills!.backend; track skill) {
-                  <span class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1" role="listitem">{{ skill }}</span>
-                }
-              }
+              @if (about()?.skills?.backend?.length) { @for (skill of
+              about()!.skills!.backend; track skill) {
+              <span
+                class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1"
+                role="listitem"
+                >{{ skill }}</span
+              >
+              } }
             </div>
           </div>
 
           <div class="mb-5" role="region" aria-labelledby="others-heading">
             <h4 id="others-heading" class="mb-2.5 text-[#D3AC92] text-lg">
-              {{ 'ABOUT.OTHER_SKILLS' | translate }}
+              {{ "ABOUT.OTHER_SKILLS" | translate }}
             </h4>
             <div
               class="flex flex-wrap gap-4"
               role="list"
               aria-label="Other skills"
             >
-              @if (about()?.skills?.others?.length) {
-                @for (skill of about()!.skills!.others; track skill) {
-                  <span class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1" role="listitem">{{ skill }}</span>
-                }
-              }
+              @if (about()?.skills?.others?.length) { @for (skill of
+              about()!.skills!.others; track skill) {
+              <span
+                class="bg-[rgba(18,49,71,0.6)] px-4 py-2 rounded-full text-sm border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[rgba(20,55,80,0.75)] hover:-translate-y-1"
+                role="listitem"
+                >{{ skill }}</span
+              >
+              } }
             </div>
           </div>
         </div>
@@ -104,7 +118,9 @@
           aria-label="Social links"
         >
           <a
-            [href]="about()?.linkedin || 'https://www.linkedin.com/in/jerome-baille'"
+            [href]="
+              about()?.linkedin || 'https://www.linkedin.com/in/jerome-baille'
+            "
             target="_blank"
             rel="noopener noreferrer"
             class="flex items-center justify-center w-[50px] h-[50px] rounded-full bg-[rgba(18,49,71,0.6)] text-[#D3AC92] border border-[rgba(211,172,146,0.2)] transition-all duration-300 hover:bg-[#D3AC92] hover:text-[#0C2A42] hover:-translate-y-1 hover:shadow-md"
@@ -170,4 +186,16 @@
       </div>
     </div>
   </div>
+
+  <section
+    id="certifications"
+    class="w-full"
+    appViewportAnimation
+    animationClass="fade-in"
+    [repeatAnimation]="true"
+    role="region"
+    aria-labelledby="certifications-heading"
+  >
+    <app-about-carousel></app-about-carousel>
+  </section>
 </section>

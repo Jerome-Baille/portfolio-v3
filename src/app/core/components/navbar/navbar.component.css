@@ -18,7 +18,6 @@ header.scrolled {
 /* Active link indicator */
 .nav-links a.active {
   color: var(--primary);
-  border-bottom: 2px solid var(--primary);
 }
 
 /* Mobile nav animation */
