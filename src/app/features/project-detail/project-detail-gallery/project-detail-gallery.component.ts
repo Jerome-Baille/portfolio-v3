@@ -28,6 +28,9 @@ export class ProjectDetailGalleryComponent {
 
   /** Computed mockups array for the template */
   readonly mockups = computed(() => this.project()?.mockups ?? []);
+  
+    /** Computed thumbnails array for the template */
+    readonly thumbnails = computed(() => this.project()?.thumbnails ?? []);
 
   /** Whether mockups exist */
   readonly hasMockups = computed(() => this.mockups().length > 0);
@@ -47,24 +50,26 @@ export class ProjectDetailGalleryComponent {
   });
 
   /** Thumbnail mockups - images 1, 2, 3... but with image 0 swapped in if applicable */
-  readonly thumbnailMockups = computed(() => {
-    const allMockups = this.mockups();
-    if (allMockups.length <= 1) return [];
-    
-    const swapped = this.swappedWithIndex();
-    
-    // Build thumbnails from indices 1, 2, 3, ...
-    return allMockups.slice(1).map((mockup, i) => {
-      const originalIndex = i + 1; // Original indices are 1, 2, 3, ...
-      
-      // If this position was swapped with image 0, show image 0 here instead
-      if (swapped === originalIndex) {
-        return { mockup: allMockups[0], originalIndex };
-      }
-      
-      return { mockup, originalIndex };
+    /** Thumbnail mockups - use thumbnails for buttons, fallback to mockups if not available */
+    readonly thumbnailMockups = computed(() => {
+      const allMockups = this.mockups();
+      const allThumbnails = this.thumbnails();
+      if (allMockups.length <= 1) return [];
+
+      const swapped = this.swappedWithIndex();
+      // Build thumbnails from indices 1, 2, 3, ...
+      return allMockups.slice(1).map((_, i) => {
+        const originalIndex = i + 1;
+        // Prefer thumbnail at this index, fallback to mockup
+        const thumb = allThumbnails[originalIndex] ?? allMockups[originalIndex];
+        // If this position was swapped with image 0, show image 0's thumbnail or mockup here instead
+        if (swapped === originalIndex) {
+          const thumb0 = allThumbnails[0] ?? allMockups[0];
+          return { mockup: thumb0, originalIndex };
+        }
+        return { mockup: thumb, originalIndex };
+      });
     });
-  });
 
   /** Project title for alt text */
   readonly projectTitle = computed(() => this.project()?.title ?? 'Project');
