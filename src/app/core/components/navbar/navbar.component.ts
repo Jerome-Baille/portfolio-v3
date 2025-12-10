@@ -1,21 +1,25 @@
-import { Component, HostListener, inject, OnInit } from '@angular/core';
+import { Component, HostListener, inject, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Observable, map } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { map, takeUntil, take, filter } from 'rxjs/operators';
 import { Router, NavigationEnd } from '@angular/router';
 import { trigger, transition, style, animate } from '@angular/animations';
-import { filter } from 'rxjs/operators';
-import { TranslatePipe } from '@ngx-translate/core';
+// filter operator already imported above
+import { TranslateModule } from '@ngx-translate/core';
+
+type NavbarSection = 'top' | 'about' | 'projects' | 'contact' | '';
 
 @Component({
   selector: 'app-navbar',
   imports: [
     CommonModule,
-    TranslatePipe
+    TranslateModule
   ],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css',
+  styleUrls: ['./navbar.component.css'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('fadeIn', [
       transition(':enter', [
@@ -25,9 +29,13 @@ import { TranslatePipe } from '@ngx-translate/core';
     ])
   ]
 })
-export class NavbarComponent implements OnInit {
+
+export class NavbarComponent implements OnInit, OnDestroy {
   private breakpointObserver = inject(BreakpointObserver);
   private router = inject(Router);
+  // viewportScroller intentionally not used; using window.scrollTo for precise offset control
+  private destroy$ = new Subject<void>();
+  private cdr = inject(ChangeDetectorRef);
   
   isDesktop$: Observable<boolean> = this.breakpointObserver
     .observe(['(min-width: 768px)'])
@@ -35,20 +43,22 @@ export class NavbarComponent implements OnInit {
       map(result => result.matches)
     );
 
-  activeSection = '';
+  activeSection: NavbarSection = 'top';
   isScrolled = false;
   isLandingPage = true;
 
   ngOnInit() {
     // Check current route on init
     this.isLandingPage = this.router.url === '/';
+    this.cdr.markForCheck();
     
     // Subscribe to route changes
     this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
+      filter(event => event instanceof NavigationEnd),
+      takeUntil(this.destroy$)
     ).subscribe((event: NavigationEnd) => {
       this.isLandingPage = event.url === '/';
-      
+
       // Reset active section when not on landing page
       if (!this.isLandingPage) {
         this.activeSection = '';
@@ -75,15 +85,17 @@ export class NavbarComponent implements OnInit {
       return;
     }
 
-    const sections = ['about', 'projects', 'contact'];
-    const scrollPosition = window.scrollY + 100; // offset for better activation
+    const sections = ['about', 'projects', 'contact'] as const;
+    // offset accounts for the fixed header
+    const offset = this.getHeaderHeight() + 30;
+    const scrollPosition = window.scrollY + offset;
 
     for (const section of sections) {
       const element = document.getElementById(section);
       if (element) {
         const top = element.offsetTop;
         const bottom = top + element.offsetHeight;
-        
+
         if (scrollPosition >= top && scrollPosition < bottom) {
           this.activeSection = section;
           return;
@@ -95,18 +107,23 @@ export class NavbarComponent implements OnInit {
     if (window.scrollY < 100) {
       this.activeSection = 'top';
     }
+    this.cdr.markForCheck();
   }
 
-  scrollToSection(sectionId: string, event: Event) {
+  scrollToSection(sectionId: NavbarSection, event: Event) {
     event.preventDefault();
-    
+    const navigateAndScroll = () => {
+      // use router navigation to ensure correct route then scroll once navigation completes
+      this.router.events.pipe(
+        filter(e => e instanceof NavigationEnd),
+        take(1)
+      ).subscribe(() => this.performScrollToSection(sectionId));
+    };
+
     if (this.router.url !== '/') {
-      // If we're not on the root path, navigate to root first
-      this.router.navigate(['']).then(() => {
-        // Wait for the landing component to load
-        setTimeout(() => {
-          this.performScrollToSection(sectionId);
-        }, 100);
+      // If we're not on the root path, navigate to root with fragment
+      this.router.navigate([''], { fragment: sectionId }).then(() => {
+        navigateAndScroll();
       });
     } else {
       // We're already on the root path, just scroll
@@ -114,13 +131,30 @@ export class NavbarComponent implements OnInit {
     }
   }
   
-  private performScrollToSection(sectionId: string) {
-    // Default behavior for other sections
+  private performScrollToSection(sectionId: NavbarSection) {
+    // Compute header height to offset for fixed header
+    const headerOffset = this.getHeaderHeight() + 16; // small breathing room
+    // Special case for projects: add a little extra offset to avoid over-scroll
+    const additionalOffsetForProjects = sectionId === 'projects' ? 48 : 0;
     const element = document.getElementById(sectionId);
+
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      const targetPosition = element.offsetTop - headerOffset - additionalOffsetForProjects;
+      // prevent scrolling past max
+      const clampedPosition = Math.max(0, Math.min(targetPosition, document.body.scrollHeight - window.innerHeight));
+      window.scrollTo({ top: clampedPosition, behavior: 'smooth' });
     } else if (sectionId === 'top') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+  }
+
+  private getHeaderHeight(): number {
+    const header = document.querySelector('header');
+    return header ? (header as HTMLElement).offsetHeight : 0;
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
