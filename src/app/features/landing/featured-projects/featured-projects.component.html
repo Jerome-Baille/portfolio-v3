@@ -28,13 +28,13 @@
         [attr.aria-label]="project.title + ' project'"
       >
         <div class="project-image">
-          @if (project.mockups && project.mockups.length > 0) {
+          @if (project.thumbnails && project.thumbnails.length > 0) {
           <picture>
-            <source [srcset]="project.mockups[0].avif" type="image/avif" />
-            <source [srcset]="project.mockups[0].webp" type="image/webp" />
+            <source [srcset]="project.thumbnails[0].avif" type="image/avif" />
+            <source [srcset]="project.thumbnails[0].webp" type="image/webp" />
             <img
-              [src]="project.mockups[0].png"
-              [alt]="project.title + ' screenshot'"
+              [src]="project.thumbnails[0].png"
+              [alt]="project.title + ' thumbnail'"
               class="mockup w-full h-full object-cover"
             />
           </picture>

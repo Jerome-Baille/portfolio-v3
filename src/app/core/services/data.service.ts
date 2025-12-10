@@ -18,6 +18,12 @@ interface Asset {
     avif?: string;
     webp?: string;
   };
+  // optional thumbnail object (new DB field)
+  thumbnail?: {
+    png?: string;
+    avif?: string;
+    webp?: string;
+  } | null;
   alt: string | null;
   backgroundColor?: string | null;
   createdAt: string;
@@ -100,6 +106,34 @@ export class DataService {
         backgroundColor: asset.backgroundColor || undefined
       };
     };
+
+    // Prefer thumbnail fields when available, otherwise fall back to formats
+    const assetToThumbnailFormats = (asset: Asset | undefined): ImageFormats => {
+      if (!asset) return { png: '', avif: '', webp: '' };
+
+      // thumbnail may come from the backend as a JSON string (sqlite TEXT column),
+      // so normalize it into an object when possible.
+      let thumbSource: any = asset.thumbnail;
+      if (typeof thumbSource === 'string' && thumbSource.trim().length > 0) {
+        try {
+          thumbSource = JSON.parse(thumbSource);
+        } catch (e) {
+          // if parsing fails, fall back to formats
+          thumbSource = null;
+        }
+      }
+
+      const thumb = thumbSource && typeof thumbSource === 'object' && Object.keys(thumbSource).length > 0
+        ? thumbSource
+        : asset.formats;
+
+      return {
+        png: prependBaseUrl(thumb?.png),
+        avif: prependBaseUrl(thumb?.avif),
+        webp: prependBaseUrl(thumb?.webp),
+        backgroundColor: asset.backgroundColor || undefined
+      };
+    };
     
     // Get assets by type (new format: one asset per image with all formats)
     const logoAsset = project.Assets?.find((asset: Asset) => asset.type === 'logo');
@@ -113,6 +147,18 @@ export class DataService {
     // Convert mockup assets to ImageFormats array
     const mockups = mockupAssets.map(asset => assetToImageFormats(asset));
 
+    // Create thumbnails array: prefer explicit thumbnail-type assets first, otherwise use mockup asset thumbnails
+    const thumbnailAssets = project.Assets
+      ?.filter((asset: Asset) => asset.type === 'thumbnail')
+      .sort((a: Asset, b: Asset) => (a.order ?? 0) - (b.order ?? 0)) || [];
+
+    let thumbnails: ImageFormats[] = [];
+    if (thumbnailAssets.length > 0) {
+      thumbnails = thumbnailAssets.map(a => assetToImageFormats(a));
+    } else {
+      thumbnails = mockupAssets.map(a => assetToThumbnailFormats(a));
+    }
+
     // Return the transformed project
     return {
       ...project,
@@ -120,6 +166,7 @@ export class DataService {
       logo: assetToImageFormats(logoAsset),
       screenshot: assetToImageFormats(screenshotAsset),
       mockups,
+      thumbnails,
       // Make sure github is properly structured even if it's empty/null
       github: project.github || { frontend: '', backend: '', extension: '' }
     };

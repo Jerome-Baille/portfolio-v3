@@ -11,6 +11,7 @@ import { ImageFormats } from '../../../../shared/interfaces/project.interface';
 })
 export class ProjectImageComponent {
   @Input() mockups: ImageFormats[] | undefined;
+  @Input() thumbnails: ImageFormats[] | undefined;
   @Input() screenshot: ImageFormats | undefined;
   @Input() title = '';
 }

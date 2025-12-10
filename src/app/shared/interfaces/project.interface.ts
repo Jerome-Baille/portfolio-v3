@@ -33,6 +33,8 @@ export interface Project {
     logo: ImageFormats;
     screenshot: ImageFormats;
     mockups: ImageFormats[];
+    // optional collection of thumbnails (prefer these in certain views)
+    thumbnails?: ImageFormats[];
     website: string;
     github: Github;
 }
