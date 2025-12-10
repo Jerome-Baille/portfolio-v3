@@ -113,18 +113,18 @@ export class DataService {
 
       // thumbnail may come from the backend as a JSON string (sqlite TEXT column),
       // so normalize it into an object when possible.
-      let thumbSource: any = asset.thumbnail;
+      let thumbSource: unknown = asset.thumbnail;
       if (typeof thumbSource === 'string' && thumbSource.trim().length > 0) {
         try {
           thumbSource = JSON.parse(thumbSource);
-        } catch (e) {
+        } catch {
           // if parsing fails, fall back to formats
           thumbSource = null;
         }
       }
 
       const thumb = thumbSource && typeof thumbSource === 'object' && Object.keys(thumbSource).length > 0
-        ? thumbSource
+        ? (thumbSource as { png?: string; avif?: string; webp?: string })
         : asset.formats;
 
       return {
@@ -175,46 +175,79 @@ export class DataService {
   // To store the ongoing request for concurrent calls
   private currentRequest: Observable<Project[]> | null = null;
 
-  // Load projects from the backend
-  loadProjects(forceRefresh = false): Observable<Project[]> {
+  // Load projects from the backend. Optionally filter via `filters` to
+  // allow server-side filtering (e.g. featured=true). When filters are
+  // provided we always fetch a fresh list from the backend and do not use
+  // the cached `projectsSubject` data.
+  loadProjects(forceRefresh = false, filters?: Record<string, string | number | boolean | (string | number | boolean)[]>): Observable<Project[]> {
     // If we have already loaded projects and aren't forcing a refresh, return cached data
     if (this.projectsLoaded && !forceRefresh) {
       return this.projects$;
     }
 
-    // If there's already a request in progress, return that instead of making a new one
-    if (this.currentRequest) {
+    // If there are no filters and there's already a request in progress, return it
+    if ((!filters || Object.keys(filters).length === 0) && this.currentRequest) {
       return this.currentRequest;
     }
 
     // Create a new request and store it
     // Note: Using limit=100 to get all projects in one request (adjust if you have more)
     const language = this.getLanguageParam();
-    const url = language 
-      ? `${environment.projectURL}?limit=100&language=${language}`
-      : `${environment.projectURL}?limit=100`;
-    this.currentRequest = this.http.get<ApiResponse<ProjectResponse[]>>(url).pipe(
+    // Build query string with optional filters
+    const buildQueryString = (params?: Record<string, string | number | boolean | (string | number | boolean)[]>) => {
+      const parts: string[] = [];
+      if (params) {
+        Object.entries(params).forEach(([k, v]) => {
+          if (v === undefined || v === null) return;
+          if (Array.isArray(v)) {
+            v.forEach(item => parts.push(`${encodeURIComponent(k)}=${encodeURIComponent(String(item))}`));
+          } else if (typeof v === 'boolean') {
+            parts.push(`${encodeURIComponent(k)}=${v ? 'true' : 'false'}`);
+          } else {
+            parts.push(`${encodeURIComponent(k)}=${encodeURIComponent(String(v))}`);
+          }
+        });
+      }
+      return parts.length ? `&${parts.join('&')}` : '';
+    };
+
+    const filterQuery = buildQueryString(filters);
+    const url = language
+      ? `${environment.projectURL}?limit=100&language=${language}${filterQuery}`
+      : `${environment.projectURL}?limit=100${filterQuery}`;
+    const request$ = this.http.get<ApiResponse<ProjectResponse[]>>(url).pipe(
       map(response => {
         // Handle the new standardized API response format
         const projects = response.data || [];
         return projects.map(project => this.processProjectData(project));
       }),
       tap(processedProjects => {
-        this.projectsSubject.next(processedProjects);
-        this.projectsLoaded = true;
-        // Clear the current request after completion
-        this.currentRequest = null;
+        // Only update the shared cache when there are no filters (we fetched the full list)
+        if (!filters || Object.keys(filters).length === 0) {
+          this.projectsSubject.next(processedProjects);
+          this.projectsLoaded = true;
+          // Clear the current request after completion
+          this.currentRequest = null;
+        }
       }),
       shareReplay(1),
       catchError(error => {
         console.error('Error fetching projects:', error);
         // Clear the current request on error
-        this.currentRequest = null;
+        if (!filters || Object.keys(filters).length === 0) {
+          this.currentRequest = null;
+        }
         return of([]);
       })
     );
 
-    return this.currentRequest;
+    // If no filters, store the request so concurrent calls reuse it. Otherwise return the request$ directly.
+    if (!filters || Object.keys(filters).length === 0) {
+      this.currentRequest = request$;
+      return this.currentRequest;
+    }
+
+    return request$;
   }
 
   // Method to get a project by ID
@@ -242,8 +275,8 @@ export class DataService {
   }
   // Method to get filtered projects
   getFilteredProjects(filters: Record<string, Project[keyof Project]>, forceRefresh = false): Observable<Project[]> {
-    // First ensure projects are loaded
-    return this.loadProjects(forceRefresh).pipe(
+    // First ensure projects are loaded (pass filters to the server so filtering happens there)
+    return this.loadProjects(forceRefresh, filters as Record<string, string | number | boolean | (string | number | boolean)[]>).pipe(
       map(projects => {
         let filteredProjects = [...projects];
 
