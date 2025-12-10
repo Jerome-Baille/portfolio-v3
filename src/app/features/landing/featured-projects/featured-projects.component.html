@@ -5,7 +5,7 @@
 >
   <div class="section-background absolute inset-0" aria-hidden="true"></div>
   <div class="relative z-10 max-w-6xl mx-auto px-6">
-    <div class="flex justify-between items-center mb-12">
+    <div class="flex flex-col gap-y-8 sm:flex-row sm:justify-between sm:items-center mb-12">
       <h2 id="featured-projects-heading" class="section-title text-3xl">
         {{ "PROJECTS.FEATURED" | translate }}
       </h2>
@@ -52,10 +52,10 @@
           }
         </div>
         <div class="project-content p-6">
-          <h3 class="text-2xl font-playfair mb-3 text-white">
+          <h3 class="text-[18px] sm:text-2xl font-playfair text-white">
             {{ project.title }}
           </h3>
-          <p class="project-description text-gray-300 text-base">
+          <p class="project-description text-gray-300 text-[14px] sm:text-base">
             {{ project.subtitle }}
           </p>
         </div>

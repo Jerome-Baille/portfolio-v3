@@ -1,11 +1,14 @@
 .contact-container {
   position: relative;
   background: rgba(12, 42, 66, 0.9);
-  border-radius: 12px;
   backdrop-filter: blur(8px);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(211, 172, 146, 0.25);
   z-index: 1;
+
+  @media screen and (min-width: 768px) {
+    border-radius: 12px;
+  }
 }
 
 .contact-container::before {
@@ -15,9 +18,16 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: 
-    linear-gradient(135deg, rgba(211, 172, 146, 0.05) 0%, transparent 100%),
-    radial-gradient(circle at 70% 30%, rgba(211, 172, 146, 0.08) 0%, transparent 70%);
+  background: linear-gradient(
+      135deg,
+      rgba(211, 172, 146, 0.05) 0%,
+      transparent 100%
+    ),
+    radial-gradient(
+      circle at 70% 30%,
+      rgba(211, 172, 146, 0.08) 0%,
+      transparent 70%
+    );
   border-radius: 12px;
   z-index: -1;
 }
@@ -61,7 +71,7 @@
 .form-input:focus {
   outline: none;
   background-color: #374151;
-  border-color: #D3AC92;
+  border-color: #d3ac92;
 }
 
 .form-error {
@@ -77,8 +87,8 @@
   border-radius: 0.25rem;
   display: flex;
   align-items: center;
-  background-color: #D3AC92;
-  color: #0C2A42;
+  background-color: #d3ac92;
+  color: #0c2a42;
   cursor: pointer;
   border: none;
 }
