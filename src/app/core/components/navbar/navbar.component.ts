@@ -5,10 +5,9 @@ import { Observable, Subject } from 'rxjs';
 import { map, takeUntil, take, filter } from 'rxjs/operators';
 import { Router, NavigationEnd } from '@angular/router';
 import { trigger, transition, style, animate } from '@angular/animations';
-// filter operator already imported above
 import { TranslateModule } from '@ngx-translate/core';
 
-type NavbarSection = 'top' | 'about' | 'projects' | 'contact' | '';
+type NavbarSection = 'hero' | 'about' | 'projects' | 'contact' | '';
 
 @Component({
   selector: 'app-navbar',
@@ -33,7 +32,6 @@ type NavbarSection = 'top' | 'about' | 'projects' | 'contact' | '';
 export class NavbarComponent implements OnInit, OnDestroy {
   private breakpointObserver = inject(BreakpointObserver);
   private router = inject(Router);
-  // viewportScroller intentionally not used; using window.scrollTo for precise offset control
   private destroy$ = new Subject<void>();
   private cdr = inject(ChangeDetectorRef);
   
@@ -43,7 +41,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       map(result => result.matches)
     );
 
-  activeSection: NavbarSection = 'top';
+  activeSection: NavbarSection = 'hero';
   isScrolled = false;
   isLandingPage = true;
 
@@ -105,29 +103,32 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
     // If at the top of the page
     if (window.scrollY < 100) {
-      this.activeSection = 'top';
+      this.activeSection = 'hero';
     }
     this.cdr.markForCheck();
   }
 
   scrollToSection(sectionId: NavbarSection, event: Event) {
-    event.preventDefault();
-    const navigateAndScroll = () => {
-      // use router navigation to ensure correct route then scroll once navigation completes
+    if (event && typeof event.preventDefault === 'function') {
+      event.preventDefault();
+    }
+
+    // Subscribe to the next NavigationEnd *before* navigating so we don't miss it
+    const scrollOnNavigationEnd = () => {
       this.router.events.pipe(
         filter(e => e instanceof NavigationEnd),
         take(1)
-      ).subscribe(() => this.performScrollToSection(sectionId));
+      ).subscribe(() => {
+        // Give the DOM a tick to render the landing sections, then scroll
+        setTimeout(() => this.performScrollToSection(sectionId), 0);
+      });
     };
 
     if (this.router.url !== '/') {
-      // If we're not on the root path, navigate to root with fragment
-      this.router.navigate([''], { fragment: sectionId }).then(() => {
-        navigateAndScroll();
-      });
+      scrollOnNavigationEnd();
+      this.router.navigate(['']);
     } else {
-      // We're already on the root path, just scroll
-      this.performScrollToSection(sectionId);
+      setTimeout(() => this.performScrollToSection(sectionId), 0);
     }
   }
   
@@ -139,7 +140,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     if (element) {
       const targetPosition = element.offsetTop - headerOffset;
       window.scrollTo({ top: Math.max(0, targetPosition), behavior: 'smooth' });
-    } else if (sectionId === 'top') {
+    } else if (sectionId === 'hero') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }

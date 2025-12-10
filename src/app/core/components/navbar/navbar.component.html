@@ -18,12 +18,12 @@
     <ul class="nav-links hidden md:flex items-center gap-10" role="menubar">
       <li role="none">
         <a
-          href="#top"
-          (click)="scrollToSection('top', $event)"
-          [class.active]="isLandingPage && activeSection === 'top'"
+          href="#hero"
+          (click)="scrollToSection('hero', $event)"
+          [class.active]="isLandingPage && activeSection === 'hero'"
           role="menuitem"
           [attr.aria-current]="
-            isLandingPage && activeSection === 'top' ? 'page' : null
+            isLandingPage && activeSection === 'hero' ? 'page' : null
           "
           class="font-bold text-sm uppercase relative text-white hover:text-[#D3AC92] transition-colors duration-300 py-1 px-1"
           >{{ "NAV.HOME" | translate }}</a
@@ -80,12 +80,12 @@
   aria-label="Mobile navigation"
 >
   <a
-    href="#top"
-    (click)="scrollToSection('top', $event)"
-    [class.active]="isLandingPage && activeSection === 'top'"
+    href="#hero"
+    (click)="scrollToSection('hero', $event)"
+    [class.active]="isLandingPage && activeSection === 'hero'"
     aria-label="Go to Home section"
     [attr.aria-current]="
-      isLandingPage && activeSection === 'top' ? 'page' : null
+      isLandingPage && activeSection === 'hero' ? 'page' : null
     "
     class="flex flex-col items-center text-white text-sm px-3 py-1 hover:text-[#D3AC92] transition-colors duration-300"
   >
